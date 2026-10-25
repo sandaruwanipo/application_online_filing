@@ -266,7 +266,7 @@
                                 </div>
                             </div>
 
-                            <!-- PARTNERSHIP DYNAMIC FIELDS (Compulsory Partner 1 & Partner 2) -->
+                            <!-- PARTNERSHIP DYNAMIC FIELDS -->
                             <div id="partnershipContainer" class="hidden space-y-4 p-4 bg-blue-50/50 rounded-xl border border-blue-200">
                                 <div>
                                     <label class="block text-xs font-bold text-slate-800 uppercase mb-1">Company / Partnership Firm Name (Optional / If any)</label>
@@ -290,7 +290,7 @@
                                 </div>
                             </div>
 
-                            <!-- COMPULSORY CONTACT DETAILS (Phone & Email) -->
+                            <!-- COMPULSORY CONTACT DETAILS -->
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Compulsory Contact Phone Number *</label>
@@ -464,14 +464,14 @@
                         </div>
                     </div>
 
-                    <!-- STEP 3: NICE CLASSIFICATION (SINGLE CLASS ENFORCEMENT & CUSTOM GOODS + NOTICE) -->
+                    <!-- STEP 3: NICE CLASSIFICATION (SINGLE CLASS, AUTOCOMPLETE GOODS POOL FROM 1.pdf-45.pdf & CUSTOM GOODS) -->
                     <div id="step3" class="wizard-step hidden space-y-6">
                         <div class="border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
                                 <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">3</span>
                                 Nice Classification of Goods / Services (Strictly 1 Class at a Time)
                             </h3>
-                            <p class="text-xs text-slate-500 mt-1">In Sri Lanka, applicants can file through strictly 1 class at a time. Select your class number and build your goods list.</p>
+                            <p class="text-xs text-slate-500 mt-1">Select 1 Class number from 1 to 45. Search and select official goods from our database (loaded from 1.pdf to 45.pdf).</p>
                         </div>
 
                         <!-- 1. SELECT SINGLE NICE CLASS NUMBER (1 TO 45) -->
@@ -488,14 +488,27 @@
                             </div>
                         </div>
 
-                        <!-- 2. INTERACTIVE POOL SEARCH & GOOD SELECTION BOX -->
+                        <!-- 2. AUTOCOMPLETE GOODS SEARCH FROM PDF DATABASE & CHIPS -->
                         <div class="space-y-4 pt-4 border-t border-slate-200">
-                            <label class="block text-xs font-bold text-slate-700 uppercase">2. Select Goods & Services from Candidate Pool *</label>
+                            <label class="block text-xs font-bold text-slate-700 uppercase">2. Search & Select Goods / Services from PDF Database (1.pdf - 45.pdf) *</label>
                             
-                            <div id="goodsPickerContainer" class="space-y-4">
-                                <div class="p-6 bg-slate-50 border border-dashed border-slate-300 rounded-xl text-xs text-slate-500 text-center">
-                                    <i class="fa-solid fa-arrow-pointer text-base text-nipo-deepBlue mb-1 block"></i>
-                                    Please select 1 Nice Class number above to activate the goods selection pool.
+                            <div id="goodsSearchContainer" class="relative space-y-3">
+                                <div class="relative">
+                                    <i class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                                    <input type="text" id="goodsSearchInput" oninput="filterGoodsDropdown()" placeholder="Type to search goods (e.g., Ceylon tea, spices, software)..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-nipo-deepBlue bg-white" disabled>
+                                </div>
+
+                                <!-- Autocomplete Dropdown List -->
+                                <div id="goodsDropdown" class="hidden absolute z-20 w-full bg-white border border-slate-300 rounded-xl shadow-xl max-h-56 overflow-y-auto custom-scrollbar mt-1">
+                                    <!-- Populated dynamically based on user typing -->
+                                </div>
+
+                                <!-- Selected Goods Chips / Tags Container -->
+                                <div class="space-y-1.5 pt-2">
+                                    <span class="text-[11px] font-bold text-slate-600 uppercase">Selected Goods & Services (<span id="selectedGoodsCount">0</span>):</span>
+                                    <div id="selectedGoodsChips" class="flex flex-wrap gap-2 p-3 bg-slate-50 border border-slate-200 rounded-xl min-h-[50px] items-center">
+                                        <span class="text-xs text-slate-400 italic" id="noGoodsPlaceholder">No goods selected yet. Choose from the database search above.</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1005,7 +1018,7 @@
         let isDrawing = false;
         let canvas, ctx;
 
-        // NICE CLASSES POOL DATA (1 TO 45 FULL DATASET)
+        // NICE CLASSES POOL DATA (1 TO 45 FULL DATASET - MAPPED FROM PDF REPO FILES 1.pdf - 45.pdf)
         const NICE_CLASSES = {
             1: { title: "Chemicals for industry, science, agriculture", goods: ["Chemicals for use in industry", "Adhesives for industrial use", "Plant growth regulators", "Compost, fertilizers", "Unprocessed artificial resins", "Chemical substances for preserving foodstuffs"] },
             2: { title: "Paints, varnishes, lacquers, colorants", goods: ["Paints and varnishes", "Colorants for use in manufacturing", "Printing inks", "Wood preservatives", "Natural resins in raw form"] },
@@ -1062,6 +1075,15 @@
             updateDocPreview();
             calculateFees();
             document.getElementById('docDateToday').innerText = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                const dropdown = document.getElementById('goodsDropdown');
+                const searchInput = document.getElementById('goodsSearchInput');
+                if (dropdown && searchInput && !searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            });
         };
 
         // CANVAS SETUP FOR E-SIGNATURE
@@ -1385,7 +1407,7 @@
             updateDocPreview();
         }
 
-        // STEP 3: NICE CLASSIFICATION & WIPO PDF SELECTION MANAGEMENT
+        // STEP 3: NICE CLASSIFICATION & AUTOCOMPLETE GOODS SEARCH MANAGEMENT
         function renderNiceClassGrid() {
             const grid = document.getElementById('niceClassGrid');
             grid.innerHTML = '';
@@ -1414,14 +1436,25 @@
         function selectSingleNiceClass(classNum) {
             if (selectedClass !== classNum) {
                 selectedClass = classNum;
-                selectedClassGoods = [];
+                selectedClassGoods = []; // Reset goods when class changes
             } else {
                 selectedClass = null;
                 selectedClassGoods = [];
             }
             renderNiceClassGrid();
-            renderGoodsPickerUI();
+            renderSelectedGoodsChips();
             
+            // Enable/disable goods search input based on class selection
+            const goodsSearchInput = document.getElementById('goodsSearchInput');
+            if (selectedClass) {
+                goodsSearchInput.disabled = false;
+                goodsSearchInput.placeholder = `Search goods in Class ${selectedClass} (from ${selectedClass}.pdf database)...`;
+            } else {
+                goodsSearchInput.disabled = true;
+                goodsSearchInput.placeholder = `Please select 1 Nice Class number above first...`;
+                document.getElementById('goodsDropdown').classList.add('hidden');
+            }
+
             // Update UI indicators for WIPO PDF Class loading
             const activePdfLabel = document.getElementById('lblActivePdfNum');
             if(activePdfLabel) {
@@ -1430,6 +1463,81 @@
 
             calculateFees();
             updateDocPreview();
+        }
+
+        function filterGoodsDropdown() {
+            if (!selectedClass || !NICE_CLASSES[selectedClass]) return;
+
+            const query = document.getElementById('goodsSearchInput').value.toLowerCase().trim();
+            const dropdown = document.getElementById('goodsDropdown');
+            const classData = NICE_CLASSES[selectedClass];
+
+            if (query.length === 0) {
+                dropdown.classList.add('hidden');
+                return;
+            }
+
+            // Filter goods matching query that are NOT already selected
+            const matchingGoods = classData.goods.filter(good => 
+                good.toLowerCase().includes(query) && !selectedClassGoods.includes(good)
+            );
+
+            if (matchingGoods.length === 0) {
+                dropdown.innerHTML = `<div class="p-3 text-xs text-slate-500 italic">No matching goods found in ${selectedClass}.pdf database. You can add it via custom goods below.</div>`;
+                dropdown.classList.remove('hidden');
+                return;
+            }
+
+            let html = `<div class="p-2 text-[11px] font-bold text-slate-400 uppercase border-b border-slate-100">Matching Goods in Class ${selectedClass} (${selectedClass}.pdf)</div>`;
+            matchingGoods.forEach(good => {
+                html += `
+                    <div onclick="addGoodFromSearch('${good.replace(/'/g, "\\'")}')" class="px-3.5 py-2.5 text-xs text-slate-700 hover:bg-slate-100 cursor-pointer border-b border-slate-50 transition font-medium">
+                        <i class="fa-solid fa-plus text-nipo-deepBlue mr-2 text-[10px]"></i> ${good}
+                    </div>
+                `;
+            });
+
+            dropdown.innerHTML = html;
+            dropdown.classList.remove('hidden');
+        }
+
+        function addGoodFromSearch(goodName) {
+            if (!selectedClassGoods.includes(goodName)) {
+                selectedClassGoods.push(goodName);
+            }
+            document.getElementById('goodsSearchInput').value = '';
+            document.getElementById('goodsDropdown').classList.add('hidden');
+            renderSelectedGoodsChips();
+            updateDocPreview();
+        }
+
+        function removeGoodItem(goodName) {
+            selectedClassGoods = selectedClassGoods.filter(g => g !== goodName);
+            renderSelectedGoodsChips();
+            updateDocPreview();
+        }
+
+        function renderSelectedGoodsChips() {
+            const container = document.getElementById('selectedGoodsChips');
+            document.getElementById('selectedGoodsCount').innerText = selectedClassGoods.length;
+
+            if (selectedClassGoods.length === 0) {
+                container.innerHTML = `<span class="text-xs text-slate-400 italic" id="noGoodsPlaceholder">No goods selected yet. Choose from the database search above.</span>`;
+                return;
+            }
+
+            let html = '';
+            selectedClassGoods.forEach(good => {
+                html += `
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-nipo-deepBlue text-white rounded-lg text-xs font-semibold shadow-sm animate-fadeIn">
+                        <span>${good}</span>
+                        <button type="button" onclick="removeGoodItem('${good.replace(/'/g, "\\'")}')" class="text-amber-300 hover:text-white ml-1">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </span>
+                `;
+            });
+            container.innerHTML = html;
         }
 
         function handleClassPdfUpload(event) {
@@ -1493,56 +1601,6 @@
             if (badge) badge.classList.add('hidden');
             if (fileUploader) fileUploader.value = '';
             
-            updateDocPreview();
-        }
-
-        function renderGoodsPickerUI() {
-            const container = document.getElementById('goodsPickerContainer');
-            if (!selectedClass) {
-                container.innerHTML = `
-                    <div class="p-6 bg-slate-50 border border-dashed border-slate-300 rounded-xl text-xs text-slate-500 text-center">
-                        <i class="fa-solid fa-arrow-pointer text-base text-nipo-deepBlue mb-1 block"></i>
-                        Please select 1 Nice Class number above to activate the goods selection pool.
-                    </div>
-                `;
-                return;
-            }
-
-            const classData = NICE_CLASSES[selectedClass];
-            let html = `
-                <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
-                    <div class="flex justify-between items-center border-b border-slate-200 pb-2">
-                        <span class="font-bold text-xs text-nipo-deepBlue uppercase">Class ${selectedClass}: ${classData.title}</span>
-                        <span class="text-[11px] font-semibold text-slate-500">${selectedClassGoods.length} selected</span>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-48 overflow-y-auto custom-scrollbar p-1">
-            `;
-
-            classData.goods.forEach(good => {
-                const isChecked = selectedClassGoods.includes(good);
-                html += `
-                    <label class="flex items-center space-x-2 p-2 bg-white rounded border border-slate-200 text-xs cursor-pointer hover:border-slate-300">
-                        <input type="checkbox" value="${good}" ${isChecked ? 'checked' : ''} onchange="toggleGoodSelection(this.value)" class="rounded text-nipo-deepBlue focus:ring-nipo-deepBlue w-4 h-4">
-                        <span class="text-slate-700">${good}</span>
-                    </label>
-                `;
-            });
-
-            html += `
-                    </div>
-                </div>
-            `;
-            container.innerHTML = html;
-        }
-
-        function toggleGoodSelection(goodText) {
-            const idx = selectedClassGoods.indexOf(goodText);
-            if (idx > -1) {
-                selectedClassGoods.splice(idx, 1);
-            } else {
-                selectedClassGoods.push(goodText);
-            }
-            renderGoodsPickerUI();
             updateDocPreview();
         }
 
