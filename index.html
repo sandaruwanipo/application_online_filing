@@ -464,14 +464,14 @@
                         </div>
                     </div>
 
-                    <!-- STEP 3: NICE CLASSIFICATION (SINGLE CLASS, AUTOCOMPLETE GOODS POOL FROM 1.pdf-45.pdf & CUSTOM GOODS) -->
+                    <!-- STEP 3: NICE CLASSIFICATION (SINGLE CLASS, AUTOCOMPLETE GOODS POOL FROM mgs.json & CUSTOM GOODS) -->
                     <div id="step3" class="wizard-step hidden space-y-6">
                         <div class="border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
                                 <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">3</span>
                                 Nice Classification of Goods / Services (Strictly 1 Class at a Time)
                             </h3>
-                            <p class="text-xs text-slate-500 mt-1">Select 1 Class number from 1 to 45. Search and select official goods from our database (loaded from 1.pdf to 45.pdf).</p>
+                            <p class="text-xs text-slate-500 mt-1">Select 1 Class number from 1 to 45. Search and select official goods from our database loaded from <code class="bg-slate-100 px-1 py-0.5 rounded font-mono text-nipo-deepBlue font-bold">mgs.json</code>.</p>
                         </div>
 
                         <!-- 1. SELECT SINGLE NICE CLASS NUMBER (1 TO 45) -->
@@ -488,9 +488,9 @@
                             </div>
                         </div>
 
-                        <!-- 2. AUTOCOMPLETE GOODS SEARCH FROM PDF DATABASE & CHIPS -->
+                        <!-- 2. AUTOCOMPLETE GOODS SEARCH FROM mgs.json DATABASE & CHIPS -->
                         <div class="space-y-4 pt-4 border-t border-slate-200">
-                            <label class="block text-xs font-bold text-slate-700 uppercase">2. Search & Select Goods / Services from PDF Database (1.pdf - 45.pdf) *</label>
+                            <label class="block text-xs font-bold text-slate-700 uppercase">2. Search & Select Goods / Services from mgs.json Database *</label>
                             
                             <div id="goodsSearchContainer" class="relative space-y-3">
                                 <div class="relative">
@@ -513,7 +513,7 @@
                             </div>
                         </div>
 
-                        <!-- 3. CUSTOM GOODS FIELD & WIPO PDF UPLOADER SECTION -->
+                        <!-- 3. CUSTOM GOODS FIELD & PDF UPLOADER SECTION -->
                         <div class="space-y-3 p-4 bg-amber-50/60 rounded-xl border border-amber-300">
                             <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
                                 <label class="block text-xs font-bold text-amber-900 uppercase">3. Custom / External WIPO Documents Class List Paste & Select</label>
@@ -525,12 +525,12 @@
                             </div>
 
                             <p class="text-[11px] text-amber-800">
-                                Applicant can paste or select any custom list of goods/services from official WIPO class documents (e.g. 1.pdf to 45.pdf).
+                                Applicant can paste or select any custom list of goods/services from official WIPO class documents.
                             </p>
 
                             <div class="flex flex-col gap-2">
                                 <div class="relative">
-                                    <textarea id="customGoodsInput" rows="3" placeholder="Type or paste custom goods/services list from WIPO Class PDF document (e.g., 1.pdf, 30.pdf)..." oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs bg-white focus:ring-1 focus:ring-amber-500"></textarea>
+                                    <textarea id="customGoodsInput" rows="3" placeholder="Type or paste custom goods/services list not found in standard dropdown..." oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs bg-white focus:ring-1 focus:ring-amber-500"></textarea>
                                     <span id="pdfAttachedBadge" class="hidden absolute top-2 right-2 px-2 py-0.5 bg-emerald-100 text-emerald-800 border border-emerald-300 rounded text-[10px] font-bold items-center gap-1">
                                         <i class="fa-solid fa-paperclip"></i> <span id="pdfFileName">1.pdf</span> attached
                                     </span>
@@ -1012,63 +1012,41 @@
         let selectedMarkType = 'Word';
         let selectedClass = null; // Strictly 1 class at a time in Sri Lanka
         let selectedClassGoods = []; // Selected goods list for the active class
+        let classDatabase = {}; // Loaded dynamically from mgs.json
         let logoDataUrl = null;
         let capturedSigDataUrl = null;
 
         let isDrawing = false;
         let canvas, ctx;
 
-        // NICE CLASSES POOL DATA (1 TO 45 FULL DATASET - MAPPED FROM PDF REPO FILES 1.pdf - 45.pdf)
-        const NICE_CLASSES = {
-            1: { title: "Chemicals for industry, science, agriculture", goods: ["Chemicals for use in industry", "Adhesives for industrial use", "Plant growth regulators", "Compost, fertilizers", "Unprocessed artificial resins", "Chemical substances for preserving foodstuffs"] },
-            2: { title: "Paints, varnishes, lacquers, colorants", goods: ["Paints and varnishes", "Colorants for use in manufacturing", "Printing inks", "Wood preservatives", "Natural resins in raw form"] },
-            3: { title: "Cosmetics, cleaning preparations, soaps", goods: ["Non-medicated cosmetics", "Perfumery and essential oils", "Non-medicated soaps", "Hair lotions and shampoos", "Toothpaste and dentifrices", "Cleaning and polishing preparations"] },
-            4: { title: "Industrial oils, greases, fuels, candles", goods: ["Industrial oils and greases", "Lubricants", "Fuels and motor spirit", "Candles and wicks for lighting"] },
-            5: { title: "Pharmaceuticals, medical preparations", goods: ["Pharmaceutical preparations", "Sanitary preparations for medical use", "Dietetic food adapted for medical use", "Plasters, materials for dressings", "Disinfectants", "Vitamin preparations"] },
-            6: { title: "Common metals and their alloys, metal hardware", goods: ["Common metals and their alloys", "Metal building materials", "Transportable buildings of metal", "Non-electric cables and wires of common metal", "Safes and metal hardware"] },
-            7: { title: "Machines, machine tools, motors and engines", goods: ["Machines and machine tools", "Motors and engines", "Machine coupling and transmission components", "Agricultural implements other than hand-operated"] },
-            8: { title: "Hand tools and implements, cutlery", goods: ["Hand tools and implements (hand-operated)", "Cutlery, forks and spoons", "Side arms", "Razors"] },
-            9: { title: "Scientific, research, navigation, software, electronics", goods: ["Scientific, research and navigation apparatus", "Computers and computer hardware", "Downloadable computer software", "Mobile applications", "Sunglasses and optical goods", "USB flash drives"] },
-            10: { title: "Surgical, medical, dental and veterinary apparatus", goods: ["Surgical, medical and dental apparatus", "Artificial limbs, eyes and teeth", "Orthopedic articles", "Suture materials"] },
-            11: { title: "Apparatus for lighting, heating, steam, cooking, cooling", goods: ["Lighting apparatus and installations", "Apparatus for cooking and baking", "Refrigerating and freezing equipment", "Air conditioning apparatus", "Water purification installations"] },
-            12: { title: "Vehicles, apparatus for locomotion by land, air or water", goods: ["Vehicles for land, air or water", "Automobiles and electric vehicles", "Bicycles and motorcycles", "Tyres for vehicle wheels"] },
-            13: { title: "Firearms, ammunition and projectiles, explosives", goods: ["Firearms", "Ammunition and projectiles", "Explosives", "Fireworks"] },
-            14: { title: "Precious metals and jewellery, horological instruments", goods: ["Precious metals and their alloys", "Jewellery, precious and semi-precious stones", "Horological and chronometric instruments (Clocks and watches)"] },
-            15: { title: "Musical instruments", goods: ["Musical instruments", "Music stands and instrument cases"] },
-            16: { title: "Paper, cardboard, printed matter, stationery", goods: ["Paper and cardboard", "Printed matter and books", "Stationery and office requisites", "Adhesives for stationery or household purposes", "Instructional and teaching materials"] },
-            17: { title: "Unprocessed and semi-processed rubber, plastics", goods: ["Unprocessed and semi-processed rubber and plastics", "Flexible pipes, tubes and hoses, not of metal", "Packing and insulating materials"] },
-            18: { title: "Leather and imitations of leather, luggage, umbrellas", goods: ["Leather and imitations of leather", "Trunks and travelling bags", "Umbrellas and parasols", "Walking sticks", "Harness and saddlery"] },
-            19: { title: "Building materials (non-metallic)", goods: ["Building materials (non-metallic)", "Rigid pipes for building (non-metallic)", "Asphalt, pitch and bitumen", "Transportable buildings (non-metallic)"] },
-            20: { title: "Furniture, mirrors, picture frames", goods: ["Furniture and office furniture", "Mirrors and picture frames", "Containers, not of metal, for storage", "Unworked or semi-worked bone or mother-of-pearl"] },
-            21: { title: "Household or kitchen utensils and containers", goods: ["Household or kitchen utensils and containers", "Cookware and tableware", "Combs and sponges", "Glassware, porcelain and earthenware"] },
-            22: { title: "Ropes, string, nets, tents, awnings, sails", goods: ["Ropes and string", "Tents and tarpaulins", "Awnings of textile or synthetic materials", "Sails", "Padding and stuffing materials"] },
-            23: { title: "Yarns and threads for textile use", goods: ["Yarns and threads for textile use"] },
-            24: { title: "Textiles and substitutes for textiles, bed linen", goods: ["Textiles and textile goods", "Bed linen and blankets", "Table linen not of paper", "Curtains of textile or plastic"] },
-            25: { title: "Clothing, footwear, headwear", goods: ["Clothing, footwear, headwear", "Shirts, trousers, skirts, dresses", "Sports jerseys and sportswear", "Undergarments", "Socks, scarves, gloves"] },
-            26: { title: "Lace, braid and embroidery, buttons, pins", goods: ["Lace and embroidery, ribbons and braid", "Buttons, hooks and eyes, pins and needles", "Artificial flowers", "Hair ornaments"] },
-            27: { title: "Carpets, rugs, mats, linoleum, wall hangings", goods: ["Carpets, rugs, mats and matting", "Linoleum and materials for covering floors", "Wall hangings (non-textile)"] },
-            28: { title: "Games, toys and playthings, sporting articles", goods: ["Games, toys and playthings", "Video game apparatus", "Gymnastic and sporting articles", "Christmas tree decorations"] },
-            29: { title: "Meat, fish, poultry, preserved and dried fruits", goods: ["Meat, fish, poultry and game", "Meat extracts", "Preserved, frozen, dried and cooked fruits and vegetables", "Jellies, jams, compotes", "Eggs, milk, cheese, butter and dairy products", "Edible oils and fats"] },
-            30: { title: "Tea, coffee, cocoa, rice, spices, flour, bread", goods: ["Ceylon tea and coffee", "Cocoa and coffee substitutes", "Rice, pasta and noodles", "Tapioca and sago", "Flour and cereal preparations", "Bread, pastries and confectionery", "Sugar, honey, treacle", "Yeast, baking powder", "Salt, mustard, vinegar, sauces", "Ceylon Spices"] },
-            31: { title: "Raw and unprocessed agricultural products, fresh fruits", goods: ["Unprocessed agricultural and aquaculture products", "Unprocessed fresh fruits and vegetables", "Fresh seeds and natural plants", "Flowers", "Animal foodstuffs and malt"] },
-            32: { title: "Beers, non-alcoholic beverages, mineral waters, juices", goods: ["Beers", "Non-alcoholic beverages", "Mineral and aerated waters", "Fruit beverages and fruit juices", "Syrups for making beverages"] },
-            33: { title: "Alcoholic beverages (except beers)", goods: ["Alcoholic beverages (except beers)", "Wine, cider, spirits, liqueurs", "Alcoholic extracts and essences"] },
-            34: { title: "Tobacco and tobacco substitutes, smokers' articles", goods: ["Tobacco and tobacco substitutes", "Cigarettes and cigars", "Electronic cigarettes", "Smokers' articles", "Matches"] },
-            35: { title: "Advertising, business management, retail services", goods: ["Advertising", "Business management", "Business administration", "Office functions", "Online retail and wholesale store services", "Import-export agencies"] },
-            36: { title: "Financial, monetary, banking, insurance, real estate", goods: ["Financial and monetary services", "Banking and insurance services", "Real estate affairs", "Real estate management and brokerage"] },
-            37: { title: "Building construction, repair, installation services", goods: ["Construction of buildings and civil works", "Repair and maintenance services", "Installation services"] },
-            38: { title: "Telecommunications services", goods: ["Telecommunications services", "Providing internet access", "Streaming and transmission of data"] },
-            39: { title: "Transport, packaging and storage of goods, travel", goods: ["Transport of goods and passengers", "Packaging and storage of merchandise", "Travel arrangement and tour operating"] },
-            40: { title: "Treatment of materials, recycling, printing", goods: ["Treatment of materials", "Custom manufacturing and textile processing", "Printing and publishing services", "Recycling of waste"] },
-            41: { title: "Education, training, entertainment, sporting activities", goods: ["Education, teaching and training", "Entertainment and sporting activities", "Cultural activities", "Publishing of books and texts"] },
-            42: { title: "Scientific and technological services, IT software development", goods: ["Scientific and technological services", "Industrial design and research", "Software development (SaaS) and IT programming", "IT consultancy services"] },
-            43: { title: "Services for providing food and drink, temporary accommodation", goods: ["Services for providing food and drink", "Restaurants, cafes, bars and canteens", "Temporary accommodation and hotels"] },
-            44: { title: "Medical services, veterinary services, beauty care", goods: ["Medical services", "Veterinary services", "Hygienic and beauty care for human beings or animals", "Agriculture and forestry services"] },
-            45: { title: "Legal services, security services for physical property", goods: ["Legal services and trademark registration consultancy", "Litigation services", "Security services for physical protection"] }
-        };
+        // HELPER TO SAFELY ACCESS CLASS DATA FROM mgs.json
+        function getClassData(classNum) {
+            const data = classDatabase[classNum] || classDatabase[String(classNum)];
+            if (!data) {
+                return { title: `Class ${classNum} Goods and Services`, goods: [] };
+            }
+            if (Array.isArray(data)) {
+                return { title: `Class ${classNum} Goods and Services`, goods: data };
+            }
+            return {
+                title: data.title || `Class ${classNum} Goods and Services`,
+                goods: data.goods || []
+            };
+        }
 
-        // INITIALIZATION
-        window.onload = function() {
+        // INITIALIZATION - FETCH mgs.json ON LOAD
+        window.onload = async function() {
+            try {
+                const response = await fetch('mgs.json');
+                if (response.ok) {
+                    classDatabase = await response.json();
+                } else {
+                    console.warn("Could not load mgs.json. Make sure mgs.json is uploaded in the root repository.");
+                }
+            } catch (e) {
+                console.error("Error fetching mgs.json:", e);
+            }
+
             renderNiceClassGrid();
             handleCategoryChange();
             setupCanvas();
@@ -1076,7 +1054,7 @@
             calculateFees();
             document.getElementById('docDateToday').innerText = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
             
-            // Close dropdown when clicking outside
+            // Close autocomplete dropdown when clicking outside
             document.addEventListener('click', function(e) {
                 const dropdown = document.getElementById('goodsDropdown');
                 const searchInput = document.getElementById('goodsSearchInput');
@@ -1407,7 +1385,7 @@
             updateDocPreview();
         }
 
-        // STEP 3: NICE CLASSIFICATION & AUTOCOMPLETE GOODS SEARCH MANAGEMENT
+        // STEP 3: NICE CLASSIFICATION & AUTOCOMPLETE GOODS SEARCH FROM mgs.json
         function renderNiceClassGrid() {
             const grid = document.getElementById('niceClassGrid');
             grid.innerHTML = '';
@@ -1428,7 +1406,8 @@
             const boxes = document.querySelectorAll('.class-box');
             boxes.forEach(box => {
                 const num = box.dataset.classNum;
-                const info = NICE_CLASSES[num] ? NICE_CLASSES[num].title.toLowerCase() : '';
+                const classInfo = getClassData(num);
+                const info = (classInfo.title + ' ' + classInfo.goods.join(' ')).toLowerCase();
                 box.style.display = (num.includes(q) || info.includes(q)) ? 'block' : 'none';
             });
         }
@@ -1448,14 +1427,14 @@
             const goodsSearchInput = document.getElementById('goodsSearchInput');
             if (selectedClass) {
                 goodsSearchInput.disabled = false;
-                goodsSearchInput.placeholder = `Search goods in Class ${selectedClass} (from ${selectedClass}.pdf database)...`;
+                goodsSearchInput.placeholder = `Search goods in Class ${selectedClass} (from mgs.json database)...`;
             } else {
                 goodsSearchInput.disabled = true;
                 goodsSearchInput.placeholder = `Please select 1 Nice Class number above first...`;
                 document.getElementById('goodsDropdown').classList.add('hidden');
             }
 
-            // Update UI indicators for WIPO PDF Class loading
+            // Update UI indicators for PDF Class loading
             const activePdfLabel = document.getElementById('lblActivePdfNum');
             if(activePdfLabel) {
                 activePdfLabel.innerText = selectedClass ? selectedClass + '.pdf' : '--';
@@ -1466,11 +1445,11 @@
         }
 
         function filterGoodsDropdown() {
-            if (!selectedClass || !NICE_CLASSES[selectedClass]) return;
+            if (!selectedClass) return;
 
             const query = document.getElementById('goodsSearchInput').value.toLowerCase().trim();
             const dropdown = document.getElementById('goodsDropdown');
-            const classData = NICE_CLASSES[selectedClass];
+            const classData = getClassData(selectedClass);
 
             if (query.length === 0) {
                 dropdown.classList.add('hidden');
@@ -1483,12 +1462,12 @@
             );
 
             if (matchingGoods.length === 0) {
-                dropdown.innerHTML = `<div class="p-3 text-xs text-slate-500 italic">No matching goods found in ${selectedClass}.pdf database. You can add it via custom goods below.</div>`;
+                dropdown.innerHTML = `<div class="p-3 text-xs text-slate-500 italic">No matching goods found in mgs.json for Class ${selectedClass}. You can add custom items below.</div>`;
                 dropdown.classList.remove('hidden');
                 return;
             }
 
-            let html = `<div class="p-2 text-[11px] font-bold text-slate-400 uppercase border-b border-slate-100">Matching Goods in Class ${selectedClass} (${selectedClass}.pdf)</div>`;
+            let html = `<div class="p-2 text-[11px] font-bold text-slate-400 uppercase border-b border-slate-100">Matching Goods in Class ${selectedClass} (mgs.json)</div>`;
             matchingGoods.forEach(good => {
                 html += `
                     <div onclick="addGoodFromSearch('${good.replace(/'/g, "\\'")}')" class="px-3.5 py-2.5 text-xs text-slate-700 hover:bg-slate-100 cursor-pointer border-b border-slate-50 transition font-medium">
@@ -1529,7 +1508,7 @@
             let html = '';
             selectedClassGoods.forEach(good => {
                 html += `
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-nipo-deepBlue text-white rounded-lg text-xs font-semibold shadow-sm animate-fadeIn">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-nipo-deepBlue text-white rounded-lg text-xs font-semibold shadow-sm">
                         <span>${good}</span>
                         <button type="button" onclick="removeGoodItem('${good.replace(/'/g, "\\'")}')" class="text-amber-300 hover:text-white ml-1">
                             <i class="fa-solid fa-xmark"></i>
@@ -1552,7 +1531,6 @@
                 badge.classList.add('inline-flex');
             }
 
-            // Detect if filename matches X.pdf pattern to auto-select class
             const match = file.name.match(/^(\d{1,2})\.pdf$/i);
             if (match) {
                 const classNum = parseInt(match[1], 10);
@@ -1561,7 +1539,6 @@
                 }
             }
 
-            // Read text content if plain text or standard readable stream
             const reader = new FileReader();
             reader.onload = function(e) {
                 const text = e.target.result;
@@ -1577,12 +1554,12 @@
         }
 
         function loadStandardWipoClassPdfText() {
-            if (!selectedClass || !NICE_CLASSES[selectedClass]) {
+            if (!selectedClass) {
                 alert("Please select a Nice Class number from 1 to 45 first.");
                 return;
             }
 
-            const classInfo = NICE_CLASSES[selectedClass];
+            const classInfo = getClassData(selectedClass);
             const wipoFormattedText = `[WIPO Class ${selectedClass} Document (${selectedClass}.pdf)]\nClass Heading: ${classInfo.title}\nSpecification of Goods/Services: ${classInfo.goods.join('; ')}.`;
             
             const customInput = document.getElementById('customGoodsInput');
@@ -1668,9 +1645,10 @@
                 if (customGoods) goodsTextArr.push(customGoods);
 
                 const finalGoodsStr = goodsTextArr.length > 0 ? goodsTextArr.join('; ') : 'No specific goods selected.';
+                const classInfo = getClassData(selectedClass);
                 docClassesList.innerHTML = `
                     <div class="border-l-2 border-nipo-deepBlue pl-2 text-xs">
-                        <strong class="text-nipo-deepBlue">Class ${selectedClass}:</strong> ${NICE_CLASSES[selectedClass].title}
+                        <strong class="text-nipo-deepBlue">Class ${selectedClass}:</strong> ${classInfo.title}
                         <div class="text-[11px] text-slate-700 mt-1"><strong>Goods/Services:</strong> ${finalGoodsStr}</div>
                     </div>
                 `;
@@ -1775,7 +1753,7 @@
                 
                 let responseText = "For WIPO class classification: Tea & spices belong to Class 30, Software & Mobile Apps belong to Class 9, Cosmetics fall in Class 3, and Restaurants/Hotels fall in Class 43.";
                 if(text.toLowerCase().includes('tea')) responseText = "Ceylon Tea & Spices belong to Class 30 of the Nice Classification system.";
-                if(text.toLowerCase().includes('pdf') || text.toLowerCase().includes('file')) responseText = "You can attach any class PDF document (such as 1.pdf up to 45.pdf) directly under Step 3 of the Goods list section.";
+                if(text.toLowerCase().includes('pdf') || text.toLowerCase().includes('file')) responseText = "You can attach any class PDF document directly under Step 3 of the Goods list section.";
                 
                 aiDiv.innerText = responseText;
                 box.appendChild(aiDiv);
