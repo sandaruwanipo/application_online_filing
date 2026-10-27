@@ -34,8 +34,8 @@
     <!-- TOP BAR -->
     <div class="bg-nipo-navy text-slate-300 text-xs py-2 px-4 border-b border-slate-700">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <span><i class="fa-solid fa-building-columns mr-1.5 text-amber-400"></i> Democratic Socialist Republic of Sri Lanka[cite: 4]</span>
-            <span>NIPO Secure e-Filing Gateway[cite: 4]</span>
+            <span><i class="fa-solid fa-building-columns mr-1.5 text-amber-400"></i> Democratic Socialist Republic of Sri Lanka</span>
+            <span>NIPO Secure e-Filing Gateway</span>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
                     <i class="fa-solid fa-user-plus"></i>
                 </div>
                 <h1 class="text-xl font-bold text-nipo-deepBlue">Create NIPO Account</h1>
-                <p class="text-xs text-slate-500">Register a secure e-Filing account to submit Form M-1[cite: 4].</p>
+                <p class="text-xs text-slate-500">Register a secure e-Filing account to submit Form M-1.</p>
             </div>
 
             <!-- REGISTRATION FORM -->
@@ -57,7 +57,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold text-slate-700 uppercase mb-1">Full Name *</label>
-                        <input type="text" id="regName" placeholder="e.g. Kusal Perera[cite: 4]" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none transition" required>
+                        <input type="text" id="regName" placeholder="e.g. Kusal Perera" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none transition" required>
                     </div>
                     <div>
                         <label class="block font-bold text-slate-700 uppercase mb-1">Username *</label>
@@ -69,13 +69,13 @@
                 <div>
                     <label class="block font-bold text-slate-700 uppercase mb-1">Email Address (Non-Temporary) *</label>
                     <div class="flex gap-2">
-                        <input type="email" id="regEmail" placeholder="e.g. kusal@example.lk[cite: 4]" class="flex-grow px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none transition" required>
+                        <input type="email" id="regEmail" placeholder="e.g. kusal@example.lk" class="flex-grow px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none transition" required>
                         <button type="button" onclick="sendEmailOtp()" id="btnEmailOtp" class="px-3 py-2 bg-slate-800 text-white rounded-lg font-bold hover:bg-slate-900 transition whitespace-nowrap">Verify Email</button>
                     </div>
                     <p id="emailStatus" class="text-[10px] text-slate-400 mt-1">Must be a permanent valid email address.</p>
                 </div>
 
-                <!-- Email OTP Input Box (Hidden initially) -->
+                <!-- Email OTP Input Box -->
                 <div id="emailOtpContainer" class="hidden p-3 bg-slate-50 rounded-lg border border-slate-200 flex gap-2 items-center">
                     <input type="text" id="emailOtpInput" placeholder="Enter 6-digit email OTP" class="flex-grow px-3 py-1.5 rounded border border-slate-300 text-xs">
                     <button type="button" onclick="verifyEmailOtp()" class="px-3 py-1.5 bg-emerald-600 text-white rounded font-bold">Confirm</button>
@@ -91,7 +91,7 @@
                     <p id="mobileStatus" class="text-[10px] text-slate-400 mt-1">SMS verification required.</p>
                 </div>
 
-                <!-- Mobile OTP Input Box (Hidden initially) -->
+                <!-- Mobile OTP Input Box -->
                 <div id="mobileOtpContainer" class="hidden p-3 bg-slate-50 rounded-lg border border-slate-200 flex gap-2 items-center">
                     <input type="text" id="mobileOtpInput" placeholder="Enter 6-digit SMS OTP" class="flex-grow px-3 py-1.5 rounded border border-slate-300 text-xs">
                     <button type="button" onclick="verifyMobileOtp()" class="px-3 py-1.5 bg-emerald-600 text-white rounded font-bold">Confirm</button>
@@ -134,8 +134,8 @@
 
             <div class="text-center pt-2 border-t border-slate-100">
                 <p class="text-xs text-slate-600">
-                    Already have an account?[cite: 4]
-                    <a href="login.html" class="text-nipo-deepBlue font-bold hover:underline">Sign In[cite: 4]</a>
+                    Already have an account? 
+                    <a href="login.html" class="text-nipo-deepBlue font-bold hover:underline">Sign In</a>
                 </p>
             </div>
         </div>
@@ -143,14 +143,12 @@
 
     <!-- FOOTER -->
     <footer class="bg-nipo-navy text-slate-400 text-center py-4 text-xs border-t border-slate-800">
-        National Intellectual Property Office of Sri Lanka &copy; 2026[cite: 4]
+        National Intellectual Property Office of Sri Lanka &copy; 2026
     </footer>
 
     <script>
         let isEmailVerified = false;
         let isMobileVerified = false;
-
-        // Temporary / Disposable email blacklist check
         const disposableDomains = ['mailinator.com', '10minutemail.com', 'tempmail.com', 'guerrillamail.com', 'yopmail.com', 'throwawaymail.com'];
 
         function sendEmailOtp() {
@@ -238,7 +236,6 @@
                 return;
             }
 
-            // Save user session securely and redirect to application page[cite: 4]
             const userData = { 
                 name, 
                 username, 
@@ -250,8 +247,8 @@
             };
             localStorage.setItem('nipo_active_user', JSON.stringify(userData));
             
-            alert(`Account successfully created for ${name}! Redirecting to e-Filing portal[cite: 4].`);
-            window.location.href = 'index.html';[cite: 4]
+            alert(`Account successfully created for ${name}! Redirecting to e-Filing portal.`);
+            window.location.href = 'index.html';
         }
     </script>
 </body>
