@@ -19,76 +19,239 @@
             }
         }
     </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+    </style>
 </head>
 <body class="bg-nipo-bg font-sans min-h-screen flex flex-col justify-between antialiased">
 
+    <!-- TOP BAR -->
     <div class="bg-nipo-navy text-slate-300 text-xs py-2 px-4 border-b border-slate-700">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <span><i class="fa-solid fa-building-columns mr-1.5 text-amber-400"></i> Democratic Socialist Republic of Sri Lanka</span>
-            <span>NIPO Secure e-Filing Gateway</span>
+            <span><i class="fa-solid fa-building-columns mr-1.5 text-amber-400"></i> Democratic Socialist Republic of Sri Lanka[cite: 4]</span>
+            <span>NIPO Secure e-Filing Gateway[cite: 4]</span>
         </div>
     </div>
 
-    <main class="flex-grow flex items-center justify-center px-4 py-12">
-        <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 max-w-md w-full space-y-6">
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow flex items-center justify-center px-4 py-10">
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 max-w-lg w-full space-y-6 animate-fade-in">
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl font-bold mx-auto shadow-md border-2 border-emerald-500">
                     <i class="fa-solid fa-user-plus"></i>
                 </div>
                 <h1 class="text-xl font-bold text-nipo-deepBlue">Create NIPO Account</h1>
-                <p class="text-xs text-slate-500">Register a secure e-Filing account to submit Form M-1.</p>
+                <p class="text-xs text-slate-500">Register a secure e-Filing account to submit Form M-1[cite: 4].</p>
             </div>
 
             <!-- REGISTRATION FORM -->
-            <form onsubmit="handleRegister(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Full Name *</label>
-                    <input type="text" id="regName" placeholder="e.g. Kusal Janith Perera" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-600" required>
+            <form onsubmit="handleRegister(event)" class="space-y-4 text-xs">
+                
+                <!-- Full Name / Username -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 uppercase mb-1">Full Name *</label>
+                        <input type="text" id="regName" placeholder="e.g. Kusal Perera[cite: 4]" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none transition" required>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 uppercase mb-1">Username *</label>
+                        <input type="text" id="regUsername" placeholder="e.g. kusal_p" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none transition" required>
+                    </div>
                 </div>
+
+                <!-- Email & OTP Verification -->
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email Address *</label>
-                    <input type="email" id="regEmail" placeholder="e.g. kusal@example.lk" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-600" required>
+                    <label class="block font-bold text-slate-700 uppercase mb-1">Email Address (Non-Temporary) *</label>
+                    <div class="flex gap-2">
+                        <input type="email" id="regEmail" placeholder="e.g. kusal@example.lk[cite: 4]" class="flex-grow px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none transition" required>
+                        <button type="button" onclick="sendEmailOtp()" id="btnEmailOtp" class="px-3 py-2 bg-slate-800 text-white rounded-lg font-bold hover:bg-slate-900 transition whitespace-nowrap">Verify Email</button>
+                    </div>
+                    <p id="emailStatus" class="text-[10px] text-slate-400 mt-1">Must be a permanent valid email address.</p>
                 </div>
+
+                <!-- Email OTP Input Box (Hidden initially) -->
+                <div id="emailOtpContainer" class="hidden p-3 bg-slate-50 rounded-lg border border-slate-200 flex gap-2 items-center">
+                    <input type="text" id="emailOtpInput" placeholder="Enter 6-digit email OTP" class="flex-grow px-3 py-1.5 rounded border border-slate-300 text-xs">
+                    <button type="button" onclick="verifyEmailOtp()" class="px-3 py-1.5 bg-emerald-600 text-white rounded font-bold">Confirm</button>
+                </div>
+
+                <!-- Mobile Number & OTP Verification -->
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Create Password *</label>
-                    <input type="password" id="regPassword" placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-600" required>
+                    <label class="block font-bold text-slate-700 uppercase mb-1">Mobile Number *</label>
+                    <div class="flex gap-2">
+                        <input type="tel" id="regMobile" placeholder="e.g. +94 712345678" class="flex-grow px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none transition" required>
+                        <button type="button" onclick="sendMobileOtp()" id="btnMobileOtp" class="px-3 py-2 bg-slate-800 text-white rounded-lg font-bold hover:bg-slate-900 transition whitespace-nowrap">Verify Mobile</button>
+                    </div>
+                    <p id="mobileStatus" class="text-[10px] text-slate-400 mt-1">SMS verification required.</p>
                 </div>
-                <button type="submit" class="w-full py-3 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 transition shadow-md">
-                    Register & Continue to Portal
+
+                <!-- Mobile OTP Input Box (Hidden initially) -->
+                <div id="mobileOtpContainer" class="hidden p-3 bg-slate-50 rounded-lg border border-slate-200 flex gap-2 items-center">
+                    <input type="text" id="mobileOtpInput" placeholder="Enter 6-digit SMS OTP" class="flex-grow px-3 py-1.5 rounded border border-slate-300 text-xs">
+                    <button type="button" onclick="verifyMobileOtp()" class="px-3 py-1.5 bg-emerald-600 text-white rounded font-bold">Confirm</button>
+                </div>
+
+                <!-- ID / Passport Number -->
+                <div>
+                    <label class="block font-bold text-slate-700 uppercase mb-1">NIC / Passport Number *</label>
+                    <input type="text" id="regIdNo" placeholder="e.g. 19902340012V or N1234567" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none transition" required>
+                </div>
+
+                <!-- Passwords -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-700 uppercase mb-1">Password *</label>
+                        <input type="password" id="regPassword" placeholder="••••••••" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none transition" required>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-700 uppercase mb-1">Retype Password *</label>
+                        <input type="password" id="regConfirmPassword" placeholder="••••••••" class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-600 outline-none transition" required>
+                    </div>
+                </div>
+
+                <!-- Security Options -->
+                <div class="p-3 bg-amber-50/60 rounded-xl border border-amber-200 space-y-2">
+                    <label class="flex items-center gap-2 cursor-pointer font-semibold text-amber-900">
+                        <input type="checkbox" id="enableGAuth" class="w-4 h-4 text-amber-600 rounded">
+                        <span>Enable Google Authenticator Protection <span class="text-[10px] font-normal text-amber-700">(Recommended)</span></span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer font-semibold text-slate-800">
+                        <input type="checkbox" id="enableFingerprint" class="w-4 h-4 text-nipo-deepBlue rounded">
+                        <span>Enable Fingerprint Login <span class="text-[10px] font-normal text-slate-500">(Only for mobile device applicants)</span></span>
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 transition shadow-md mt-2">
+                    Complete Registration & Continue
                 </button>
             </form>
 
             <div class="text-center pt-2 border-t border-slate-100">
                 <p class="text-xs text-slate-600">
-                    Already have an account? 
-                    <a href="login.html" class="text-nipo-deepBlue font-bold hover:underline">Sign In</a>
+                    Already have an account?[cite: 4]
+                    <a href="login.html" class="text-nipo-deepBlue font-bold hover:underline">Sign In[cite: 4]</a>
                 </p>
             </div>
         </div>
     </main>
 
+    <!-- FOOTER -->
     <footer class="bg-nipo-navy text-slate-400 text-center py-4 text-xs border-t border-slate-800">
-        National Intellectual Property Office of Sri Lanka &copy; 2026
+        National Intellectual Property Office of Sri Lanka &copy; 2026[cite: 4]
     </footer>
 
     <script>
+        let isEmailVerified = false;
+        let isMobileVerified = false;
+
+        // Temporary / Disposable email blacklist check
+        const disposableDomains = ['mailinator.com', '10minutemail.com', 'tempmail.com', 'guerrillamail.com', 'yopmail.com', 'throwawaymail.com'];
+
+        function sendEmailOtp() {
+            const email = document.getElementById('regEmail').value.trim();
+            if (!email || !email.includes('@')) {
+                alert("Please enter a valid email address first.");
+                return;
+            }
+            const domain = email.split('@')[1].toLowerCase();
+            if (disposableDomains.includes(domain)) {
+                alert("Temporary or disposable email addresses are not permitted. Please use a valid personal or business email.");
+                return;
+            }
+            document.getElementById('emailOtpContainer').classList.remove('hidden');
+            alert(`[Simulation] OTP sent to ${email}. Use code: 123456`);
+        }
+
+        function verifyEmailOtp() {
+            const code = document.getElementById('emailOtpInput').value.trim();
+            if (code === '123456') {
+                isEmailVerified = true;
+                document.getElementById('emailOtpContainer').classList.add('hidden');
+                document.getElementById('btnEmailOtp').innerText = "Verified ✓";
+                document.getElementById('btnEmailOtp').className = "px-3 py-2 bg-emerald-600 text-white rounded-lg font-bold cursor-default";
+                document.getElementById('emailStatus').innerText = "Email successfully verified.";
+                document.getElementById('emailStatus').className = "text-[10px] text-emerald-600 font-bold mt-1";
+            } else {
+                alert("Invalid OTP code. Try '123456'.");
+            }
+        }
+
+        function sendMobileOtp() {
+            const mobile = document.getElementById('regMobile').value.trim();
+            if (!mobile || mobile.length < 9) {
+                alert("Please enter a valid mobile number.");
+                return;
+            }
+            document.getElementById('mobileOtpContainer').classList.remove('hidden');
+            alert(`[Simulation] SMS OTP sent to ${mobile}. Use code: 654321`);
+        }
+
+        function verifyMobileOtp() {
+            const code = document.getElementById('mobileOtpInput').value.trim();
+            if (code === '654321') {
+                isMobileVerified = true;
+                document.getElementById('mobileOtpContainer').classList.add('hidden');
+                document.getElementById('btnMobileOtp').innerText = "Verified ✓";
+                document.getElementById('btnMobileOtp').className = "px-3 py-2 bg-emerald-600 text-white rounded-lg font-bold cursor-default";
+                document.getElementById('mobileStatus').innerText = "Mobile number successfully verified.";
+                document.getElementById('mobileStatus').className = "text-[10px] text-emerald-600 font-bold mt-1";
+            } else {
+                alert("Invalid SMS OTP code. Try '654321'.");
+            }
+        }
+
         function handleRegister(event) {
             event.preventDefault();
             const name = document.getElementById('regName').value.trim();
+            const username = document.getElementById('regUsername').value.trim();
             const email = document.getElementById('regEmail').value.trim();
+            const mobile = document.getElementById('regMobile').value.trim();
+            const idNo = document.getElementById('regIdNo').value.trim();
             const password = document.getElementById('regPassword').value.trim();
+            const confirmPassword = document.getElementById('regConfirmPassword').value.trim();
+            const enableGAuth = document.getElementById('enableGAuth').checked;
+            const enableFingerprint = document.getElementById('enableFingerprint').checked;
 
-            if (!name || !email || !password) {
-                alert("Please fill in all registration fields.");
+            if (!name || !username || !email || !mobile || !idNo || !password) {
+                alert("Please fill in all required registration fields.");
                 return;
             }
 
-            // Save user session securely and redirect to application page
-            const userData = { name, email };
+            if (password !== confirmPassword) {
+                alert("Passwords do not match. Please retype correctly.");
+                return;
+            }
+
+            if (!isEmailVerified) {
+                alert("Please verify your email address via OTP before registering.");
+                return;
+            }
+
+            if (!isMobileVerified) {
+                alert("Please verify your mobile number via OTP before registering.");
+                return;
+            }
+
+            // Save user session securely and redirect to application page[cite: 4]
+            const userData = { 
+                name, 
+                username, 
+                email, 
+                mobile, 
+                idNo, 
+                gAuthEnabled: enableGAuth, 
+                fingerprintEnabled: enableFingerprint 
+            };
             localStorage.setItem('nipo_active_user', JSON.stringify(userData));
             
-            alert(`Account successfully created for ${name}! Redirecting to e-Filing portal.`);
-            window.location.href = 'index.html';
+            alert(`Account successfully created for ${name}! Redirecting to e-Filing portal[cite: 4].`);
+            window.location.href = 'index.html';[cite: 4]
         }
     </script>
 </body>
