@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Intellectual Property Office - Sri Lanka | Secure Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Noto Serif -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nipo: {
+                            navy: '#0d1b2a',
+                            deepBlue: '#1a2b4c',
+                            blue: '#203a43',
+                            gold: '#d4af37',
+                            goldHover: '#b89628',
+                            goldLight: '#fbf7e8',
+                            bg: '#f4f6f9'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Noto Serif', 'serif']
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.4s ease-out forwards',
+                        'slide-up': 'slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .official-doc {
+            font-family: 'Noto Serif', serif;
+            color: #111;
+            background-color: #ffffff;
+        }
+        .official-border {
+            border: 2px solid #1a2b4c;
+        }
+        .official-header-border {
+            border-bottom: 2px solid #d4af37;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #modalFormDoc, #modalFormDoc * {
+                visibility: visible;
+            }
+            #modalFormDoc {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-nipo-bg font-sans min-h-screen text-slate-800 flex flex-col antialiased selection:bg-nipo-gold selection:text-nipo-navy">
+
+    <!-- TOP GOVT BAR -->
+    <div class="bg-nipo-navy text-slate-300 text-xs py-1.5 px-4 border-b border-slate-700/55">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="inline-flex items-center text-amber-400 font-medium">
+                    <i class="fa-solid fa-building-columns mr-1.5"></i> Democratic Socialist Republic of Sri Lanka
+                </span>
+                <span class="hidden md:inline text-slate-500">|</span>
+                <span class="hidden md:inline text-slate-400">Ministry of Commerce & Industry</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="flex space-x-1 text-[11px] bg-slate-800/80 p-0.5 rounded border border-slate-700">
+                    <button class="px-2 py-0.5 rounded bg-nipo-gold text-nipo-navy font-bold">EN</button>
+                    <button class="px-2 py-0.5 rounded hover:text-white transition">SI</button>
+                    <button class="px-2 py-0.5 rounded hover:text-white transition">TA</button>
+                </div>
+                <span class="text-slate-400 text-xs"><i class="fa-solid fa-headset mr-1"></i> Helpline: +94 11 2689368</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <header class="bg-white shadow-md border-b-2 border-nipo-gold sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-full bg-nipo-deepBlue text-nipo-gold flex items-center justify-center text-2xl font-bold shadow-md border-2 border-nipo-gold">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold text-nipo-deepBlue tracking-tight leading-tight">
+                        National Intellectual Property Office
+                    </h1>
+                    <p class="text-xs sm:text-sm font-medium text-slate-500 flex items-center gap-2">
+                        <span>e-Filing Portal</span>
+                        <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span class="text-emerald-700 font-semibold text-xs uppercase tracking-wider">Form M-1 Application System</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- User Status & Navigation (Hidden until authenticated) -->
+            <div id="headerUserNav" class="hidden items-center space-x-3">
+                <div class="flex items-center space-x-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+                    <button id="navTabWizard" onclick="switchMainTab('wizard')" class="px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-nipo-deepBlue text-white shadow-sm">
+                        <i class="fa-solid fa-file-pen"></i> <span class="hidden sm:inline">New Application</span>
+                    </button>
+                    <button id="navTabTracker" onclick="switchMainTab('tracker')" class="px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-200">
+                        <i class="fa-solid fa-magnifying-glass"></i> <span class="hidden sm:inline">Status Tracker</span>
+                    </button>
+                </div>
+                <div class="hidden sm:flex items-center gap-2 pl-3 border-l border-slate-200">
+                    <div class="w-8 h-8 rounded-full bg-nipo-gold/20 text-nipo-deepBlue font-bold flex items-center justify-center text-xs" id="userAvatarInitials">US</div>
+                    <div class="text-left">
+                        <span class="block text-xs font-bold text-slate-800 truncate max-w-[120px]" id="headerUsernameDisplay">User</span>
+                        <button onclick="logoutUser()" class="text-[10px] text-red-600 hover:underline font-semibold">Sign Out</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24">
+
+        <!-- ========================================== -->
+        <!-- VIEW 0: AUTHENTICATION & REGISTRATION PORTAL -->
+        <!-- ========================================== -->
+        <div id="viewAuth" class="max-w-xl mx-auto animate-fade-in py-6">
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-200/80 overflow-hidden backdrop-blur-md">
+                
+                <!-- Auth Header Tabs -->
+                <div class="grid grid-cols-2 bg-slate-100 p-1.5 border-b border-slate-200 text-xs font-bold">
+                    <button id="authTabLoginBtn" onclick="switchAuthTab('login')" class="py-3 rounded-2xl bg-nipo-deepBlue text-white shadow-md transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-right-to-bracket"></i> Sign In
+                    </button>
+                    <button id="authTabRegisterBtn" onclick="switchAuthTab('register')" class="py-3 rounded-2xl text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-user-plus"></i> Create Account
+                    </button>
+                </div>
+
+                <!-- 1. LOGIN FORM -->
+                <div id="authLoginForm" class="p-8 space-y-6 animate-slide-up">
+                    <div class="text-center space-y-1">
+                        <h2 class="text-xl font-bold text-nipo-deepBlue">Welcome Back</h2>
+                        <p class="text-xs text-slate-500">Sign in to access your NIPO trademark portfolio</p>
+                    </div>
+
+                    <!-- Google Sign In Button -->
+                    <button type="button" onclick="handleGoogleAuth()" class="w-full py-3 px-4 border border-slate-300 rounded-xl bg-white hover:bg-slate-50 font-semibold text-xs text-slate-700 flex items-center justify-center gap-3 shadow-sm transition">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-4 h-4" alt="Google">
+                        <span>Continue with Google</span>
+                    </button>
+
+                    <div class="flex items-center my-4">
+                        <div class="flex-grow border-t border-slate-200"></div>
+                        <span class="px-3 text-[11px] text-slate-400 uppercase font-semibold">Or with username / email</span>
+                        <div class="flex-grow border-t border-slate-200"></div>
+                    </div>
+
+                    <form onsubmit="handleLoginSubmit(event);" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Username or Email *</label>
+                            <input type="text" id="loginIdentifier" placeholder="e.g. kusal_perera or kusal@example.lk" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-nipo-deepBlue" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password *</label>
+                            <input type="password" id="loginPassword" placeholder="••••••••••••" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-nipo-deepBlue" required>
+                        </div>
+
+                        <!-- Optional 2FA Code Input (Hidden by default unless triggered) -->
+                        <div id="login2faContainer" class="hidden space-y-2 p-4 bg-purple-50 rounded-xl border border-purple-200 animate-fade-in">
+                            <label class="block text-xs font-bold text-purple-900 uppercase">Google Authenticator / 2FA Code *</label>
+                            <input type="text" id="login2faCode" placeholder="Enter 6-digit code (e.g. 482910)" maxlength="6" class="w-full px-4 py-2.5 rounded-lg border border-purple-300 text-sm text-center font-mono tracking-widest bg-white">
+                        </div>
+
+                        <div class="flex items-center justify-between text-xs pt-1">
+                            <label class="flex items-center gap-2 cursor-pointer text-slate-600">
+                                <input type="checkbox" id="rememberMe" class="w-4 h-4 text-nipo-deepBlue rounded">
+                                <span>Remember this device</span>
+                            </label>
+                            <a href="#" onclick="alert('Password reset instructions sent to registered email.'); return false;" class="text-nipo-deepBlue font-bold hover:underline">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 bg-nipo-deepBlue hover:bg-slate-900 text-white rounded-xl font-bold text-xs shadow-lg transition flex items-center justify-center gap-2">
+                            <span>Secure Sign In</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+
+                    <!-- Biometric / Fingerprint Login Button for Mobile Users -->
+                    <div class="pt-2 border-t border-slate-100 text-center">
+                        <button type="button" onclick="handleBiometricLogin()" class="w-full py-3 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-fingerprint text-amber-600 text-base"></i>
+                            <span>Quick Biometric / Fingerprint Login (TouchID)</span>
+                        </button>
+                        <span class="text-[10px] text-slate-400 mt-1.5 block">Available for registered mobile users (requires monthly login validation).</span>
+                    </div>
+                </div>
+
+                <!-- 2. REGISTRATION FORM -->
+                <div id="authRegisterForm" class="hidden p-8 space-y-6 animate-slide-up">
+                    <div class="text-center space-y-1">
+                        <h2 class="text-xl font-bold text-nipo-deepBlue">Create NIPO Account</h2>
+                        <p class="text-xs text-slate-500">Register to file and manage official Sri Lanka trademarks</p>
+                    </div>
+
+                    <!-- Google Sign Up Button -->
+                    <button type="button" onclick="handleGoogleAuth()" class="w-full py-3 px-4 border border-slate-300 rounded-xl bg-white hover:bg-slate-50 font-semibold text-xs text-slate-700 flex items-center justify-center gap-3 shadow-sm transition">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-4 h-4" alt="Google">
+                        <span>Sign up with Google</span>
+                    </button>
+
+                    <div class="flex items-center my-4">
+                        <div class="flex-grow border-t border-slate-200"></div>
+                        <span class="px-3 text-[11px] text-slate-400 uppercase font-semibold">Or register manually</span>
+                        <div class="flex-grow border-t border-slate-200"></div>
+                    </div>
+
+                    <form onsubmit="handleRegisterSubmit(event);" class="space-y-4">
+                        
+                        <!-- Username with Live Availability Check -->
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="block text-xs font-bold text-slate-700 uppercase">Username *</label>
+                                <span id="usernameAvailabilityStatus" class="text-[11px] font-semibold text-slate-400">Type username...</span>
+                            </div>
+                            <input type="text" id="regUsername" oninput="checkUsernameAvailability()" placeholder="e.g. kusal_perera" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-nipo-deepBlue" required>
+                        </div>
+
+                        <!-- Email with Temporary Mail Check & OTP Verification -->
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email Address *</label>
+                            <div class="flex gap-2">
+                                <input type="email" id="regEmail" oninput="validateEmailDomain()" placeholder="e.g. kusal@example.lk" class="flex-grow px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-nipo-deepBlue" required>
+                                <button type="button" onclick="sendEmailOtp()" id="btnSendEmailOtp" class="px-4 bg-nipo-deepBlue text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">Verify Email</button>
+                            </div>
+                            <span id="emailValidationMsg" class="text-[11px] block text-slate-500">Enter a valid non-disposable email address.</span>
+
+                            <!-- Email OTP Verification Box (Hidden initially) -->
+                            <div id="emailOtpBox" class="hidden p-3 bg-blue-50 rounded-xl border border-blue-200 flex gap-2 items-center">
+                                <input type="text" id="emailOtpInput" placeholder="Enter 6-digit email OTP" maxlength="6" class="flex-grow px-3 py-2 rounded-lg border border-blue-300 text-xs font-mono bg-white">
+                                <button type="button" onclick="verifyEmailOtp()" class="px-3 py-2 bg-blue-700 text-white font-bold text-xs rounded-lg">Confirm</button>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Number with OTP Verification -->
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Mobile Number (SMS OTP) *</label>
+                            <div class="flex gap-2">
+                                <input type="tel" id="regMobile" placeholder="e.g. +94 71 234 5678" class="flex-grow px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-nipo-deepBlue" required>
+                                <button type="button" onclick="sendMobileOtp()" class="px-4 bg-amber-600 text-white font-bold text-xs rounded-xl hover:bg-amber-700 transition">Send SMS OTP</button>
+                            </div>
+
+                            <!-- Mobile OTP Input Box (Hidden initially) -->
+                            <div id="mobileOtpBox" class="hidden p-3 bg-amber-50 rounded-xl border border-amber-200 flex gap-2 items-center">
+                                <input type="text" id="mobileOtpInput" placeholder="Enter 6-digit SMS OTP" maxlength="6" class="flex-grow px-3 py-2 rounded-lg border border-amber-300 text-xs font-mono bg-white">
+                                <button type="button" onclick="verifyMobileOtp()" class="px-3 py-2 bg-amber-700 text-white font-bold text-xs rounded-lg">Verify SMS</button>
+                            </div>
+                        </div>
+
+                        <!-- ID or Business Reg No & Address -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">NIC / Business Reg No. *</label>
+                                <input type="text" id="regIdNo" placeholder="19882390012V / PV123" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Postal Address *</label>
+                                <input type="text" id="regAddress" placeholder="Colombo 03, Sri Lanka" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm" required>
+                            </div>
+                        </div>
+
+                        <!-- Passwords -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password *</label>
+                                <input type="password" id="regPassword" placeholder="••••••••••••" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Re-enter Password *</label>
+                                <input type="password" id="regConfirmPassword" placeholder="••••••••••••" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm" required>
+                            </div>
+                        </div>
+
+                        <!-- Tick box before sign up -->
+                        <div class="pt-2">
+                            <label class="flex items-start gap-2.5 cursor-pointer text-xs text-slate-700">
+                                <input type="checkbox" id="regTermsCheck" class="mt-0.5 w-4 h-4 text-nipo-deepBlue rounded" required>
+                                <span>I agree to the <strong class="text-nipo-deepBlue">NIPO Terms of Service</strong>, privacy policy, and certify that all provided details are legally accurate under IP Act No. 36 of 2003.</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs shadow-lg transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-user-check"></i> <span>Complete Registration & Continue</span>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ========================================== -->
+        <!-- VIEW 1: TRADEMARK WIZARD APPLICATION (Hidden until Auth) -->
+        <!-- ========================================== -->
+        <div id="viewWizard" class="hidden space-y-6 animate-fade-in">
+            
+            <!-- TOP BANNER -->
+            <div class="bg-gradient-to-r from-nipo-deepBlue via-slate-800 to-nipo-navy rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-white pointer-events-none">
+                    <i class="fa-solid fa-certificate text-[220px]"></i>
+                </div>
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <span class="inline-block bg-nipo-gold/20 text-nipo-gold border border-nipo-gold/40 text-xs px-2.5 py-1 rounded-full font-semibold uppercase tracking-wider mb-2">
+                            Intellectual Property Act No. 36 of 2003
+                        </span>
+                        <h2 class="text-2xl font-bold">Application for Registration of a Mark (Form M-1)</h2>
+                        <p class="text-slate-300 text-sm mt-1 max-w-2xl">
+                            Fill in all required fields to draft your official trademark application. Use the floating <strong class="text-nipo-gold">Live Form M-1 Preview</strong> button at any time to inspect your generated document.
+                        </p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/15 min-w-[220px] text-right">
+                        <span class="text-xs text-slate-300 block uppercase font-medium">Estimated Application Fee</span>
+                        <span id="headerFeeDisplay" class="text-2xl font-extrabold text-amber-300">LKR 2,380</span>
+                        <span class="text-[11px] text-slate-300 block mt-0.5" id="headerFeeBreakdown">Includes 1 Class + Filing Fees</span>
+                    </div>
+                </div>
+
+                <!-- PROGRESS STEP INDICATOR -->
+                <div class="mt-8 pt-6 border-t border-white/10">
+                    <div class="grid grid-cols-5 gap-2 text-center text-xs font-medium">
+                        <div id="stepTab1" onclick="jumpToStep(1)" class="cursor-pointer space-y-1.5 transition text-amber-400">
+                            <div class="w-8 h-8 rounded-full bg-nipo-gold text-nipo-navy flex items-center justify-center font-bold mx-auto shadow-md">1</div>
+                            <div class="truncate">Applicant Info</div>
+                        </div>
+                        <div id="stepTab2" onclick="jumpToStep(2)" class="cursor-pointer space-y-1.5 transition text-slate-400">
+                            <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold mx-auto">2</div>
+                            <div class="truncate">Mark Details</div>
+                        </div>
+                        <div id="stepTab3" onclick="jumpToStep(3)" class="cursor-pointer space-y-1.5 transition text-slate-400">
+                            <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold mx-auto">3</div>
+                            <div class="truncate">Nice Class & Goods</div>
+                        </div>
+                        <div id="stepTab4" onclick="jumpToStep(4)" class="cursor-pointer space-y-1.5 transition text-slate-400">
+                            <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold mx-auto">4</div>
+                            <div class="truncate">Priority Claim</div>
+                        </div>
+                        <div id="stepTab5" onclick="jumpToStep(5)" class="cursor-pointer space-y-1.5 transition text-slate-400">
+                            <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold mx-auto">5</div>
+                            <div class="truncate">Review & Sign</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORM WIZARD CONTAINER -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 relative">
+                
+                <form id="trademarkForm" onsubmit="event.preventDefault();">
+                    
+                    <!-- STEP 1: APPLICANT DETAILS -->
+                    <div id="step1" class="wizard-step space-y-6">
+                        <div class="border-b border-slate-100 pb-4">
+                            <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">1</span>
+                                Applicant Identity & Capacity
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1">Select applicant type and provide legal details for registration.</p>
+                        </div>
+
+                        <!-- Category Selection -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <label class="relative flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer hover:bg-slate-50 transition border-nipo-deepBlue bg-blue-50/30" id="catLabelIndividual">
+                                <input type="radio" name="applicantCategory" value="Individual" checked onchange="handleCategoryChange()" class="sr-only">
+                                <i class="fa-solid fa-user text-xl text-nipo-deepBlue mb-2"></i>
+                                <span class="text-xs font-bold text-center">1. Individual</span>
+                            </label>
+                            <label class="relative flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer hover:bg-slate-50 transition border-slate-200" id="catLabelCompany">
+                                <input type="radio" name="applicantCategory" value="Company" onchange="handleCategoryChange()" class="sr-only">
+                                <i class="fa-solid fa-building text-xl text-slate-600 mb-2"></i>
+                                <span class="text-xs font-bold text-center">2. Company</span>
+                            </label>
+                            <label class="relative flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer hover:bg-slate-50 transition border-slate-200" id="catLabelPartnership">
+                                <input type="radio" name="applicantCategory" value="Partnership" onchange="handleCategoryChange()" class="sr-only">
+                                <i class="fa-solid fa-users text-xl text-slate-600 mb-2"></i>
+                                <span class="text-xs font-bold text-center">3. Partnership</span>
+                            </label>
+                            <label class="relative flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer hover:bg-slate-50 transition border-slate-200" id="catLabelSoleProp">
+                                <input type="radio" name="applicantCategory" value="SoleProprietorship" onchange="handleCategoryChange()" class="sr-only">
+                                <i class="fa-solid fa-store text-xl text-slate-600 mb-2"></i>
+                                <span class="text-xs font-bold text-center">4. Proprietorship</span>
+                            </label>
+                        </div>
+
+                        <!-- Dynamic Applicant Inputs -->
+                        <div class="space-y-4 pt-2">
+                            
+                            <!-- INDIVIDUAL OR COMPANY SINGLE INPUT -->
+                            <div id="singleApplicantContainer" class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1" id="lblApplicantName">Full Name of Applicant *</label>
+                                    <input type="text" id="applicantFullName" placeholder="e.g. Kusal Janith Perera" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nipo-deepBlue text-sm transition">
+                                </div>
+                            </div>
+
+                            <!-- SOLE PROPRIETORSHIP DYNAMIC FIELDS -->
+                            <div id="solePropContainer" class="hidden space-y-4 p-4 bg-amber-50/50 rounded-xl border border-amber-200">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-800 uppercase mb-1">Company / Business Name (Trading As) *</label>
+                                    <input type="text" id="solePropBusinessName" placeholder="e.g. Ceylon Royal Tea Traders" oninput="updateSolePropString()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nipo-deepBlue text-sm">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label class="block text-xs font-bold text-slate-800 uppercase">Proprietor Name(s) *</label>
+                                        <button type="button" onclick="addProprietor()" class="text-xs text-nipo-deepBlue font-bold hover:underline"><i class="fa-solid fa-plus-circle"></i> Add Proprietor</button>
+                                    </div>
+                                    <div id="proprietorsList" class="space-y-2">
+                                        <div class="flex gap-2 items-center">
+                                            <input type="text" class="proprietor-input w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm" placeholder="Name 1" oninput="updateSolePropString()">
+                                            <button type="button" onclick="removeDynamicRow(this, updateSolePropString)" class="px-2 py-2 text-red-500 hover:text-red-700 text-xs font-bold"><i class="fa-solid fa-trash-can"></i> Remove</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-slate-600 bg-white p-2.5 rounded border border-amber-200">
+                                    <i class="fa-solid fa-circle-info text-amber-600 mr-1"></i> Resulting Legal Name Output: <strong id="formattedSolePropDisplay" class="text-nipo-deepBlue">--</strong>
+                                </div>
+                            </div>
+
+                            <!-- PARTNERSHIP DYNAMIC FIELDS -->
+                            <div id="partnershipContainer" class="hidden space-y-4 p-4 bg-blue-50/50 rounded-xl border border-blue-200">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-800 uppercase mb-1">Company / Partnership Firm Name (Optional / If any)</label>
+                                    <input type="text" id="partnershipFirmName" placeholder="e.g. Perera & Sons Law Associates" oninput="updatePartnershipString()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nipo-deepBlue text-sm">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label class="block text-xs font-bold text-slate-800 uppercase">Partner Full Names (Compulsory: At least 2 Partners) *</label>
+                                        <button type="button" onclick="addPartner()" class="text-xs text-nipo-deepBlue font-bold hover:underline"><i class="fa-solid fa-plus-circle"></i> Add Partner</button>
+                                    </div>
+                                    <div id="partnersList" class="space-y-2">
+                                        <div class="flex gap-2 items-center">
+                                            <input type="text" class="partner-input w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm" placeholder="Partner 1 Full Name *" oninput="updatePartnershipString()">
+                                            <span class="text-[11px] font-bold text-slate-500 whitespace-nowrap px-2">Compulsory</span>
+                                        </div>
+                                        <div class="flex gap-2 items-center">
+                                            <input type="text" class="partner-input w-full px-3.5 py-2 rounded-lg border border-slate-300 text-sm" placeholder="Partner 2 Full Name *" oninput="updatePartnershipString()">
+                                            <span class="text-[11px] font-bold text-slate-500 whitespace-nowrap px-2">Compulsory</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- COMPULSORY CONTACT DETAILS -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Compulsory Contact Phone Number *</label>
+                                    <input type="tel" id="applicantPhone" placeholder="e.g. +94 71 234 5678" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white" required>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Compulsory Email Address *</label>
+                                    <input type="email" id="applicantEmail" placeholder="e.g. kusal@example.lk" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white" required>
+                                </div>
+                            </div>
+
+                            <!-- Common ID & Nationality Details -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">NIC / Passport / Company Reg No. *</label>
+                                    <input type="text" id="applicantIdNo" placeholder="e.g. 19882390012V / PV12345" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nationality / Country of Incorporation *</label>
+                                    <input type="text" id="applicantNationality" value="Sri Lankan" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm">
+                                </div>
+                            </div>
+
+                            <!-- Address Location Radio & Details -->
+                            <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                <label class="block text-xs font-bold text-slate-700 uppercase">Applicant Address Location *</label>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <label class="inline-flex items-center text-xs font-semibold text-slate-700 cursor-pointer">
+                                        <input type="radio" name="addressLocation" value="SriLanka" checked onchange="toggleOverseasPoa()" class="w-4 h-4 text-nipo-deepBlue">
+                                        <span class="ml-2">Address is inside Sri Lanka</span>
+                                    </label>
+                                    <label class="inline-flex items-center text-xs font-semibold text-slate-700 cursor-pointer">
+                                        <input type="radio" name="addressLocation" value="Overseas" onchange="toggleOverseasPoa()" class="w-4 h-4 text-nipo-deepBlue">
+                                        <span class="ml-2">Address is outside Sri Lanka (Requires Local Service Address)</span>
+                                    </label>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Full Postal Address *</label>
+                                    <textarea id="applicantAddress" rows="2" placeholder="No. 45, Galle Road, Colombo 03, Sri Lanka" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- MANDATORY POWER OF ATTORNEY SECTION IF OVERSEAS -->
+                            <div id="poaSection" class="hidden space-y-4 p-4 bg-amber-50 rounded-xl border border-amber-300">
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-amber-200 pb-2">
+                                    <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
+                                        <i class="fa-solid fa-file-contract text-amber-600"></i> Power of Attorney (Form M-2) & Service Address Details
+                                    </h4>
+                                    <button type="button" onclick="downloadPoaTemplate()" class="px-2.5 py-1 text-xs font-bold bg-amber-700 text-white rounded hover:bg-amber-800 transition flex items-center gap-1">
+                                        <i class="fa-solid fa-file-pdf"></i> Download POA Template PDF
+                                    </button>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Registered Agent / Attorney Name *</label>
+                                        <input type="text" id="agentName" placeholder="e.g. Julius & Creasy IP Attorneys" oninput="updateDocPreview()" class="w-full px-3 py-2 rounded border border-slate-300 text-sm bg-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Agent / Attorney Email *</label>
+                                        <input type="email" id="agentEmail" placeholder="e.g. ip-agent@lawfirm.lk" oninput="updateDocPreview()" class="w-full px-3 py-2 rounded border border-slate-300 text-sm bg-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Agent Phone / Contact Number *</label>
+                                        <input type="text" id="agentPhone" placeholder="e.g. +94 11 2345678" oninput="updateDocPreview()" class="w-full px-3 py-2 rounded border border-slate-300 text-sm bg-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Agent Postal Address in Sri Lanka *</label>
+                                        <input type="text" id="agentAddress" placeholder="e.g. No. 4, Janadhipathi Mawatha, Colombo 01" oninput="updateDocPreview()" class="w-full px-3 py-2 rounded border border-slate-300 text-sm bg-white">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-xs font-bold text-amber-900 uppercase mb-1">Upload Signed Power of Attorney Document *</label>
+                                    <input type="file" id="poaDocUpload" accept=".pdf,image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-700 file:text-white hover:file:bg-amber-800 cursor-pointer">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: MARK DETAILS -->
+                    <div id="step2" class="wizard-step hidden space-y-6">
+                        <div class="border-b border-slate-100 pb-4">
+                            <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">2</span>
+                                Mark Representation & Details
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1">Specify whether your trademark is a Word, Logo, or Combination mark.</p>
+                        </div>
+
+                        <!-- Mark Type Selection -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Mark Category *</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <button type="button" id="btnTypeWord" onclick="setMarkType('Word')" class="py-3 px-4 rounded-xl border-2 font-bold text-xs flex flex-col items-center gap-1.5 border-nipo-deepBlue bg-nipo-deepBlue text-white">
+                                    <i class="fa-solid fa-font text-base"></i> Word Mark
+                                </button>
+                                <button type="button" id="btnTypeDevice" onclick="setMarkType('Device')" class="py-3 px-4 rounded-xl border-2 font-bold text-xs flex flex-col items-center gap-1.5 border-slate-200 hover:border-slate-300 text-slate-700">
+                                    <i class="fa-solid fa-image text-base"></i> Device / Logo
+                                </button>
+                                <button type="button" id="btnTypeCombined" onclick="setMarkType('Combined')" class="py-3 px-4 rounded-xl border-2 font-bold text-xs flex flex-col items-center gap-1.5 border-slate-200 hover:border-slate-300 text-slate-700">
+                                    <i class="fa-solid fa-icons text-base"></i> Combined Mark
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Mark Fields -->
+                        <div class="space-y-4">
+                            
+                            <!-- Text Mark Field -->
+                            <div id="wordMarkFieldContainer">
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Text / Brand Name of Mark *</label>
+                                <input type="text" id="markText" placeholder="e.g. CEYLON HERITAGE" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm font-semibold tracking-wide">
+                            </div>
+
+                            <!-- Logo Upload Container -->
+                            <div id="logoUploadContainer" class="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center hover:border-nipo-deepBlue transition bg-slate-50">
+                                <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-400 mb-2"></i>
+                                <p class="text-xs font-bold text-slate-700">Upload Mark Logo / Image Representation (JPEG or PNG)</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Maximum dimension 8cm x 8cm (High Quality, max 5MB)</p>
+                                <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)" class="mt-3 text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
+                                
+                                <div id="logoPreviewBox" class="hidden mt-4 pt-4 border-t border-slate-200 flex flex-col items-center">
+                                    <span class="text-xs text-slate-500 mb-2">Logo Preview:</span>
+                                    <img id="logoImgPreview" src="" alt="Mark Preview" class="max-h-32 rounded border border-slate-300 p-1 bg-white shadow-sm">
+                                </div>
+                            </div>
+
+                            <!-- Language & Translation Section -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Language of the Mark *</label>
+                                    <select id="markLanguage" onchange="handleLanguageChange()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                                        <option value="English">English</option>
+                                        <option value="Sinhala">Sinhala</option>
+                                        <option value="Tamil">Tamil</option>
+                                        <option value="Other">Other Non-Official Language</option>
+                                    </select>
+                                </div>
+                                <div id="translationField" class="hidden">
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">English Translation / Transliteration *</label>
+                                    <input type="text" id="markTranslationText" placeholder="e.g. English translation/meaning of foreign words" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm">
+                                </div>
+                            </div>
+
+                            <!-- Sworn Translator Upload Section -->
+                            <div id="swornTranslatorNotice" class="hidden p-4 bg-blue-50 border border-blue-200 rounded-xl space-y-3">
+                                <div class="flex items-center gap-2 text-xs font-bold text-blue-900">
+                                    <i class="fa-solid fa-file-certificate text-blue-600 text-sm"></i>
+                                    <span>Sworn Translator Certification Required</span>
+                                </div>
+                                <p class="text-xs text-blue-800 leading-relaxed">
+                                    Since the mark contains foreign script or words in a non-official language, a certified Sworn Translator Approved Translation and Transliteration document must be provided.
+                                </p>
+                                <div>
+                                    <label class="block text-xs font-bold text-blue-900 uppercase mb-1">Upload Sworn Translator Certificate *</label>
+                                    <input type="file" id="swornTranslatorDocUpload" accept=".pdf,image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-700 file:text-white hover:file:bg-blue-800 cursor-pointer">
+                                </div>
+                            </div>
+
+                            <!-- Color Claim -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Color Claim (Optional)</label>
+                                <p class="text-[11px] text-amber-700 font-semibold mb-1">
+                                    <i class="fa-solid fa-circle-info"></i> Notice: Do not mention color codes (e.g. #HEX). Mention colors visible to the human eye (e.g. Royal Blue, Gold, Red).
+                                </p>
+                                <input type="text" id="colorClaim" placeholder="e.g. Royal Blue, Gold, and White" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm">
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: NICE CLASSIFICATION & DYNAMIC mgs.json SEARCH POOL -->
+                    <div id="step3" class="wizard-step hidden space-y-6">
+                        <div class="border-b border-slate-100 pb-4">
+                            <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">3</span>
+                                Nice Classification & Approved Goods / Services Selection
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1">Select 1 Nice Class (1–45) or search keywords to auto-discover matching goods from our official database (<code class="bg-slate-100 px-1 py-0.5 rounded font-mono text-nipo-deepBlue font-bold">mgs.json</code>).</p>
+                        </div>
+
+                        <!-- 1. SELECT SINGLE NICE CLASS NUMBER OR SEARCH BY KEYWORD -->
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <label class="block text-xs font-bold text-slate-700 uppercase">1. Select Nice Class Number (Choose 1 Class) *</label>
+                                <span class="text-[11px] text-nipo-deepBlue font-bold" id="selectedClassDisplayLabel">Active Class: None</span>
+                            </div>
+                            
+                            <div class="relative">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                                <input type="text" id="classSearchInput" onkeyup="filterClassGrid()" placeholder="Filter class numbers (1 to 45) or search titles..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-nipo-deepBlue">
+                            </div>
+
+                            <div id="niceClassGrid" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-9 gap-2 max-h-48 overflow-y-auto custom-scrollbar p-2 border border-slate-200 rounded-xl bg-slate-50">
+                                <!-- Populated dynamically (1 to 45) -->
+                            </div>
+                        </div>
+
+                        <!-- 2. AUTOCOMPLETE GOODS SEARCH FROM mgs.json DATABASE & CHIPS -->
+                        <div class="space-y-4 pt-4 border-t border-slate-200">
+                            <label class="block text-xs font-bold text-slate-700 uppercase">2. Search & Select Goods / Services from mgs.json Pool *</label>
+                            
+                            <div id="goodsSearchContainer" class="relative space-y-3">
+                                <div class="relative">
+                                    <i class="fa-solid fa-search absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                                    <input type="text" id="goodsSearchInput" oninput="filterGoodsDropdown()" placeholder="Type goods/services keywords (e.g. Ceylon tea, spices, software, shoes)..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-nipo-deepBlue bg-white">
+                                </div>
+
+                                <!-- Autocomplete Dropdown List -->
+                                <div id="goodsDropdown" class="hidden absolute z-20 w-full bg-white border border-slate-300 rounded-xl shadow-xl max-h-60 overflow-y-auto custom-scrollbar mt-1">
+                                    <!-- Populated dynamically based on user typing -->
+                                </div>
+
+                                <!-- Selected Goods Chips / Tags Container -->
+                                <div class="space-y-1.5 pt-2">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-[11px] font-bold text-slate-600 uppercase">Selected Approved Goods (<span id="selectedGoodsCount">0</span>):</span>
+                                        <button type="button" onclick="clearSelectedGoods()" class="text-[11px] font-semibold text-slate-400 hover:text-red-600">Clear All Goods</button>
+                                    </div>
+                                    <div id="selectedGoodsChips" class="flex flex-wrap gap-2 p-3 bg-slate-50 border border-slate-200 rounded-xl min-h-[50px] items-center">
+                                        <span class="text-xs text-slate-400 italic" id="noGoodsPlaceholder">No goods selected yet. Choose from the database search above.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. CUSTOM GOODS FIELD WITH MANDATORY FORMALITY CHECK NOTICE -->
+                        <div class="space-y-3 p-4 bg-amber-50/70 rounded-xl border border-amber-300">
+                            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                                <label for="customGoodsInput" class="block text-xs font-bold text-amber-900 uppercase">3. Other Goods / Services (Not listed in mgs.json database)</label>
+                                <!-- PDF Quick Upload -->
+                                <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1 bg-amber-700 hover:bg-amber-800 text-white rounded-lg text-xs font-bold shadow-sm transition">
+                                    <i class="fa-solid fa-file-pdf"></i> Attach Class PDF (1.pdf - 45.pdf)
+                                    <input type="file" id="pdfClassUploader" accept=".pdf,.txt" onchange="handleClassPdfUpload(event)" class="sr-only">
+                                </label>
+                            </div>
+
+                            <textarea id="customGoodsInput" rows="3" placeholder="Describe any custom or specialized terms not found in the standard mgs.json database..." oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs bg-white focus:ring-1 focus:ring-amber-500"></textarea>
+
+                            <div class="flex items-center justify-between gap-2">
+                                <button type="button" onclick="loadStandardWipoClassPdfText()" class="text-[11px] font-bold text-nipo-deepBlue hover:underline flex items-center gap-1">
+                                    <i class="fa-solid fa-file-arrow-down"></i> Auto-populate standard WIPO text for Class <span id="lblActivePdfNum">--</span>
+                                </button>
+                                <button type="button" onclick="clearCustomGoods()" class="text-[11px] font-semibold text-slate-500 hover:text-red-600">
+                                    Clear Custom Terms
+                                </button>
+                            </div>
+                            
+                            <!-- MANDATORY NOTICE REGARDING FORMALITY CHECK TIME -->
+                            <div class="p-3 bg-amber-100/90 rounded border border-amber-300 text-xs text-amber-950 flex items-start gap-2.5">
+                                <i class="fa-solid fa-triangle-exclamation text-amber-700 text-sm mt-0.5"></i>
+                                <div>
+                                    <strong>Important Statutory Notice:</strong> Submitting custom goods or services terms outside the standard approved list takes extra processing time for the formality check during application examination at NIPO.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: PRIORITY CLAIM & UPLOAD -->
+                    <div id="step4" class="wizard-step hidden space-y-6">
+                        <div class="border-b border-slate-100 pb-4">
+                            <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">4</span>
+                                Convention Priority Claim (Paris Convention)
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1">Claim priority from an earlier application filed in a Paris Convention member state.</p>
+                        </div>
+
+                        <div class="flex items-center space-x-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                            <input type="checkbox" id="hasPriorityClaim" onchange="togglePriorityFields()" class="w-4 h-4 text-nipo-deepBlue rounded focus:ring-nipo-deepBlue">
+                            <label for="hasPriorityClaim" class="text-sm font-semibold text-slate-800 cursor-pointer">
+                                I wish to claim Paris Convention Priority from a prior foreign filing
+                            </label>
+                        </div>
+
+                        <div id="priorityFieldsContainer" class="hidden space-y-4 p-5 bg-amber-50/50 rounded-xl border border-amber-200">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Priority Country *</label>
+                                    <input type="text" id="priorityCountry" placeholder="e.g. United Kingdom" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Application No. *</label>
+                                    <input type="text" id="priorityNumber" placeholder="e.g. UK0000392812" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Filing Date *</label>
+                                    <input type="date" id="priorityDate" onchange="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                                </div>
+                            </div>
+
+                            <!-- Priority Document Upload / Deferred Submission Section -->
+                            <div class="pt-3 border-t border-amber-200 space-y-3">
+                                <label class="block text-xs font-bold text-amber-900 uppercase">Certified Priority Document Upload / Submission *</label>
+                                
+                                <div id="priorityUploadBox" class="bg-white p-3.5 rounded-lg border border-amber-300">
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Upload Certified Priority Copy (.pdf, .jpg, .png)</label>
+                                    <input type="file" id="priorityDocUpload" accept=".pdf,image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
+                                </div>
+
+                                <div class="flex items-center space-x-2 pt-1">
+                                    <input type="checkbox" id="prioritySubmitLater" onchange="togglePrioritySubmitLater()" class="w-4 h-4 text-amber-600 rounded focus:ring-amber-500">
+                                    <label for="prioritySubmitLater" class="text-xs font-bold text-amber-900 cursor-pointer">
+                                        I will submit the certified Priority Document later (Within 3 months from filing date)
+                                    </label>
+                                </div>
+
+                                <!-- Statutory Warning Banner when Submit Later is Checked -->
+                                <div id="priorityLaterWarning" class="hidden p-3 bg-amber-100/80 border-l-4 border-amber-600 rounded text-xs text-amber-900 space-y-1">
+                                    <div class="font-bold flex items-center gap-1.5 text-amber-950">
+                                        <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> Statutory Notice under Sri Lanka IP Act No. 36 of 2003
+                                    </div>
+                                    <p class="leading-relaxed">
+                                        You have opted to submit the certified Priority Document later. Pursuant to NIPO regulations, the official certified priority document together with certified English translation must be lodged with the Registrar General within **three (3) months** from this application filing date. Failure to lodge within 3 months will result in forfeiture of priority status.
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- STEP 5: STATUTORY SIGNATURE, ADDITIONAL DOCS & REVIEW -->
+                    <div id="step5" class="wizard-step hidden space-y-6">
+                        <div class="border-b border-slate-100 pb-4">
+                            <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">5</span>
+                                Declaration, Statutory Authentication, Additional Documents & Fee Payment
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1">Provide required statutory signature/seal, attach additional documents, and review fees.</p>
+                        </div>
+
+                        <!-- DYNAMIC CATEGORY SIGNATURE & SEAL REQUIREMENTS (BOTH OPTION A & B AVAILABLE) -->
+                        <div class="p
