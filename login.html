@@ -34,8 +34,8 @@
     <!-- TOP BAR -->
     <div class="bg-nipo-navy text-slate-300 text-xs py-2 px-4 border-b border-slate-700">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <span><i class="fa-solid fa-building-columns mr-1.5 text-amber-400"></i> Democratic Socialist Republic of Sri Lanka[cite: 5]</span>
-            <span>NIPO Secure e-Filing Gateway[cite: 5]</span>
+            <span><i class="fa-solid fa-building-columns mr-1.5 text-amber-400"></i> Democratic Socialist Republic of Sri Lanka</span>
+            <span>NIPO Secure e-Filing Gateway</span>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
                     <i class="fa-solid fa-shield-halved"></i>
                 </div>
                 <h1 class="text-xl font-bold text-nipo-deepBlue">NIPO Portal Sign In</h1>
-                <p class="text-xs text-slate-500">Enter your credentials to access Form M-1 e-Filing[cite: 5].</p>
+                <p class="text-xs text-slate-500">Enter your credentials to access Form M-1 e-Filing.</p>
             </div>
 
             <!-- QUICK TEST LOGIN BUTTON (UNRESTRICTED) -->
@@ -58,7 +58,7 @@
                 </button>
             </div>
 
-            <!-- FINGERPRINT LOGIN BUTTON (MOBILE SIMULATION) -->
+            <!-- FINGERPRINT LOGIN BUTTON -->
             <div class="p-3 bg-blue-50 rounded-xl border border-blue-200 text-center">
                 <button type="button" onclick="loginWithFingerprint()" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition flex items-center justify-center gap-2">
                     <i class="fa-solid fa-fingerprint text-base"></i> Sign In with Fingerprint (Mobile App Simulation)
@@ -82,21 +82,21 @@
                     <input type="password" id="loginPassword" placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nipo-deepBlue outline-none transition" required>
                 </div>
 
-                <!-- Google Authenticator Code Input (Conditional / Optional) -->
+                <!-- Google Authenticator Code Input -->
                 <div id="gAuthCodeContainer" class="hidden">
                     <label class="block font-bold text-purple-900 uppercase mb-1"><i class="fa-solid fa-shield-dog mr-1"></i> Google Authenticator Code *</label>
                     <input type="text" id="gAuthCodeInput" placeholder="Enter 6-digit Authenticator code" class="w-full px-3.5 py-2.5 rounded-lg border border-purple-300 bg-purple-50 focus:ring-2 focus:ring-purple-600 outline-none transition font-mono">
                 </div>
 
                 <button type="submit" class="w-full py-3 bg-nipo-deepBlue text-white rounded-xl font-bold hover:bg-slate-800 transition shadow-md">
-                    Sign In to Portal[cite: 5]
+                    Sign In to Portal
                 </button>
             </form>
 
             <div class="text-center pt-2 border-t border-slate-100">
                 <p class="text-xs text-slate-600">
-                    Don't have an account?[cite: 5]
-                    <a href="register.html" class="text-nipo-deepBlue font-bold hover:underline">Create Account[cite: 5]</a>
+                    Don't have an account? 
+                    <a href="register.html" class="text-nipo-deepBlue font-bold hover:underline">Create Account</a>
                 </p>
             </div>
         </div>
@@ -104,7 +104,7 @@
 
     <!-- FOOTER -->
     <footer class="bg-nipo-navy text-slate-400 text-center py-4 text-xs border-t border-slate-800">
-        National Intellectual Property Office of Sri Lanka &copy; 2026[cite: 5]
+        National Intellectual Property Office of Sri Lanka &copy; 2026
     </footer>
 
     <script>
@@ -118,7 +118,6 @@
                 return;
             }
 
-            // Check if user has GAuth enabled in stored accounts or trigger verification
             const storedUser = localStorage.getItem('nipo_active_user');
             let userName = identifier.split('@')[0];
             
@@ -143,26 +142,24 @@
                 } catch(e) {}
             }
 
-            // Save session and redirect securely to application page[cite: 5]
             const userData = { name: userName, email: identifier };
             localStorage.setItem('nipo_active_user', JSON.stringify(userData));
-            window.location.href = 'index.html';[cite: 5]
+            window.location.href = 'index.html';
         }
 
         function loginWithFingerprint() {
-            // Simulated fingerprint biometric check for mobile applicants
             const confirmed = window.confirm("📱 [Biometric Simulation] Place your finger on the device sensor to authenticate.");
             if (confirmed) {
                 const testUser = { name: 'Mobile Biometric Applicant', email: 'mobile.user@nipo.lk' };
                 localStorage.setItem('nipo_active_user', JSON.stringify(testUser));
-                window.location.href = 'index.html';[cite: 5]
+                window.location.href = 'index.html';
             }
         }
 
         function testLoginNoRestriction() {
             const testUser = { name: 'Test Examiner / Applicant', email: 'test.user@nipo.lk' };
             localStorage.setItem('nipo_active_user', JSON.stringify(testUser));
-            window.location.href = 'index.html';[cite: 5]
+            window.location.href = 'index.html';
         }
     </script>
 </body>
