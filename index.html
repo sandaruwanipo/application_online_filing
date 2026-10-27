@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>National Intellectual Property Office - Sri Lanka | Trademark Portal (Form M-1)</title>
+    
+    <!-- SECURITY GUARD: Redirect to login immediately if not authenticated -->
+    <script>
+        (function() {
+            const activeUser = localStorage.getItem('nipo_active_user');
+            if (!activeUser) {
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -86,7 +97,7 @@
 </head>
 <body class="bg-nipo-bg font-sans min-h-screen text-slate-800 flex flex-col antialiased selection:bg-nipo-gold selection:text-nipo-navy">
 
-    <!-- TOP GOVT BAR -->
+    <!-- TOP GOVT BAR WITH USER SESSION & SIGN OUT -->
     <div class="bg-nipo-navy text-slate-300 text-xs py-1.5 px-4 border-b border-slate-700/50">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -97,12 +108,17 @@
                 <span class="hidden md:inline text-slate-400">Ministry of Commerce & Industry</span>
             </div>
             <div class="flex items-center space-x-4">
-                <div class="flex space-x-1 text-[11px] bg-slate-800/80 p-0.5 rounded border border-slate-700">
+                <div class="hidden sm:flex space-x-1 text-[11px] bg-slate-800/80 p-0.5 rounded border border-slate-700">
                     <button class="px-2 py-0.5 rounded bg-nipo-gold text-nipo-navy font-bold">EN</button>
                     <button class="px-2 py-0.5 rounded hover:text-white transition">SI</button>
                     <button class="px-2 py-0.5 rounded hover:text-white transition">TA</button>
                 </div>
-                <span class="text-slate-400 text-xs"><i class="fa-solid fa-headset mr-1"></i> Helpline: +94 11 2689368</span>
+                <span class="text-slate-300 font-semibold" id="userSessionDisplay">
+                    <i class="fa-solid fa-user-check text-emerald-400 mr-1"></i> Logged in
+                </span>
+                <button onclick="handleLogout()" class="text-red-400 hover:text-red-300 font-bold transition flex items-center gap-1 bg-red-950/40 px-2.5 py-1 rounded border border-red-800/50">
+                    <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                </button>
             </div>
         </div>
     </div>
@@ -723,7 +739,7 @@
                             </div>
                         </div>
 
-                        <!-- 1. ADDITIONAL DOCUMENTS UPLOAD SECTION (REQUEST 1) -->
+                        <!-- 1. ADDITIONAL DOCUMENTS UPLOAD SECTION -->
                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
                             <div class="border-b border-slate-200 pb-2">
                                 <span class="text-xs font-bold text-nipo-deepBlue uppercase tracking-wider block"><i class="fa-solid fa-folder-open mr-1.5 text-amber-600"></i> Additional Documents & Special Submissions</span>
@@ -849,7 +865,7 @@
 
     </main>
 
-    <!-- STACKED CIRCULAR FLOATING BUTTONS FOR MOBILE & EXPANDABLE FOR DESKTOP (REQUEST 2) -->
+    <!-- STACKED CIRCULAR FLOATING BUTTONS FOR MOBILE & EXPANDABLE FOR DESKTOP -->
     <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-2.5 pointer-events-none">
         <!-- Live Form M-1 Preview Button -->
         <button onclick="openDocModal()" class="pointer-events-auto w-12 h-12 sm:w-auto sm:h-auto sm:px-5 sm:py-3 bg-nipo-deepBlue hover:bg-slate-900 text-white rounded-full shadow-2xl hover:scale-105 transition-all flex items-center justify-center sm:justify-start gap-2.5 border-2 border-nipo-gold text-xs font-bold ring-4 ring-slate-900/10" title="Live Form M-1 Preview">
@@ -1048,6 +1064,18 @@
 
         // INITIALIZATION - FETCH mgs.json ON LOAD
         window.onload = async function() {
+            // Load user session details into top bar
+            const activeUser = localStorage.getItem('nipo_active_user');
+            if (activeUser) {
+                try {
+                    const user = JSON.parse(activeUser);
+                    const displayEl = document.getElementById('userSessionDisplay');
+                    if (displayEl) {
+                        displayEl.innerHTML = `<i class="fa-solid fa-user-check text-emerald-400 mr-1"></i> ${user.name || user.email}`;
+                    }
+                } catch(e) { console.error(e); }
+            }
+
             try {
                 const response = await fetch('mgs.json');
                 if (response.ok) {
@@ -1075,6 +1103,12 @@
                 }
             });
         };
+
+        // SIGN OUT FUNCTION
+        function handleLogout() {
+            localStorage.removeItem('nipo_active_user');
+            window.location.href = 'login.html';
+        }
 
         // CANVAS SETUP FOR E-SIGNATURE
         function setupCanvas() {
