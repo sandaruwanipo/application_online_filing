@@ -19,61 +19,84 @@
             }
         }
     </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+    </style>
 </head>
 <body class="bg-nipo-bg font-sans min-h-screen flex flex-col justify-between antialiased">
 
     <!-- TOP BAR -->
     <div class="bg-nipo-navy text-slate-300 text-xs py-2 px-4 border-b border-slate-700">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <span><i class="fa-solid fa-building-columns mr-1.5 text-amber-400"></i> Democratic Socialist Republic of Sri Lanka</span>
-            <span>NIPO Secure e-Filing Gateway</span>
+            <span><i class="fa-solid fa-building-columns mr-1.5 text-amber-400"></i> Democratic Socialist Republic of Sri Lanka[cite: 5]</span>
+            <span>NIPO Secure e-Filing Gateway[cite: 5]</span>
         </div>
     </div>
 
     <!-- LOGIN CARD CONTAINER -->
     <main class="flex-grow flex items-center justify-center px-4 py-12">
-        <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 max-w-md w-full space-y-6">
+        <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 max-w-md w-full space-y-6 animate-fade-in">
             <div class="text-center space-y-2">
                 <div class="w-14 h-14 rounded-full bg-nipo-deepBlue text-nipo-gold flex items-center justify-center text-2xl font-bold mx-auto shadow-md border-2 border-nipo-gold">
                     <i class="fa-solid fa-shield-halved"></i>
                 </div>
                 <h1 class="text-xl font-bold text-nipo-deepBlue">NIPO Portal Sign In</h1>
-                <p class="text-xs text-slate-500">Enter your credentials to access Form M-1 e-Filing.</p>
+                <p class="text-xs text-slate-500">Enter your credentials to access Form M-1 e-Filing[cite: 5].</p>
             </div>
 
-            <!-- QUICK TEST LOGIN BUTTON (NO PASSWORD) -->
+            <!-- QUICK TEST LOGIN BUTTON (UNRESTRICTED) -->
             <div class="p-4 bg-amber-50 rounded-xl border border-amber-300 text-center space-y-2">
-                <span class="text-[11px] font-bold text-amber-900 block uppercase">Instant Evaluation Mode</span>
-                <button type="button" onclick="testLoginNoPassword()" class="w-full py-2.5 px-4 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition shadow-sm flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-bolt"></i> ⚡ Quick Test Login (Without Password)
+                <span class="text-[11px] font-bold text-amber-900 block uppercase">Testing Evaluation Mode</span>
+                <button type="button" onclick="testLoginNoRestriction()" class="w-full py-2.5 px-4 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition shadow-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-bolt"></i> ⚡ Quick Test Login (Without Any Restriction)
+                </button>
+            </div>
+
+            <!-- FINGERPRINT LOGIN BUTTON (MOBILE SIMULATION) -->
+            <div class="p-3 bg-blue-50 rounded-xl border border-blue-200 text-center">
+                <button type="button" onclick="loginWithFingerprint()" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-fingerprint text-base"></i> Sign In with Fingerprint (Mobile App Simulation)
                 </button>
             </div>
 
             <div class="relative flex py-1 items-center">
                 <div class="flex-grow border-t border-slate-200"></div>
-                <span class="flex-shrink mx-4 text-slate-400 text-[11px] uppercase font-semibold">Or Sign In with Email</span>
+                <span class="flex-shrink mx-4 text-slate-400 text-[11px] uppercase font-semibold">Or Sign In with Email / Username</span>
                 <div class="flex-grow border-t border-slate-200"></div>
             </div>
 
             <!-- LOGIN FORM -->
-            <form onsubmit="handleLogin(event)" class="space-y-4">
+            <form onsubmit="handleLogin(event)" class="space-y-4 text-xs">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email Address *</label>
-                    <input type="email" id="loginEmail" placeholder="e.g. kusal@example.lk" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-nipo-deepBlue" required>
+                    <label class="block font-bold text-slate-700 uppercase mb-1">Email or Username *</label>
+                    <input type="text" id="loginIdentifier" placeholder="e.g. kusal@example.lk or username" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nipo-deepBlue outline-none transition" required>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password *</label>
-                    <input type="password" id="loginPassword" placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-nipo-deepBlue" required>
+                    <label class="block font-bold text-slate-700 uppercase mb-1">Password *</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nipo-deepBlue outline-none transition" required>
                 </div>
-                <button type="submit" class="w-full py-3 bg-nipo-deepBlue text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-md">
-                    Sign In to Portal
+
+                <!-- Google Authenticator Code Input (Conditional / Optional) -->
+                <div id="gAuthCodeContainer" class="hidden">
+                    <label class="block font-bold text-purple-900 uppercase mb-1"><i class="fa-solid fa-shield-dog mr-1"></i> Google Authenticator Code *</label>
+                    <input type="text" id="gAuthCodeInput" placeholder="Enter 6-digit Authenticator code" class="w-full px-3.5 py-2.5 rounded-lg border border-purple-300 bg-purple-50 focus:ring-2 focus:ring-purple-600 outline-none transition font-mono">
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-nipo-deepBlue text-white rounded-xl font-bold hover:bg-slate-800 transition shadow-md">
+                    Sign In to Portal[cite: 5]
                 </button>
             </form>
 
             <div class="text-center pt-2 border-t border-slate-100">
                 <p class="text-xs text-slate-600">
-                    Don't have an account? 
-                    <a href="register.html" class="text-nipo-deepBlue font-bold hover:underline">Create Account</a>
+                    Don't have an account?[cite: 5]
+                    <a href="register.html" class="text-nipo-deepBlue font-bold hover:underline">Create Account[cite: 5]</a>
                 </p>
             </div>
         </div>
@@ -81,30 +104,65 @@
 
     <!-- FOOTER -->
     <footer class="bg-nipo-navy text-slate-400 text-center py-4 text-xs border-t border-slate-800">
-        National Intellectual Property Office of Sri Lanka &copy; 2026
+        National Intellectual Property Office of Sri Lanka &copy; 2026[cite: 5]
     </footer>
 
     <script>
         function handleLogin(event) {
             event.preventDefault();
-            const email = document.getElementById('loginEmail').value.trim();
+            const identifier = document.getElementById('loginIdentifier').value.trim();
             const password = document.getElementById('loginPassword').value.trim();
 
-            if (!email || !password) {
-                alert("Please enter both email and password.");
+            if (!identifier || !password) {
+                alert("Please enter your identifier and password.");
                 return;
             }
 
-            // Save session and redirect securely to application page
-            const userData = { name: email.split('@')[0], email: email };
+            // Check if user has GAuth enabled in stored accounts or trigger verification
+            const storedUser = localStorage.getItem('nipo_active_user');
+            let userName = identifier.split('@')[0];
+            
+            if (storedUser) {
+                try {
+                    const parsed = JSON.parse(storedUser);
+                    if (parsed.gAuthEnabled) {
+                        const gAuthContainer = document.getElementById('gAuthCodeContainer');
+                        if (gAuthContainer.classList.contains('hidden')) {
+                            gAuthContainer.classList.remove('hidden');
+                            alert("[Simulation] Google Authenticator protection enabled on this account. Please enter code '123456'.");
+                            return;
+                        } else {
+                            const code = document.getElementById('gAuthCodeInput').value.trim();
+                            if (code !== '123456') {
+                                alert("Invalid Google Authenticator code. Try '123456'.");
+                                return;
+                            }
+                        }
+                    }
+                    userName = parsed.name || parsed.username || userName;
+                } catch(e) {}
+            }
+
+            // Save session and redirect securely to application page[cite: 5]
+            const userData = { name: userName, email: identifier };
             localStorage.setItem('nipo_active_user', JSON.stringify(userData));
-            window.location.href = 'index.html';
+            window.location.href = 'index.html';[cite: 5]
         }
 
-        function testLoginNoPassword() {
+        function loginWithFingerprint() {
+            // Simulated fingerprint biometric check for mobile applicants
+            const confirmed = window.confirm("📱 [Biometric Simulation] Place your finger on the device sensor to authenticate.");
+            if (confirmed) {
+                const testUser = { name: 'Mobile Biometric Applicant', email: 'mobile.user@nipo.lk' };
+                localStorage.setItem('nipo_active_user', JSON.stringify(testUser));
+                window.location.href = 'index.html';[cite: 5]
+            }
+        }
+
+        function testLoginNoRestriction() {
             const testUser = { name: 'Test Examiner / Applicant', email: 'test.user@nipo.lk' };
             localStorage.setItem('nipo_active_user', JSON.stringify(testUser));
-            window.location.href = 'index.html';
+            window.location.href = 'index.html';[cite: 5]
         }
     </script>
 </body>
