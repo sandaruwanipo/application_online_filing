@@ -126,23 +126,17 @@
                 </div>
             </div>
 
-            <!-- RIGHT HEADER ACTIONS: TAB SWITCHER & TEST LOGIN STATUS -->
-            <div class="flex items-center space-x-3">
-                <div class="hidden sm:flex items-center space-x-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
-                    <button id="navTabWizard" onclick="switchMainTab('wizard')" class="px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-nipo-deepBlue text-white shadow-sm">
-                        <i class="fa-solid fa-file-pen"></i> <span>New Application</span>
-                    </button>
-                    <button id="navTabTracker" onclick="switchMainTab('tracker')" class="px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-200">
-                        <i class="fa-solid fa-magnifying-glass"></i> <span>Status Tracker</span>
-                    </button>
-                </div>
-
-                <!-- Test Login User Pill -->
-                <div id="testUserPill" class="flex items-center gap-2 bg-emerald-50 border border-emerald-300 text-emerald-900 px-3 py-1.5 rounded-xl text-xs font-bold">
-                    <i class="fa-solid fa-user-shield text-emerald-600"></i>
-                    <span id="testUserNameDisplay">Test User (Active)</span>
-                    <button onclick="openTestLoginModal()" class="ml-1 text-[10px] text-slate-500 hover:text-slate-800 underline">Switch</button>
-                </div>
+            <!-- Tab Switcher -->
+            <div class="flex items-center space-x-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+                <button id="navTabWizard" onclick="switchMainTab('wizard')" class="px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-nipo-deepBlue text-white shadow-sm">
+                    <i class="fa-solid fa-file-pen"></i> <span class="hidden sm:inline">New Application</span>
+                </button>
+                <button id="navTabTracker" onclick="switchMainTab('tracker')" class="px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-200">
+                    <i class="fa-solid fa-magnifying-glass"></i> <span class="hidden sm:inline">Status Tracker</span>
+                </button>
+                <button id="navTabAccount" onclick="switchMainTab('account')" class="px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-200">
+                    <i class="fa-solid fa-user-circle"></i> <span class="hidden sm:inline" id="navAccountLabel">Account</span>
+                </button>
             </div>
         </div>
     </header>
@@ -856,6 +850,100 @@
             </div>
         </div>
 
+        <!-- VIEW 3: ACCOUNT & LOGIN / REGISTER -->
+        <div id="viewAccount" class="hidden space-y-6">
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm max-w-xl mx-auto space-y-6">
+                
+                <!-- NOT LOGGED IN STATE -->
+                <div id="authContainer" class="space-y-6">
+                    <div class="text-center space-y-2">
+                        <div class="w-12 h-12 rounded-full bg-nipo-deepBlue text-nipo-gold flex items-center justify-center text-xl mx-auto shadow-md">
+                            <i class="fa-solid fa-user-lock"></i>
+                        </div>
+                        <h2 class="text-xl font-bold text-nipo-deepBlue" id="authTitle">NIPO Portal Login</h2>
+                        <p class="text-xs text-slate-500">Access your saved filings or create a new account.</p>
+                    </div>
+
+                    <!-- Toggle Login / Register -->
+                    <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
+                        <button type="button" onclick="setAuthMode('login')" id="authTabLogin" class="flex-1 py-2 rounded-lg text-xs font-bold bg-white text-nipo-deepBlue shadow-sm transition">Sign In</button>
+                        <button type="button" onclick="setAuthMode('register')" id="authTabRegister" class="flex-1 py-2 rounded-lg text-xs font-bold text-slate-600 transition">Create Account</button>
+                    </div>
+
+                    <!-- TEST LOGIN (NO PASSWORD) QUICK BUTTON -->
+                    <div class="p-3 bg-amber-50 rounded-xl border border-amber-300 text-center space-y-2">
+                        <span class="text-[11px] font-bold text-amber-900 block uppercase">Testing Mode Quick Access</span>
+                        <button type="button" onclick="testLoginNoPassword()" class="w-full py-2.5 px-4 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition shadow-sm flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-bolt"></i> ⚡ Quick Test Login (Without Password)
+                        </button>
+                    </div>
+
+                    <!-- LOGIN FORM -->
+                    <form id="loginForm" onsubmit="event.preventDefault(); handleLogin();" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email Address *</label>
+                            <input type="email" id="loginEmail" placeholder="e.g. kusal@example.lk" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password *</label>
+                            <input type="password" id="loginPassword" placeholder="••••••••" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm" required>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-nipo-deepBlue text-white rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-md">
+                            Sign In to Portal
+                        </button>
+                    </form>
+
+                    <!-- REGISTER FORM -->
+                    <form id="registerForm" onsubmit="event.preventDefault(); handleRegister();" class="hidden space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Full Name *</label>
+                            <input type="text" id="regName" placeholder="e.g. Kusal Janith Perera" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email Address *</label>
+                            <input type="email" id="regEmail" placeholder="e.g. kusal@example.lk" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password *</label>
+                            <input type="password" id="regPassword" placeholder="Create password" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm" required>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-emerald-600 text-white rounded-xl text-xs font-bold hover:bg-emerald-700 transition shadow-md">
+                            Create Account & Register
+                        </button>
+                    </form>
+                </div>
+
+                <!-- LOGGED IN USER PROFILE STATE -->
+                <div id="userProfileContainer" class="hidden space-y-6 text-center">
+                    <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl font-bold mx-auto border-2 border-emerald-500">
+                        <i class="fa-solid fa-user-check"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="text-lg font-bold text-nipo-deepBlue" id="profileNameDisplay">Kusal Perera</h3>
+                        <p class="text-xs text-slate-500 font-mono" id="profileEmailDisplay">kusal@example.lk</p>
+                        <span class="inline-block mt-2 px-3 py-1 bg-emerald-100 text-emerald-800 text-[11px] font-bold rounded-full">Authenticated User Session Active</span>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-left space-y-2">
+                        <span class="text-xs font-bold text-slate-700 uppercase block">Account Activity</span>
+                        <div class="text-xs text-slate-600 flex justify-between">
+                            <span>Saved Draft Applications:</span>
+                            <strong class="text-nipo-deepBlue">1 Draft (Form M-1)</strong>
+                        </div>
+                        <div class="text-xs text-slate-600 flex justify-between">
+                            <span>Portal Access Level:</span>
+                            <strong class="text-emerald-700">Standard e-Filer / Applicant</strong>
+                        </div>
+                    </div>
+
+                    <button onclick="handleLogout()" class="w-full py-3 bg-red-600 text-white rounded-xl text-xs font-bold hover:bg-red-700 transition shadow-md">
+                        <i class="fa-solid fa-right-from-bracket mr-1.5"></i> Sign Out of Portal
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
     </main>
 
     <!-- STACKED CIRCULAR FLOATING BUTTONS FOR MOBILE & EXPANDABLE FOR DESKTOP -->
@@ -871,43 +959,6 @@
             <i class="fa-solid fa-wand-magic-sparkles text-amber-300 text-base"></i>
             <span class="hidden sm:inline">Ask Gemini IP Assistant</span>
         </button>
-    </div>
-
-    <!-- TEST LOGIN MODAL (NO PASSWORD REQUIRED FOR TESTING) -->
-    <div id="testLoginModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 p-6 space-y-6">
-            <div class="text-center space-y-2">
-                <div class="w-12 h-12 rounded-full bg-amber-100 text-nipo-deepBlue flex items-center justify-center text-xl mx-auto border border-amber-300">
-                    <i class="fa-solid fa-user-shield"></i>
-                </div>
-                <h3 class="text-lg font-bold text-nipo-deepBlue">Test Portal Login (Passwordless)</h3>
-                <p class="text-xs text-slate-500">Select a test role or enter a testing name to access the NIPO e-Filing Portal instantly.</p>
-            </div>
-
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Testing User / Applicant Name *</label>
-                    <input type="text" id="testLoginNameInput" value="Kusal Janith Perera" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-nipo-deepBlue">
-                </div>
-
-                <div class="grid grid-cols-2 gap-2">
-                    <button type="button" onclick="setTestRole('Kusal Janith Perera (Individual)')" class="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 text-left">
-                        👤 Individual User
-                    </button>
-                    <button type="button" onclick="setTestRole('Ceylon Royal Tea (Corporate)')" class="p-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 text-left">
-                        🏢 Corporate Agent
-                    </button>
-                </div>
-
-                <button type="button" onclick="completeTestLogin()" class="w-full py-3 bg-nipo-deepBlue hover:bg-slate-900 text-white font-bold text-xs rounded-xl transition shadow-md flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-right-to-bracket"></i> Login Instantly (Test Mode)
-                </button>
-            </div>
-
-            <div class="text-[11px] text-slate-400 text-center border-t border-slate-100 pt-3">
-                <i class="fa-solid fa-circle-info mr-1 text-amber-600"></i> Google Login and Account Creation disabled for testing security.
-            </div>
-        </div>
     </div>
 
     <!-- GEMINI ASSISTANT MODAL / POPUP -->
@@ -1110,6 +1161,7 @@
             setupCanvas();
             updateDocPreview();
             calculateFees();
+            checkUserSession();
             document.getElementById('docDateToday').innerText = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
             
             // Close autocomplete dropdown on clicking outside
@@ -1121,23 +1173,6 @@
                 }
             });
         };
-
-        // TEST LOGIN LOGIC
-        function openTestLoginModal() {
-            document.getElementById('testLoginModal').classList.remove('hidden');
-        }
-
-        function setTestRole(name) {
-            document.getElementById('testLoginNameInput').value = name;
-        }
-
-        function completeTestLogin() {
-            const name = document.getElementById('testLoginNameInput').value.trim() || 'Test User';
-            document.getElementById('testUserNameDisplay').innerText = name + ' (Active)';
-            document.getElementById('applicantFullName').value = name;
-            document.getElementById('testLoginModal').classList.add('hidden');
-            updateDocPreview();
-        }
 
         // CANVAS SETUP FOR E-SIGNATURE
         function setupCanvas() {
@@ -1192,19 +1227,119 @@
         function switchMainTab(tab) {
             const btnW = document.getElementById('navTabWizard');
             const btnT = document.getElementById('navTabTracker');
+            const btnA = document.getElementById('navTabAccount');
+            
             const viewW = document.getElementById('viewWizard');
             const viewT = document.getElementById('viewTracker');
+            const viewA = document.getElementById('viewAccount');
+
+            viewW.classList.add('hidden');
+            viewT.classList.add('hidden');
+            viewA.classList.add('hidden');
+
+            [btnW, btnT, btnA].forEach(b => b.className = "px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-200");
 
             if (tab === 'wizard') {
                 viewW.classList.remove('hidden');
-                viewT.classList.add('hidden');
-                btnW.className = "px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-nipo-deepBlue text-white shadow-sm";
-                btnT.className = "px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-200";
-            } else {
-                viewW.classList.add('hidden');
+                btnW.className = "px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-nipo-deepBlue text-white shadow-sm";
+            } else if (tab === 'tracker') {
                 viewT.classList.remove('hidden');
-                btnT.className = "px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-nipo-deepBlue text-white shadow-sm";
-                btnW.className = "px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-600 hover:bg-slate-200";
+                btnT.className = "px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-nipo-deepBlue text-white shadow-sm";
+            } else if (tab === 'account') {
+                viewA.classList.remove('hidden');
+                btnA.className = "px-3 sm:px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-nipo-deepBlue text-white shadow-sm";
+            }
+        }
+
+        // AUTHENTICATION & ACCOUNT FUNCTIONS
+        function setAuthMode(mode) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const tabLogin = document.getElementById('authTabLogin');
+            const tabRegister = document.getElementById('authTabRegister');
+            const title = document.getElementById('authTitle');
+
+            if (mode === 'login') {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                tabLogin.className = "flex-1 py-2 rounded-lg text-xs font-bold bg-white text-nipo-deepBlue shadow-sm transition";
+                tabRegister.className = "flex-1 py-2 rounded-lg text-xs font-bold text-slate-600 transition";
+                title.innerText = "NIPO Portal Login";
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                tabRegister.className = "flex-1 py-2 rounded-lg text-xs font-bold bg-white text-nipo-deepBlue shadow-sm transition";
+                tabLogin.className = "flex-1 py-2 rounded-lg text-xs font-bold text-slate-600 transition";
+                title.innerText = "Create NIPO Account";
+            }
+        }
+
+        function handleRegister() {
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+
+            if (!name || !email || !password) {
+                alert("Please fill in all registration fields.");
+                return;
+            }
+
+            const userData = { name, email };
+            localStorage.setItem('nipo_active_user', JSON.stringify(userData));
+            
+            alert(`Account successfully created for ${name}! You are now logged in.`);
+            checkUserSession();
+            switchMainTab('wizard');
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            if (!email || !password) {
+                alert("Please enter both email and password.");
+                return;
+            }
+
+            const userData = { name: email.split('@')[0], email: email };
+            localStorage.setItem('nipo_active_user', JSON.stringify(userData));
+
+            alert(`Welcome back, ${userData.name}!`);
+            checkUserSession();
+            switchMainTab('wizard');
+        }
+
+        function testLoginNoPassword() {
+            const testUser = { name: 'Test Examiner / Applicant', email: 'test.user@nipo.lk' };
+            localStorage.setItem('nipo_active_user', JSON.stringify(testUser));
+            alert("⚡ Successfully logged in using Test Login (No Password mode)!");
+            checkUserSession();
+            switchMainTab('wizard');
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('nipo_active_user');
+            checkUserSession();
+            alert("Successfully signed out of portal.");
+        }
+
+        function checkUserSession() {
+            const stored = localStorage.getItem('nipo_active_user');
+            const authContainer = document.getElementById('authContainer');
+            const profileContainer = document.getElementById('userProfileContainer');
+            const navAccountLabel = document.getElementById('navAccountLabel');
+
+            if (stored) {
+                const user = JSON.parse(stored);
+                authContainer.classList.add('hidden');
+                profileContainer.classList.remove('hidden');
+                document.getElementById('profileNameDisplay').innerText = user.name;
+                document.getElementById('profileEmailDisplay').innerText = user.email;
+                navAccountLabel.innerText = user.name.split(' ')[0];
+            } else {
+                authContainer.classList.remove('hidden');
+                profileContainer.classList.add('hidden');
+                navAccountLabel.innerText = "Account";
             }
         }
 
