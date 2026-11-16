@@ -17,6 +17,7 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts: Inter & Noto Serif -->
@@ -805,6 +806,7 @@
                             <button type="button" id="btnNextStep" onclick="changeStep(1)" class="px-6 py-2.5 rounded-xl bg-nipo-deepBlue text-white font-bold text-xs hover:bg-slate-800 transition shadow-md flex items-center gap-2">
                                 <span>Continue</span> <i class="fa-solid fa-arrow-right"></i>
                             </button>
+                            <button type="button" id="btnDownloadM01" onclick="downloadCompletedM01()" class="hidden px-5 py-2.5 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-700 transition shadow-md flex items-center gap-2"><i class="fa-solid fa-file-pdf"></i> Download Editable Form M-01</button>
                             <button type="button" id="btnSubmitApp" onclick="submitApplication()" class="hidden px-6 py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs hover:bg-emerald-700 transition shadow-md flex items-center gap-2">
                                 <i class="fa-solid fa-paper-plane"></i> Submit Form M-1
                             </button>
@@ -1758,6 +1760,107 @@
 
         function printOfficialForm() {
             window.print();
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const step5 = document.getElementById('step5');
+            const button = document.getElementById('btnDownloadM01');
+            if (step5 && button) {
+                const refresh = () => button.classList.toggle('hidden', step5.classList.contains('hidden'));
+                new MutationObserver(refresh).observe(step5,{attributes:true,attributeFilter:['class']});
+                refresh();
+            }
+        });
+
+        // Populate the original interactive PDF template; all original AcroForm fields remain editable.
+        // Requires pdf-lib and Form_M01_Fillable_Multiline.pdf beside index.html.
+        async function downloadCompletedM01() {
+            const btn = document.getElementById('btnDownloadM01');
+            const original = btn.innerHTML;
+            btn.disabled = true;
+            btn.textContent = 'Preparing editable PDF...';
+            try {
+                if (!window.PDFLib) throw new Error('PDF library did not load. Check internet access.');
+                const response = await fetch('./Form_M01_Fillable_Multiline.pdf', {cache:'no-store'});
+                if (!response.ok) throw new Error('PDF template not found. Upload Form_M01_Fillable_Multiline.pdf beside index.html.');
+                const pdf = await PDFLib.PDFDocument.load(await response.arrayBuffer());
+                const form = pdf.getForm();
+                const value = id => document.getElementById(id)?.value?.trim() || '';
+                const checked = id => !!document.getElementById(id)?.checked;
+                const category = document.querySelector('input[name="applicantCategory"]:checked')?.value || 'Individual';
+                let applicant = value('applicantFullName');
+                if (category === 'Partnership') {
+                    const partners = [...document.querySelectorAll('.partner-input')].map(e=>e.value.trim()).filter(Boolean);
+                    applicant = [value('partnershipFirmName'),partners.join(', ')].filter(Boolean).join(' — ');
+                } else if (category === 'SoleProprietorship') {
+                    const owners = [...document.querySelectorAll('.proprietor-input')].map(e=>e.value.trim()).filter(Boolean);
+                    applicant = [value('solePropBusinessName'),owners.join(', ')].filter(Boolean).join(' — ');
+                }
+                const set = (name, text) => {
+                    try {const field=form.getTextField(name);field.setText(String(text||''));field.setFontSize(0);}catch(e){console.warn('Missing PDF field',name,e);}
+                };
+                set('Applicant_Name', applicant);
+                set('Applicant_Address',value('applicantAddress'));
+                set('Applicant_Contact',[value('applicantPhone'),value('applicantEmail')].filter(Boolean).join(' / '));
+                set('Mark_Translation',value('markTranslationText'));
+                set('Colour_Claim',value('colorClaim'));
+                set('Nice_Class',selectedClass ? String(selectedClass) : '');
+                const goods=[...selectedClassGoods,value('customGoodsInput')].filter(Boolean).join('; ');
+                set('Goods_or_Services',goods);
+                set('Priority_Application_Date',checked('hasPriorityClaim') ? value('priorityDate') : '');
+                set('Address_for_Service_Sri_Lanka',value('agentAddress'));
+                set('Agent_Name',value('agentName'));
+                set('Agent_Address',value('agentAddress'));
+                set('Agent_Contact',[value('agentPhone'),value('agentEmail')].filter(Boolean).join(' / '));
+                const signatory=category==='Company'?value('companyDirectorName'):category==='Partnership'?value('signingPartnerName'):category==='SoleProprietorship'?value('signingProprietorName'):applicant;
+                set('Signature_Name_or_Details',signatory);
+                set('Signature_Date',new Date().toLocaleDateString('en-GB'));
+                set('Mark_Representation_Description',logoDataUrl ? '' : value('markText'));
+                // Draw uploaded mark into representation space without flattening the text fields.
+                const drawImage = async (dataUrl,page,x,y,w,h) => {
+                    if(!dataUrl || !dataUrl.startsWith('data:image/')) return false;
+                    let img;
+                    if(dataUrl.startsWith('data:image/png')) img=await pdf.embedPng(dataUrl);
+                    else if(dataUrl.startsWith('data:image/jpeg')||dataUrl.startsWith('data:image/jpg')) img=await pdf.embedJpg(dataUrl);
+                    else {
+                        const imageEl = new Image();imageEl.src=dataUrl;await imageEl.decode();
+                        const cv=document.createElement('canvas');cv.width=imageEl.naturalWidth;cv.height=imageEl.naturalHeight;
+                        cv.getContext('2d').drawImage(imageEl,0,0);img=await pdf.embedPng(cv.toDataURL('image/png'));
+                    }
+                    const scale=Math.min(w/img.width,h/img.height);
+                    page.drawImage(img,{x:x+(w-img.width*scale)/2,y:y+(h-img.height*scale)/2,width:img.width*scale,height:img.height*scale});
+                    return true;
+                };
+                if(logoDataUrl) await drawImage(logoDataUrl,pdf.getPage(0),314,337,220,113);
+                if(capturedSigDataUrl) await drawImage(capturedSigDataUrl,pdf.getPage(1),335,118,198,28);
+                // Full specifications are retained on an editable continuation page if they exceed the original box.
+                // This avoids silently clipping long lists in the fixed-height original form.
+                if(goods.length>380) {
+                    set('Goods_or_Services','See editable continuation sheet attached (Class '+selectedClass+').');
+                    const page=pdf.addPage([612,792]);
+                    page.drawText('FORM M-01 — GOODS / SERVICES CONTINUATION', {x:45,y:745,size:12});
+                    page.drawText('Nice Class: '+(selectedClass||''),{x:45,y:720,size:10});
+                    const field=form.createTextField('Goods_or_Services_Full_Continuation');
+                    field.enableMultiline();field.setText(goods);field.setFontSize(0);
+                    field.addToPage(page,{x:45,y:70,width:522,height:625,borderWidth:1});
+                }
+                // Priority details not represented by separate fields on the official template.
+                if(checked('hasPriorityClaim')) {
+                    const priorityText=[value('priorityCountry'),value('priorityNumber'),value('priorityDate')].filter(Boolean).join(' | ');
+                    // retain original priority date field and provide full information on a separate editable field
+                    const page=pdf.addPage([612,792]);
+                    page.drawText('FORM M-01 — PRIORITY CLAIM DETAILS', {x:45,y:745,size:12});
+                    const field=form.createTextField('Priority_Full_Details');field.enableMultiline();field.setText(priorityText);
+                    field.addToPage(page,{x:45,y:650,width:522,height:65,borderWidth:1});
+                }
+                const bytes=await pdf.save({updateFieldAppearances:true});
+                const blob=new Blob([bytes],{type:'application/pdf'});
+                const url=URL.createObjectURL(blob);
+                const a=document.createElement('a');a.href=url;a.download='Form_M01_Completed_Editable.pdf';
+                document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+            }catch(err){console.error(err);alert('Could not generate the PDF: '+err.message);}
+            finally{btn.disabled=false;btn.innerHTML=original;}
         }
 
         function submitApplication() {
