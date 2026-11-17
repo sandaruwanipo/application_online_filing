@@ -538,33 +538,20 @@
                             </div>
                         </div>
 
-                        <!-- 3. CUSTOM GOODS FIELD WITH MANDATORY FORMALITY CHECK NOTICE -->
+                        <!-- Optional specification attachment (instead of manual goods entry) -->
                         <div class="space-y-3 p-4 bg-amber-50/70 rounded-xl border border-amber-300">
-                            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
-                                <label for="customGoodsInput" class="block text-xs font-bold text-amber-900 uppercase">3. Other Goods / Services (Not listed in mgs.json database)</label>
-                                <!-- PDF Quick Upload -->
-                                <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1 bg-amber-700 hover:bg-amber-800 text-white rounded-lg text-xs font-bold shadow-sm transition">
-                                    <i class="fa-solid fa-file-pdf"></i> Attach Class PDF (1.pdf - 45.pdf)
-                                    <input type="file" id="pdfClassUploader" accept=".pdf,.txt" onchange="handleClassPdfUpload(event)" class="sr-only">
-                                </label>
-                            </div>
-
-                            <textarea id="customGoodsInput" rows="3" placeholder="Describe any custom or specialized terms not found in the standard mgs.json database..." oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-xs bg-white focus:ring-1 focus:ring-amber-500"></textarea>
-
-                            <div class="flex items-center justify-between gap-2">
-                                <button type="button" onclick="loadStandardWipoClassPdfText()" class="text-[11px] font-bold text-nipo-deepBlue hover:underline flex items-center gap-1">
-                                    <i class="fa-solid fa-file-arrow-down"></i> Auto-populate standard WIPO text for Class <span id="lblActivePdfNum">--</span>
-                                </button>
-                                <button type="button" onclick="clearCustomGoods()" class="text-[11px] font-semibold text-slate-500 hover:text-red-600">
-                                    Clear Custom Terms
-                                </button>
-                            </div>
-                            
-                            <!-- MANDATORY NOTICE REGARDING FORMALITY CHECK TIME -->
-                            <div class="p-3 bg-amber-100/90 rounded border border-amber-300 text-xs text-amber-950 flex items-start gap-2.5">
-                                <i class="fa-solid fa-triangle-exclamation text-amber-700 text-sm mt-0.5"></i>
-                                <div>
-                                    <strong>Important Statutory Notice:</strong> Submitting custom goods or services terms outside the standard approved list takes extra processing time for the formality check during application examination at NIPO.
+                            <label class="flex items-center gap-3 text-sm font-bold text-amber-950 cursor-pointer">
+                                <input type="checkbox" id="attachGoodsListCheck" onchange="toggleGoodsAttachment()" class="w-4 h-4 accent-amber-700">
+                                Attach the goods / services list as a separate document
+                            </label>
+                            <p class="text-xs text-slate-600">Optional alternative to selecting goods from the list above. When selected, the Form M-01 goods/services box will display <strong>Attached</strong>, and the uploaded specification will be included as pages after the application.</p>
+                            <div id="goodsAttachmentPanel" class="hidden space-y-3 p-3 bg-white rounded-lg border border-amber-200">
+                                <label for="pdfClassUploader" class="block text-xs font-bold text-amber-900 uppercase">Attach Class – Goods / Services Specification (PDF, JPG or PNG)</label>
+                                <input type="file" id="pdfClassUploader" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" onchange="handleClassPdfUpload(event)" class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-amber-700 file:text-white file:font-semibold">
+                                <p id="goodsAttachmentName" class="text-xs text-slate-500" aria-live="polite">No attachment selected.</p>
+                                <div class="p-3 bg-amber-100/90 rounded border border-amber-300 text-xs text-amber-950 flex items-start gap-2.5">
+                                    <i class="fa-solid fa-triangle-exclamation text-amber-700 text-sm mt-0.5"></i>
+                                    <div><strong>Important Statutory Notice:</strong> Submitting custom goods or services terms outside the standard approved list takes extra processing time for the formality check during application examination at NIPO.</div>
                                 </div>
                             </div>
                         </div>
@@ -1587,54 +1574,24 @@
             container.innerHTML = html;
         }
 
+        function toggleGoodsAttachment() {
+            const attached = document.getElementById('attachGoodsListCheck').checked;
+            document.getElementById('goodsAttachmentPanel').classList.toggle('hidden', !attached);
+            document.getElementById('goodsSearchContainer').classList.toggle('opacity-50', attached);
+            document.getElementById('goodsSearchInput').disabled = attached;
+            document.getElementById('goodsAttachmentName').textContent = document.getElementById('pdfClassUploader').files[0]?.name || 'No attachment selected.';
+            updateDocPreview();
+        }
+
         function handleClassPdfUpload(event) {
             const file = event.target.files[0];
-            if (!file) return;
-
-            const match = file.name.match(/^(\d{1,2})\.pdf$/i);
-            if (match) {
-                const classNum = parseInt(match[1], 10);
-                if (classNum >= 1 && classNum <= 45) {
-                    selectSingleNiceClass(classNum);
-                }
+            const label = document.getElementById('goodsAttachmentName');
+            if (!file) { label.textContent = 'No attachment selected.'; updateDocPreview(); return; }
+            if (!(/\.pdf$/i.test(file.name) || /\.(png|jpe?g)$/i.test(file.name))) {
+                alert('Please upload the goods/services specification as PDF, JPG or PNG.');
+                event.target.value = ''; label.textContent = 'No attachment selected.'; return;
             }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const text = e.target.result;
-                if (typeof text === 'string' && text.trim().length > 0) {
-                    const customInput = document.getElementById('customGoodsInput');
-                    if (customInput) {
-                        customInput.value = text.trim();
-                        updateDocPreview();
-                    }
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        function loadStandardWipoClassPdfText() {
-            if (!selectedClass) {
-                alert("Please select a Nice Class number from 1 to 45 first.");
-                return;
-            }
-
-            const items = getClassItems(selectedClass);
-            const className = getClassName(selectedClass);
-            const sampleItems = items.length > 0 ? items.slice(0, 15).join(', ') + "..." : "Standard approved items";
-            
-            const wipoFormattedText = `[WIPO Class ${selectedClass} Document (${selectedClass}.pdf)]\nClass Name: ${className}\nFull Specification: ${sampleItems}`;
-            
-            const customInput = document.getElementById('customGoodsInput');
-            if (customInput) {
-                customInput.value = wipoFormattedText;
-                updateDocPreview();
-            }
-        }
-
-        function clearCustomGoods() {
-            const customInput = document.getElementById('customGoodsInput');
-            if (customInput) customInput.value = '';
+            label.textContent = 'Selected: ' + file.name;
             updateDocPreview();
         }
 
@@ -1693,19 +1650,15 @@
 
             // Classes & Goods Preview
             const docClassesList = document.getElementById('docClassesList');
-            const customGoods = document.getElementById('customGoodsInput')?.value.trim();
-
+            const attachedGoods = document.getElementById('attachGoodsListCheck')?.checked;
             if (!selectedClass) {
                 docClassesList.innerHTML = `<div class="text-slate-500 italic">No Nice Class Selected</div>`;
             } else {
-                let goodsTextArr = [...selectedClassGoods];
-                if (customGoods) goodsTextArr.push(customGoods);
-
-                const finalGoodsStr = goodsTextArr.length > 0 ? goodsTextArr.join('; ') : 'No specific goods selected.';
+                const finalGoodsStr = selectedClassGoods.length ? selectedClassGoods.join('; ') : 'No specific goods selected.';
                 const className = getClassName(selectedClass);
-                const goodsPreview=finalGoodsStr.length>290
+                const goodsPreview = attachedGoods ? 'Attached' : (finalGoodsStr.length > 290
                     ? '<span class="italic text-amber-800">Goods/services list attached as continuation page(s); original Form M-01 box will be blank.</span>'
-                    : finalGoodsStr;
+                    : finalGoodsStr);
                 docClassesList.innerHTML = `
                     <div class="border-l-2 border-nipo-deepBlue pl-2 text-xs">
                         <strong class="text-nipo-deepBlue">Class ${selectedClass} (${className}):</strong>
@@ -1790,6 +1743,7 @@
             const original=btn.innerHTML;
             if(!document.getElementById('declarationCheck').checked){alert('Please confirm the declaration before generating the application.');return;}
             if(!selectedClass){alert('Please select a Nice class before generating the application.');return;}
+            if(document.getElementById('attachGoodsListCheck')?.checked && !document.getElementById('pdfClassUploader')?.files?.length){alert('Please attach the goods/services specification before generating the application.');return;}
             btn.disabled=true;btn.textContent='Generating application and attachments...';
             try {
                 if(!window.PDFLib)throw new Error('PDF library could not load. Please check your connection.');
@@ -1808,7 +1762,8 @@
                     try{const field=form.getTextField(name);field.setText(String(text||''));field.setFontSize(size);}
                     catch(err){console.warn('PDF field unavailable:',name,err);}
                 };
-                const goods=[...selectedClassGoods,value('customGoodsInput')].filter(Boolean).join('; ');
+                const goods=selectedClassGoods.join('; ');
+                const goodsAttached=checked('attachGoodsListCheck');
                 set('Applicant_Name',applicant);set('Applicant_Address',value('applicantAddress'));
                 set('Applicant_Contact',[value('applicantPhone'),value('applicantEmail')].filter(Boolean).join(' / '));
                 set('Mark_Translation',value('markTranslationText'));set('Colour_Claim',value('colorClaim'));
@@ -1847,7 +1802,9 @@
                 if(capturedSigDataUrl)await drawCentered(capturedSigDataUrl,pdf.getPage(1),{x:335,y:118,w:198,h:28});
                 // The fixed-size original goods box holds only a short description at 9pt.
                 // A full-length specification is preserved in separate editable continuation pages.
-                if(goods.length>290){
+                if(goodsAttached){
+                    set('Goods_or_Services','Attached',9);
+                }else if(goods.length>290){
                     set('Goods_or_Services','',9);
                     const lines=[];
                     for(const paragraph of goods.split(/\n/)){
@@ -1863,15 +1820,16 @@
                         const page=pdf.addPage([612,792]);
                         pageTitle(page,'FORM M-01 - GOODS / SERVICES CONTINUATION','Nice Class: '+selectedClass+' | Page '+(Math.floor(i/perPage)+1));
                         const field=form.createTextField('Goods_Services_Continuation_'+(Math.floor(i/perPage)+1));
-                        field.enableMultiline();field.setText(lines.slice(i,i+perPage).join('\n'));field.setFontSize(10);
-                        field.addToPage(page,{x:42,y:65,width:528,height:630,borderWidth:0.5});
+                        field.enableMultiline();
+                        field.addToPage(page,{x:42,y:65,width:528,height:630,borderWidth:0.5,font});
+                        field.setText(lines.slice(i,i+perPage).join('\n'));field.setFontSize(10);field.updateAppearances(font);
                     }
                 }else set('Goods_or_Services',goods,9);
                 if(checked('hasPriorityClaim')){
                     const page=pdf.addPage([612,792]);pageTitle(page,'FORM M-01 - PRIORITY CLAIM DETAILS');
                     const field=form.createTextField('Priority_Claim_Full_Details');field.enableMultiline();
                     field.setText('Country: '+value('priorityCountry')+'\nEarlier application: '+value('priorityNumber')+'\nFiling date: '+value('priorityDate'));
-                    field.setFontSize(10);field.addToPage(page,{x:42,y:570,width:528,height:120,borderWidth:0.5});
+                    field.addToPage(page,{x:42,y:570,width:528,height:120,borderWidth:0.5,font});field.setFontSize(10);field.updateAppearances(font);
                 }
                 // A separate, centered mark representation sheet follows the application.
                 if(logoDataUrl){
@@ -1879,6 +1837,7 @@
                     await drawCentered(logoDataUrl,page,{x:65,y:135,w:482,h:530});
                 }
                 const attachments=[
+                    ...(goodsAttached ? [['pdfClassUploader','GOODS / SERVICES SPECIFICATION']] : []),
                     ['threeDRepresentationUpload','THREE-DIMENSIONAL MARK REPRESENTATION'],
                     ['poaDocUpload','POWER OF ATTORNEY'],
                     ['swornTranslatorDocUpload','CERTIFIED TRANSLATION'],
