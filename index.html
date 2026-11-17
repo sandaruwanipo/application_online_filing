@@ -468,6 +468,17 @@
                                 </p>
                                 <input type="text" id="colorClaim" placeholder="e.g. Royal Blue, Gold, and White" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm">
                             </div>
+                            <!-- Optional three-dimensional mark representation -->
+                            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+                                <label class="flex items-center gap-2 text-xs font-bold text-slate-700 uppercase">
+                                    <input type="checkbox" id="has3DRepresentation" onchange="toggle3DRepresentation()" class="w-4 h-4 accent-amber-600">
+                                    Three-Dimensional (3D) Representation (Optional)
+                                </label>
+                                <div id="threeDRepresentationSection" class="hidden space-y-2">
+                                    <p class="text-xs text-slate-600">If the mark is three-dimensional, attach views or representations of the 3D mark (PDF, JPG or PNG). These will appear as separate pages after the application.</p>
+                                    <input type="file" id="threeDRepresentationUpload" accept=".pdf,image/png,image/jpeg,image/webp" multiple class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-nipo-deepBlue file:text-white">
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -564,7 +575,7 @@
                         <div class="border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
                                 <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">4</span>
-                                Convention Priority Claim (Paris Convention)
+                                Convention Priority Claim (Paris Convention) <span class="text-emerald-700 text-xs font-semibold normal-case">(Optional)</span>
                             </h3>
                             <p class="text-xs text-slate-500 mt-1">Claim priority from an earlier application filed in a Paris Convention member state.</p>
                         </div>
@@ -813,12 +824,13 @@
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
                     <h2 class="text-xl font-bold text-nipo-deepBlue">Application Status Lookup</h2>
+                    <span class="inline-flex items-center rounded-full bg-green-100 border border-green-300 px-4 py-1.5 text-sm font-extrabold text-green-700">Coming Soon</span>
                     <p class="text-xs text-slate-500">Track real-time examination status of filed Sri Lanka Trademarks.</p>
                 </div>
 
-                <div class="flex gap-2">
-                    <input type="text" id="trackerInput" placeholder="Enter Application No. (e.g. LK/TM/2026/89401)" class="flex-grow px-4 py-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-nipo-deepBlue uppercase font-mono">
-                    <button onclick="searchStatus()" class="px-6 py-3 bg-nipo-deepBlue text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">
+                <div class="flex gap-2 opacity-60" aria-disabled="true">
+                    <input disabled type="text" id="trackerInput" placeholder="Enter Application No. (e.g. LK/TM/2026/89401)" class="flex-grow px-4 py-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-nipo-deepBlue uppercase font-mono">
+                    <button disabled title="Coming soon" onclick="searchStatus()" class="px-6 py-3 bg-nipo-deepBlue text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">
                         Search Status
                     </button>
                 </div>
@@ -1691,10 +1703,13 @@
 
                 const finalGoodsStr = goodsTextArr.length > 0 ? goodsTextArr.join('; ') : 'No specific goods selected.';
                 const className = getClassName(selectedClass);
+                const goodsPreview=finalGoodsStr.length>290
+                    ? '<span class="italic text-amber-800">Goods/services list attached as continuation page(s); original Form M-01 box will be blank.</span>'
+                    : finalGoodsStr;
                 docClassesList.innerHTML = `
                     <div class="border-l-2 border-nipo-deepBlue pl-2 text-xs">
                         <strong class="text-nipo-deepBlue">Class ${selectedClass} (${className}):</strong>
-                        <div class="text-[11px] text-slate-700 mt-1"><strong>Goods/Services:</strong> ${finalGoodsStr}</div>
+                        <div class="text-[11px] text-slate-700 mt-1"><strong>Goods/Services:</strong> ${goodsPreview}</div>
                     </div>
                 `;
             }
@@ -1723,6 +1738,13 @@
                 sigImg.classList.add('hidden');
                 sigPlaceholder.classList.remove('hidden');
             }
+        }
+
+        function toggle3DRepresentation() {
+            const enabled=document.getElementById('has3DRepresentation').checked;
+            document.getElementById('threeDRepresentationSection').classList.toggle('hidden',!enabled);
+            if(!enabled)document.getElementById('threeDRepresentationUpload').value='';
+            updateDocPreview();
         }
 
         function togglePriorityFields() {
@@ -1790,6 +1812,7 @@
                 set('Applicant_Name',applicant);set('Applicant_Address',value('applicantAddress'));
                 set('Applicant_Contact',[value('applicantPhone'),value('applicantEmail')].filter(Boolean).join(' / '));
                 set('Mark_Translation',value('markTranslationText'));set('Colour_Claim',value('colorClaim'));
+                set('Three_Dimensional_Mark_Claim',checked('has3DRepresentation')?'Three-dimensional mark; representations attached.':'');
                 set('Nice_Class',String(selectedClass),10);
                 set('Priority_Application_Date',checked('hasPriorityClaim')?value('priorityDate'):'');
                 set('Address_for_Service_Sri_Lanka',value('agentAddress'));
@@ -1825,7 +1848,7 @@
                 // The fixed-size original goods box holds only a short description at 9pt.
                 // A full-length specification is preserved in separate editable continuation pages.
                 if(goods.length>290){
-                    set('Goods_or_Services','Full list of goods/services attached on continuation page(s).',9);
+                    set('Goods_or_Services','',9);
                     const lines=[];
                     for(const paragraph of goods.split(/\n/)){
                         let line='';
@@ -1856,6 +1879,7 @@
                     await drawCentered(logoDataUrl,page,{x:65,y:135,w:482,h:530});
                 }
                 const attachments=[
+                    ['threeDRepresentationUpload','THREE-DIMENSIONAL MARK REPRESENTATION'],
                     ['poaDocUpload','POWER OF ATTORNEY'],
                     ['swornTranslatorDocUpload','CERTIFIED TRANSLATION'],
                     ['priorityDocUpload','PRIORITY DOCUMENT'],
@@ -1892,6 +1916,8 @@
         }
 
         function searchStatus() {
+            alert('Application Status Lookup is coming soon. No live status service is connected.');
+            return;
             const ref = document.getElementById('trackerInput').value.trim();
             if (!ref) {
                 alert("Please enter a valid Application Reference Number.");
