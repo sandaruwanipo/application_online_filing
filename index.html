@@ -170,13 +170,13 @@
                     <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/15 min-w-[220px] text-right">
                         <span class="text-xs text-slate-300 block uppercase font-medium">Estimated Application Fee</span>
                         <span id="headerFeeDisplay" class="text-2xl font-extrabold text-amber-300">LKR 2,380</span>
-                        <span class="text-[11px] text-slate-300 block mt-0.5" id="headerFeeBreakdown">Includes 1 Class + Filing Fees</span>
+                        <span class="text-[11px] text-slate-300 block mt-0.5" id="headerFeeBreakdown">Category-based estimate · verify with NIPO</span>
                     </div>
                 </div>
 
                 <!-- PROGRESS STEP INDICATOR -->
                 <div class="mt-8 pt-6 border-t border-white/10">
-                    <div class="grid grid-cols-5 gap-2 text-center text-xs font-medium">
+                    <div class="grid grid-cols-6 gap-2 text-center text-xs font-medium">
                         <div id="stepTab1" onclick="jumpToStep(1)" class="cursor-pointer space-y-1.5 transition text-amber-400">
                             <div class="w-8 h-8 rounded-full bg-nipo-gold text-nipo-navy flex items-center justify-center font-bold mx-auto shadow-md">1</div>
                             <div class="truncate">Applicant Info</div>
@@ -195,7 +195,11 @@
                         </div>
                         <div id="stepTab5" onclick="jumpToStep(5)" class="cursor-pointer space-y-1.5 transition text-slate-400">
                             <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold mx-auto">5</div>
-                            <div class="truncate">Review & Sign</div>
+                            <div class="truncate">Additional Documents</div>
+                        </div>
+                        <div id="stepTab6" onclick="jumpToStep(6)" class="cursor-pointer space-y-1.5 transition text-slate-400">
+                            <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold mx-auto">6</div>
+                            <div class="truncate">Declaration & Fees</div>
                         </div>
                     </div>
                 </div>
@@ -373,7 +377,7 @@
                                 
                                 <div>
                                     <label class="block text-xs font-bold text-amber-900 uppercase mb-1">Upload Signed Power of Attorney Document *</label>
-                                    <input type="file" id="poaDocUpload" accept=".pdf,image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-700 file:text-white hover:file:bg-amber-800 cursor-pointer">
+                                    <input type="file" id="poaDocUpload" accept=".pdf,application/pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-700 file:text-white hover:file:bg-amber-800 cursor-pointer">
                                 </div>
                             </div>
 
@@ -456,7 +460,7 @@
                                 </p>
                                 <div>
                                     <label class="block text-xs font-bold text-blue-900 uppercase mb-1">Upload Sworn Translator Certificate *</label>
-                                    <input type="file" id="swornTranslatorDocUpload" accept=".pdf,image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-700 file:text-white hover:file:bg-blue-800 cursor-pointer">
+                                    <input type="file" id="swornTranslatorDocUpload" accept=".pdf,application/pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-700 file:text-white hover:file:bg-blue-800 cursor-pointer">
                                 </div>
                             </div>
 
@@ -475,8 +479,8 @@
                                     Three-Dimensional (3D) Representation (Optional)
                                 </label>
                                 <div id="threeDRepresentationSection" class="hidden space-y-2">
-                                    <p class="text-xs text-slate-600">If the mark is three-dimensional, attach views or representations of the 3D mark (PDF, JPG or PNG). These will appear as separate pages after the application.</p>
-                                    <input type="file" id="threeDRepresentationUpload" accept=".pdf,image/png,image/jpeg,image/webp" multiple class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-nipo-deepBlue file:text-white">
+                                    <p class="text-xs text-slate-600">If the mark is three-dimensional, attach views or representations of the 3D mark (PDF only). These will appear as separate pages after the application.</p>
+                                    <input type="file" id="threeDRepresentationUpload" accept=".pdf,application/pdf" multiple class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-nipo-deepBlue file:text-white">
                                 </div>
                             </div>
 
@@ -546,8 +550,8 @@
                             </label>
                             <p class="text-xs text-slate-600">Optional alternative to selecting goods from the list above. When selected, the Form M-01 goods/services box will display <strong>Attached</strong>, and the uploaded specification will be included as pages after the application.</p>
                             <div id="goodsAttachmentPanel" class="hidden space-y-3 p-3 bg-white rounded-lg border border-amber-200">
-                                <label for="pdfClassUploader" class="block text-xs font-bold text-amber-900 uppercase">Attach Class – Goods / Services Specification (PDF, JPG or PNG)</label>
-                                <input type="file" id="pdfClassUploader" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" onchange="handleClassPdfUpload(event)" class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-amber-700 file:text-white file:font-semibold">
+                                <label for="pdfClassUploader" class="block text-xs font-bold text-amber-900 uppercase">Attach Class – Goods / Services Specification (PDF only)</label>
+                                <input type="file" id="pdfClassUploader" accept=".pdf,application/pdf" onchange="handleClassPdfUpload(event)" class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-amber-700 file:text-white file:font-semibold">
                                 <p id="goodsAttachmentName" class="text-xs text-slate-500" aria-live="polite">No attachment selected.</p>
                                 <div class="p-3 bg-amber-100/90 rounded border border-amber-300 text-xs text-amber-950 flex items-start gap-2.5">
                                     <i class="fa-solid fa-triangle-exclamation text-amber-700 text-sm mt-0.5"></i>
@@ -595,8 +599,8 @@
                                 <label class="block text-xs font-bold text-amber-900 uppercase">Certified Priority Document Upload / Submission *</label>
                                 
                                 <div id="priorityUploadBox" class="bg-white p-3.5 rounded-lg border border-amber-300">
-                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Upload Certified Priority Copy (.pdf, .jpg, .png)</label>
-                                    <input type="file" id="priorityDocUpload" accept=".pdf,image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Upload Certified Priority Copy (.pdf)</label>
+                                    <input type="file" id="priorityDocUpload" accept=".pdf,application/pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                                 </div>
 
                                 <div class="flex items-center space-x-2 pt-1">
@@ -621,15 +625,43 @@
                     </div>
 
                     <!-- STEP 5: STATUTORY SIGNATURE, ADDITIONAL DOCS & REVIEW -->
+                    <!-- STEP 5: OPTIONAL ADDITIONAL DOCUMENTS (PDF ONLY) -->
                     <div id="step5" class="wizard-step hidden space-y-6">
+                        <div class="border-b border-slate-100 pb-4">
+                            <h3 class="text-lg font-bold text-nipo-deepBlue">5. Additional Documents (Optional)</h3>
+                            <p class="text-xs text-slate-500 mt-1">Upload supporting PDF documents, if applicable. This section follows the optional priority claim.</p>
+                        </div>
+                        <!-- 1. ADDITIONAL DOCUMENTS UPLOAD SECTION -->
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
+                            <div class="border-b border-slate-200 pb-2">
+                                <span class="text-xs font-bold text-nipo-deepBlue uppercase tracking-wider block"><i class="fa-solid fa-folder-open mr-1.5 text-amber-600"></i> Additional Documents & Special Submissions</span>
+                                <p class="text-xs text-slate-500 mt-0.5">Use this section if you have other supplementary documents or custom submissions.</p>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Specification / Description of Extra Documents *</label>
+                                <input type="text" id="extraDocsDesc" placeholder="e.g. Certified translation of constitution, co-ownership agreement, letter of authorization..." class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Upload Additional Files (.pdf)</label>
+                                <input type="file" id="extraDocsUpload" multiple accept=".pdf,application/pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="step6" class="wizard-step hidden space-y-6">
                         <div class="border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
                                 <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">5</span>
-                                Declaration, Statutory Authentication, Additional Documents & Fee Payment
+                                Declaration, Statutory Authentication & Fee Payment
                             </h3>
-                            <p class="text-xs text-slate-500 mt-1">Provide required statutory signature/seal, attach additional documents, and review fees.</p>
+                            <p class="text-xs text-slate-500 mt-1">Review the declaration, signature/seal guidance and estimated fees.</p>
                         </div>
 
+                        <div class="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950">
+                            <strong>Recommended: Download, print, sign and affix the appropriate seal to the application.</strong>
+                            The generated PDF should be reviewed and signed/sealed as applicable before submission. Uploaded signed supporting documents must be PDFs.
+                        </div>
                         <!-- DYNAMIC CATEGORY SIGNATURE & SEAL REQUIREMENTS (BOTH OPTION A & B AVAILABLE) -->
                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
                             <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
@@ -661,9 +693,9 @@
                                     <div class="space-y-3 p-4 bg-white rounded-xl border border-slate-300 flex flex-col justify-between">
                                         <div>
                                             <label class="block text-xs font-bold text-nipo-deepBlue uppercase mb-1">Option B: Upload Scanned Signature</label>
-                                            <p class="text-[11px] text-slate-500 mb-3">Upload a clean scanned image (.png, .jpg) of your official signature.</p>
+                                            <p class="text-[11px] text-slate-500 mb-3">Upload a signed PDF document (.pdf) of your official signature.</p>
                                         </div>
-                                        <input type="file" id="indSigFileInput" accept="image/*" onchange="handleSigUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
+                                        <input type="file" id="indSigFileInput" accept=".pdf,application/pdf" onchange="handleSigUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                                     </div>
                                 </div>
                             </div>
@@ -686,7 +718,7 @@
                                 </div>
                                 <div class="p-4 bg-white rounded-xl border border-slate-300 space-y-2">
                                     <label class="block text-xs font-bold text-slate-700 uppercase">Upload Scanned Director Signature & Company Seal *</label>
-                                    <input type="file" id="companySealUpload" accept="image/*,.pdf" onchange="handleSealUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
+                                    <input type="file" id="companySealUpload" accept=".pdf,application/pdf" onchange="handleSealUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                                 </div>
                             </div>
 
@@ -702,7 +734,7 @@
                                 </div>
                                 <div class="p-4 bg-white rounded-xl border border-slate-300 space-y-2">
                                     <label class="block text-xs font-bold text-slate-700 uppercase">Upload Partner Signature & Partnership Seal *</label>
-                                    <input type="file" id="partnerSealUpload" accept="image/*,.pdf" onchange="handleSealUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
+                                    <input type="file" id="partnerSealUpload" accept=".pdf,application/pdf" onchange="handleSealUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                                 </div>
                             </div>
 
@@ -718,7 +750,7 @@
                                 </div>
                                 <div class="p-4 bg-white rounded-xl border border-slate-300 space-y-2">
                                     <label class="block text-xs font-bold text-slate-700 uppercase">Upload Proprietor Signature & Business Seal/Stamp *</label>
-                                    <input type="file" id="solePropSealUpload" accept="image/*,.pdf" onchange="handleSealUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
+                                    <input type="file" id="solePropSealUpload" accept=".pdf,application/pdf" onchange="handleSealUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                                 </div>
                             </div>
 
@@ -729,44 +761,29 @@
                             </div>
                         </div>
 
-                        <!-- 1. ADDITIONAL DOCUMENTS UPLOAD SECTION -->
-                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
-                            <div class="border-b border-slate-200 pb-2">
-                                <span class="text-xs font-bold text-nipo-deepBlue uppercase tracking-wider block"><i class="fa-solid fa-folder-open mr-1.5 text-amber-600"></i> Additional Documents & Special Submissions</span>
-                                <p class="text-xs text-slate-500 mt-0.5">Use this section if you have other supplementary documents or custom submissions.</p>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Specification / Description of Extra Documents *</label>
-                                <input type="text" id="extraDocsDesc" placeholder="e.g. Certified translation of constitution, co-ownership agreement, letter of authorization..." class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Upload Additional Files (.pdf, .jpg, .png)</label>
-                                <input type="file" id="extraDocsUpload" multiple accept=".pdf,image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
-                            </div>
-                        </div>
-
+                        <p class="text-xs text-slate-500">Fee estimates shown below are configured for this prototype and must be confirmed against the current NIPO fee schedule before payment.</p>
                         <!-- Detailed Fee Breakdown Box -->
                         <div class="bg-slate-900 text-white rounded-2xl p-6 space-y-4 shadow-xl">
                             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
                                 <h4 class="text-sm font-bold text-amber-400 uppercase tracking-wider">Fee Calculation Schedule (LKR)</h4>
-                                <span class="text-xs bg-slate-800 px-2.5 py-1 rounded text-slate-300 border border-slate-700">Category-Based Schedule</span>
+                                <span class="text-xs bg-slate-800 px-2.5 py-1 rounded text-slate-300 border border-slate-700">User-configured estimates · verify before payment</span>
                             </div>
 
                             <div class="space-y-2 text-xs">
                                 <div class="flex justify-between text-slate-300">
-                                    <span>Base Official Filing Fee (Category Dependent):</span>
+                                    <span>Estimated category filing fee:</span>
                                     <span class="font-mono text-sm text-white" id="baseFeeText">LKR 2,380</span>
                                 </div>
                                 <div class="flex justify-between text-slate-300">
-                                    <span>Priority Claim Filing Fee:</span>
+                                    <span>Priority fee (not included):</span>
                                     <span class="font-mono text-sm text-white" id="priorityFeeText">LKR 0</span>
                                 </div>
                                 <div class="flex justify-between text-slate-300">
-                                    <span>Agent Registration Processing Fee:</span>
+                                    <span>Agent fee (not included):</span>
                                     <span class="font-mono text-sm text-white" id="agentFeeText">LKR 0</span>
                                 </div>
                                 <div class="border-t border-slate-800 pt-3 flex justify-between items-center text-sm font-bold">
-                                    <span class="text-amber-400">TOTAL MANDATORY FEES DUE:</span>
+                                    <span class="text-amber-400">ESTIMATED CATEGORY FEE:</span>
                                     <span class="text-2xl font-extrabold text-amber-400 font-mono" id="totalFeeAmountText">LKR 2,380</span>
                                 </div>
                             </div>
@@ -781,6 +798,16 @@
                                 </label>
                             </div>
                         </div>
+                    <div class="mt-5 rounded-xl border-2 border-red-400 bg-red-50 p-5 text-red-800" role="note">
+                        <h4 class="font-extrabold text-base mb-2">Important: Documents to submit to NIPO</h4>
+                        <ol class="list-decimal pl-5 text-sm font-bold space-y-1">
+                            <li>Application</li>
+                            <li>Copy of the application</li>
+                            <li>Fees in cash should be submitted to the NIPO cash counter.</li>
+                        </ol>
+                        <p class="text-xs mt-3 font-medium">Generating a PDF does not submit the application or pay any fee.</p>
+                    </div>
+
                     </div>
 
                     <!-- NAV BUTTONS AT BOTTOM OF WIZARD -->
@@ -1171,14 +1198,14 @@
         // STEP NAVIGATION
         function changeStep(dir) {
             const nextStep = currentStep + dir;
-            if (nextStep < 1 || nextStep > 5) return;
+            if (nextStep < 1 || nextStep > 6) return;
             jumpToStep(nextStep);
         }
 
         function jumpToStep(step) {
             document.getElementById(`step${currentStep}`).classList.add('hidden');
             
-            for(let i=1; i<=5; i++) {
+            for(let i=1; i<=6; i++) {
                 const tab = document.getElementById(`stepTab${i}`);
                 const circle = tab.children[0];
                 if(i === step) {
@@ -1197,7 +1224,7 @@
             document.getElementById(`step${currentStep}`).classList.remove('hidden');
 
             document.getElementById('btnPrevStep').classList.toggle('hidden', currentStep === 1);
-            document.getElementById('btnNextStep').classList.toggle('hidden', currentStep === 5);
+            document.getElementById('btnNextStep').classList.toggle('hidden', currentStep === 6);
             
         }
 
@@ -1272,35 +1299,32 @@
 
         function handleSigUpload(event) {
             const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    capturedSigDataUrl = e.target.result;
-                    document.getElementById('sigImgDisplay').src = capturedSigDataUrl;
-                    document.getElementById('sigPreviewBox').classList.remove('hidden');
-                    updateDocPreview();
-                }
-                reader.readAsDataURL(file);
+            if (file && !/\.pdf$/i.test(file.name)) {
+                alert('Please upload the signed document as a PDF.');
+                event.target.value = ''; return;
             }
+            capturedSigDataUrl = null;
+            document.getElementById('sigPreviewBox')?.classList.add('hidden');
+            updateDocPreview();
         }
 
         function handleSealUpload(event) {
             const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    capturedSigDataUrl = e.target.result;
-                    document.getElementById('sigImgDisplay').src = capturedSigDataUrl;
-                    document.getElementById('sigPreviewBox').classList.remove('hidden');
-                    updateDocPreview();
-                }
-                reader.readAsDataURL(file);
+            if (file && !/\.pdf$/i.test(file.name)) {
+                alert('Please upload the signed and sealed document as a PDF.');
+                event.target.value = ''; return;
             }
+            // The signed PDF is appended to the final generated application.
+            capturedSigDataUrl = null;
+            const preview = document.getElementById('sigPreviewBox');
+            if (preview) preview.classList.add('hidden');
+            updateDocPreview();
         }
 
         function removeDynamicRow(btn, callback) {
             btn.parentElement.remove();
             if(callback) callback();
+            calculateFees();
         }
 
         function addProprietor() {
@@ -1313,6 +1337,7 @@
                 <button type="button" onclick="removeDynamicRow(this, updateSolePropString)" class="px-2 py-2 text-red-500 hover:text-red-700 text-xs font-bold"><i class="fa-solid fa-trash-can"></i> Remove</button>
             `;
             container.appendChild(div);
+            calculateFees();
         }
 
         function updateSolePropString() {
@@ -1324,6 +1349,7 @@
             document.getElementById('formattedSolePropDisplay').innerText = formatted;
             document.getElementById('docApplicantName').innerText = formatted;
             document.getElementById('docCategory').innerText = "Proprietorship";
+            calculateFees();
         }
 
         function addPartner() {
@@ -1587,8 +1613,8 @@
             const file = event.target.files[0];
             const label = document.getElementById('goodsAttachmentName');
             if (!file) { label.textContent = 'No attachment selected.'; updateDocPreview(); return; }
-            if (!(/\.pdf$/i.test(file.name) || /\.(png|jpe?g)$/i.test(file.name))) {
-                alert('Please upload the goods/services specification as PDF, JPG or PNG.');
+            if (!/\.pdf$/i.test(file.name)) {
+                alert('Please upload the goods/services specification as PDF only.');
                 event.target.value = ''; label.textContent = 'No attachment selected.'; return;
             }
             label.textContent = 'Selected: ' + file.name;
@@ -1596,25 +1622,19 @@
         }
 
         function calculateFees() {
-            let total = 2380; // Base Class 1 fee
-            let priorityFee = 0;
-            let agentFee = 0;
-
-            const hasPriority = document.getElementById('hasPriorityClaim')?.checked;
-            if (hasPriority) priorityFee = 1000;
-
-            const addressLoc = document.querySelector('input[name="addressLocation"]:checked')?.value;
-            if (addressLoc === 'Overseas') agentFee = 1500;
-
-            total += priorityFee + agentFee;
-
-            document.getElementById('headerFeeDisplay').innerText = `LKR ${total.toLocaleString()}`;
-            document.getElementById('totalFeeAmountText').innerText = `LKR ${total.toLocaleString()}`;
-            document.getElementById('docTotalFee').innerText = `LKR ${total.toLocaleString()}`;
-            
-            document.getElementById('baseFeeText').innerText = `LKR 2,380`;
-            document.getElementById('priorityFeeText').innerText = `LKR ${priorityFee.toLocaleString()}`;
-            document.getElementById('agentFeeText').innerText = `LKR ${agentFee.toLocaleString()}`;
+            const category = document.querySelector('input[name="applicantCategory"]:checked')?.value || 'Individual';
+            const proprietors = [...document.querySelectorAll('.proprietor-input')].filter(e => e.value.trim()).length;
+            const base = category === 'Company' || category === 'Partnership' ||
+                (category === 'SoleProprietorship' && proprietors > 1) ? 7080 : 2380;
+            // Display the category-based estimates supplied for this prototype.
+            // Do not add unverified priority or agent charges to these figures.
+            const formatted = `LKR ${base.toLocaleString('en-US')}`;
+            ['headerFeeDisplay','totalFeeAmountText','docTotalFee','baseFeeText'].forEach(id => {
+                const el = document.getElementById(id); if (el) el.textContent = formatted;
+            });
+            ['priorityFeeText','agentFeeText'].forEach(id => {
+                const el = document.getElementById(id); if (el) el.textContent = 'Not included';
+            });
         }
 
         function updateDocPreview() {
@@ -1727,7 +1747,7 @@
 
 
         document.addEventListener('DOMContentLoaded', () => {
-            const step5 = document.getElementById('step5');
+            const step5 = document.getElementById('step6');
             const button = document.getElementById('btnDownloadM01');
             if (step5 && button) {
                 const refresh = () => button.classList.toggle('hidden', step5.classList.contains('hidden'));
@@ -1744,6 +1764,15 @@
             if(!document.getElementById('declarationCheck').checked){alert('Please confirm the declaration before generating the application.');return;}
             if(!selectedClass){alert('Please select a Nice class before generating the application.');return;}
             if(document.getElementById('attachGoodsListCheck')?.checked && !document.getElementById('pdfClassUploader')?.files?.length){alert('Please attach the goods/services specification before generating the application.');return;}
+            const uploadInputs = [...document.querySelectorAll('input[type="file"]')].filter(el => el.id !== 'logoFileInput');
+            for (const input of uploadInputs) {
+                for (const file of input.files) {
+                    if (!/\.pdf$/i.test(file.name) || (file.type && file.type !== 'application/pdf')) {
+                        alert('Only PDF supporting documents are accepted: ' + file.name);
+                        return;
+                    }
+                }
+            }
             btn.disabled=true;btn.textContent='Generating application and attachments...';
             try {
                 if(!window.PDFLib)throw new Error('PDF library could not load. Please check your connection.');
@@ -1858,10 +1887,7 @@
                             const source=await PDFLib.PDFDocument.load(await file.arrayBuffer());
                             const pages=await pdf.copyPages(source,source.getPageIndices());
                             for(const page of pages)pdf.addPage(page);
-                        }else if(file.type.startsWith('image/')){
-                            const page=pdf.addPage([612,792]);pageTitle(page,'ATTACHMENT - '+label,file.name);
-                            await drawCentered(await fileToDataUrl(file),page,{x:48,y:75,w:516,h:620});
-                        }else throw new Error('Unsupported attachment type: '+file.name+' (PDF or image required)');
+                        }else throw new Error('Supporting documents must be PDF files: '+file.name);
                     }
                 }
                 // Refresh appearance streams while retaining editable AcroForm widgets.
