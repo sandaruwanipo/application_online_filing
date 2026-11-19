@@ -7,7 +7,7 @@
     <!-- Public document generator: no login redirect. -->
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=UexvRvRpV7tLY0fBQ-gzmFwQvfEViDdPWWSP-LWkZZU1YGt9OfDWcJteYs0M3tRLnFtvsE4y0pCIbfyJDVZojLThz0ERRTtioSiUlaPjQEOAE9sVmM4jAlFfkXbiqWLXuy4xSpelfrL50iak9Ektr13HR67WtiGUXimpMuXhiYVRvPDUduBKmNT51nB-jwzPSkLTsALIemKmSj_h5yXZwCaLthoYjkVOVBXI4pMtwfrYjujktNoNiHibKMnaXc5PgKvWw1AMv9HDRjE5RjXtTQ" charset="UTF-8"></script><script type="text/javascript" src="https://gc.kes.v2.scr.kaspersky-labs.com/7EA5E9BB-55E1-4C31-9C21-4943DDFED2E4/main.js?attr=xUNmJKcqyFvi1wENPCP_f8KWLLjmuuM9T-4v4T-kNnHXoxNmaal0qxAnRtZ5OxU0eDIarJXi6JY7AUGD5rPPsUS5pm59B2h4qEk7LBPxNjFVRc5nUBxo73bQkjCHgL03g9KuteCw35nhU_ICuM86H0S78MV7v7kSrckDq1mLfl4ZAhN5f7_sxVoyc7hHnOmq9G7k8D3-cYKFh31O-MiMEwJ81KWc_v8PB2GGgpKm454oZ5ZC1I2Wn_Pas0591eq3cIOWrN1hG1Vc5yytoWtYTieZjGiBrzn0o6cwC7yHLwN-g6-VOPMYHweEoweICBisT8rL1hhNAxbYmNGUTLWLnA" charset="UTF-8"></script><script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -472,7 +472,6 @@
                                 </p>
                                 <input type="text" id="colorClaim" placeholder="e.g. Royal Blue, Gold, and White" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm">
                             </div>
-
                             <!-- Optional three-dimensional mark representation -->
                             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
                                 <label class="flex items-center gap-2 text-xs font-bold text-slate-700 uppercase">
@@ -623,7 +622,7 @@
                                         <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> Statutory Notice under Sri Lanka IP Act No. 36 of 2003
                                     </div>
                                     <p class="leading-relaxed">
-                                        You have opted to submit the certified Priority Document later. Pursuant to NIPO regulations, the official certified priority document together with certified English translation must be lodged with the Registrar General within <strong>three (3) months</strong> from this application filing date. Failure to lodge within 3 months will result in forfeiture of priority status.
+                                        You have opted to submit the certified Priority Document later. Pursuant to NIPO regulations, the official certified priority document together with certified English translation must be lodged with the Registrar General within **three (3) months** from this application filing date. Failure to lodge within 3 months will result in forfeiture of priority status.
                                     </p>
                                 </div>
                             </div>
@@ -631,6 +630,7 @@
                         </div>
                     </div>
 
+                    <!-- STEP 5: STATUTORY SIGNATURE, ADDITIONAL DOCS & REVIEW -->
                     <!-- STEP 5: OPTIONAL ADDITIONAL DOCUMENTS (PDF ONLY) -->
                     <div id="step5" class="wizard-step hidden space-y-6">
                         <div class="border-b border-slate-100 pb-4">
@@ -652,13 +652,13 @@
                                 <input type="file" id="extraDocsUpload" multiple accept=".pdf,application/pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                             </div>
                         </div>
+
                     </div>
 
-                    <!-- STEP 6: STATUTORY SIGNATURE, ADDITIONAL DOCS & REVIEW -->
                     <div id="step6" class="wizard-step hidden space-y-6">
                         <div class="border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
-                                <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">6</span>
+                                <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">5</span>
                                 Declaration, Statutory Authentication & Fee Payment
                             </h3>
                             <p class="text-xs text-slate-500 mt-1">Review the declaration, signature/seal guidance and estimated fees.</p>
@@ -668,7 +668,6 @@
                             <strong>Recommended: Download, print, sign and affix the appropriate seal to the application.</strong>
                             The generated PDF should be reviewed and signed/sealed as applicable before submission. Uploaded signed supporting documents must be PDFs.
                         </div>
-
                         <!-- DYNAMIC CATEGORY SIGNATURE & SEAL REQUIREMENTS (BOTH OPTION A & B AVAILABLE) -->
                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
                             <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
@@ -769,7 +768,6 @@
                         </div>
 
                         <p class="text-xs text-slate-500">Fee estimates shown below are configured for this prototype and must be confirmed against the current NIPO fee schedule before payment.</p>
-
                         <!-- Detailed Fee Breakdown Box -->
                         <div class="bg-slate-900 text-white rounded-2xl p-6 space-y-4 shadow-xl">
                             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -806,16 +804,15 @@
                                 </label>
                             </div>
                         </div>
-
-                        <div class="mt-5 rounded-xl border-2 border-red-400 bg-red-50 p-5 text-red-800" role="note">
-                            <h4 class="font-extrabold text-base mb-2">Important: Documents to submit to NIPO</h4>
-                            <ol class="list-decimal pl-5 text-sm font-bold space-y-1">
-                                <li>Application</li>
-                                <li>Copy of the application</li>
-                                <li>Fees in cash should be submitted to the NIPO cash counter.</li>
-                            </ol>
-                            <p class="text-xs mt-3 font-medium">Generating a PDF does not submit the application or pay any fee.</p>
-                        </div>
+                    <div class="mt-5 rounded-xl border-2 border-red-400 bg-red-50 p-5 text-red-800" role="note">
+                        <h4 class="font-extrabold text-base mb-2">Important: Documents to submit to NIPO</h4>
+                        <ol class="list-decimal pl-5 text-sm font-bold space-y-1">
+                            <li>Application</li>
+                            <li>Copy of the application</li>
+                            <li>Fees in cash should be submitted to the NIPO cash counter.</li>
+                        </ol>
+                        <p class="text-xs mt-3 font-medium">Generating a PDF does not submit the application or pay any fee.</p>
+                    </div>
 
                     </div>
 
@@ -831,9 +828,12 @@
                             <button type="button" id="btnNextStep" onclick="changeStep(1)" class="px-6 py-2.5 rounded-xl bg-nipo-deepBlue text-white font-bold text-xs hover:bg-slate-800 transition shadow-md flex items-center gap-2">
                                 <span>Continue</span> <i class="fa-solid fa-arrow-right"></i>
                             </button>
-                            <button type="button" id="btnDownloadM01" onclick="downloadCompletedM01()" class="hidden px-6 py-2.5 rounded-xl bg-emerald-700 text-white font-bold text-xs hover:bg-emerald-800 transition shadow-md flex items-center gap-2">
-                                <i class="fa-solid fa-file-arrow-down"></i> Generate & Download Filled Form M-01 PDF
-                            </button>
+                            <label class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-slate-300 text-[11px] font-semibold text-slate-700 cursor-pointer hover:border-amber-500" title="Optional: use your own copy of Form M 01 as the template. If left empty, the Form_M01_Fillable_Multiline.pdf beside index.html is used.">
+                                <i class="fa-solid fa-file-arrow-up text-amber-600"></i> Form M 01 template (optional)
+                                <input type="file" id="m01TemplateUpload" accept="application/pdf,.pdf" class="hidden">
+                                <span id="m01TemplateName" class="font-normal text-slate-500">Using built-in Form_M01_Fillable_Multiline.pdf</span>
+                            </label>
+                            <button type="button" id="btnDownloadM01" onclick="downloadCompletedM01()" class="hidden px-5 py-2.5 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-700 transition shadow-md flex items-center gap-2"><i class="fa-solid fa-file-pdf"></i> Generate Application PDF</button>
                         </div>
                     </div>
 
@@ -1091,6 +1091,7 @@
 
         // INITIALIZATION - FETCH mgs.json ON LOAD
         window.onload = async function() {
+            // Public mode: do not show private account details.
             const activeUser = null;
             if (activeUser) {
                 try {
@@ -1120,6 +1121,7 @@
             calculateFees();
             document.getElementById('docDateToday').innerText = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
             
+            // Close autocomplete dropdown on clicking outside
             document.addEventListener('click', function(e) {
                 const dropdown = document.getElementById('goodsDropdown');
                 const searchInput = document.getElementById('goodsSearchInput');
@@ -1234,6 +1236,7 @@
 
             document.getElementById('btnPrevStep').classList.toggle('hidden', currentStep === 1);
             document.getElementById('btnNextStep').classList.toggle('hidden', currentStep === 6);
+            
         }
 
         // CATEGORY CHANGE
@@ -1322,6 +1325,7 @@
                 alert('Please upload the signed and sealed document as a PDF.');
                 event.target.value = ''; return;
             }
+            // The signed PDF is appended to the final generated application.
             capturedSigDataUrl = null;
             const preview = document.getElementById('sigPreviewBox');
             if (preview) preview.classList.add('hidden');
@@ -1498,6 +1502,7 @@
             updateDocPreview();
         }
 
+        // KEYWORD SEARCH ACROSS ALL CLASSES / ACTIVE CLASS
         function filterGoodsDropdown() {
             const query = document.getElementById('goodsSearchInput').value.toLowerCase().trim();
             const dropdown = document.getElementById('goodsDropdown');
@@ -1510,6 +1515,7 @@
             let foundMatches = [];
 
             if (selectedClass) {
+                // Filter terms within selected active class
                 const items = getClassItems(selectedClass);
                 items.forEach(item => {
                     if (item.toLowerCase().includes(query) && !selectedClassGoods.includes(item)) {
@@ -1517,6 +1523,7 @@
                     }
                 });
             } else {
+                // Search across all 45 classes in mgs.json database
                 for (let c = 1; c <= 45; c++) {
                     const items = getClassItems(c);
                     items.forEach(item => {
@@ -1538,7 +1545,9 @@
                 <span>${foundMatches.length} result(s)</span>
             </div>`;
 
+            // Limit preview list to 50 results
             foundMatches.slice(0, 50).forEach(match => {
+                const className = getClassName(match.classNum);
                 html += `
                     <div onclick="addGoodFromSearch('${match.item.replace(/'/g, "\\'")}', ${match.classNum})" class="px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-100 cursor-pointer border-b border-slate-50 transition flex items-center justify-between">
                         <span class="font-medium"><i class="fa-solid fa-plus text-nipo-deepBlue mr-2 text-[10px]"></i> ${match.item}</span>
@@ -1552,6 +1561,7 @@
         }
 
         function addGoodFromSearch(goodName, targetClass) {
+            // Auto-select class if none was actively highlighted
             if (!selectedClass && targetClass) {
                 selectSingleNiceClass(targetClass);
             }
@@ -1627,6 +1637,8 @@
             const proprietors = [...document.querySelectorAll('.proprietor-input')].filter(e => e.value.trim()).length;
             const base = category === 'Company' || category === 'Partnership' ||
                 (category === 'SoleProprietorship' && proprietors > 1) ? 7080 : 2380;
+            // Display the category-based estimates supplied for this prototype.
+            // Do not add unverified priority or agent charges to these figures.
             const formatted = `LKR ${base.toLocaleString('en-US')}`;
             ['headerFeeDisplay','totalFeeAmountText','docTotalFee','baseFeeText'].forEach(id => {
                 const el = document.getElementById(id); if (el) el.textContent = formatted;
@@ -1637,6 +1649,7 @@
         }
 
         function updateDocPreview() {
+            // Applicant preview
             const nameInput = document.getElementById('applicantFullName')?.value.trim();
             const category = document.querySelector('input[name="applicantCategory"]:checked')?.value;
             
@@ -1653,17 +1666,20 @@
             document.getElementById('docNationality').innerText = document.getElementById('applicantNationality')?.value.trim() || 'Sri Lankan';
             document.getElementById('docAddress').innerText = document.getElementById('applicantAddress')?.value.trim() || '--';
 
+            // Agent Preview
             const agentName = document.getElementById('agentName')?.value.trim();
             const agentAddress = document.getElementById('agentAddress')?.value.trim();
             document.getElementById('docAgentName').innerText = agentName || '--';
             document.getElementById('docAgentAddress').innerText = agentAddress || '--';
 
+            // Mark Representation Preview
             const markText = document.getElementById('markText')?.value.trim() || '[ TEXT MARK ]';
             document.getElementById('docMarkTextDisplay').innerText = markText;
             document.getElementById('docMarkLang').innerText = document.getElementById('markLanguage')?.value || 'English';
             document.getElementById('docMarkTranslation').innerText = document.getElementById('markTranslationText')?.value.trim() || '--';
             document.getElementById('docColorClaim').innerText = document.getElementById('colorClaim')?.value.trim() || 'None';
 
+            // Classes & Goods Preview
             const docClassesList = document.getElementById('docClassesList');
             const attachedGoods = document.getElementById('attachGoodsListCheck')?.checked;
             if (!selectedClass) {
@@ -1682,6 +1698,7 @@
                 `;
             }
 
+            // Priority Preview
             const hasPriority = document.getElementById('hasPriorityClaim')?.checked;
             const docPrioritySection = document.getElementById('docPrioritySection');
             if (hasPriority) {
@@ -1693,6 +1710,7 @@
                 docPrioritySection.classList.add('hidden');
             }
 
+            // Signature Output
             const sigImg = document.getElementById('docSigImgOutput');
             const sigPlaceholder = document.getElementById('docSigPlaceholder');
 
@@ -1738,312 +1756,133 @@
             window.print();
         }
 
+
         document.addEventListener('DOMContentLoaded', () => {
-            const step6 = document.getElementById('step6');
+            const step5 = document.getElementById('step6');
             const button = document.getElementById('btnDownloadM01');
-            if (step6 && button) {
-                const refresh = () => button.classList.toggle('hidden', step6.classList.contains('hidden'));
-                new MutationObserver(refresh).observe(step6, { attributes: true, attributeFilter: ['class'] });
+            if (step5 && button) {
+                const refresh = () => button.classList.toggle('hidden', step5.classList.contains('hidden'));
+                new MutationObserver(refresh).observe(step5,{attributes:true,attributeFilter:['class']});
                 refresh();
             }
         });
 
+        // Generate a completed, still-editable Form M-01 with continuation and evidence pages.
+        // All processing takes place locally in the applicant's browser.
         async function downloadCompletedM01() {
-            const btn = document.getElementById('btnDownloadM01');
-            const original = btn.innerHTML;
-
-            if (!document.getElementById('declarationCheck').checked) {
-                alert('Please confirm the declaration before generating the application.');
-                return;
-            }
-            if (!selectedClass) {
-                alert('Please select a Nice class before generating the application.');
-                return;
-            }
-            if (document.getElementById('attachGoodsListCheck')?.checked && !document.getElementById('pdfClassUploader')?.files?.length) {
-                alert('Please attach the goods/services specification before generating the application.');
-                return;
-            }
-
-            const uploadInputs = [...document.querySelectorAll('input[type="file"]')].filter(el => el.id !== 'logoFileInput');
+            const btn=document.getElementById('btnDownloadM01');
+            const original=btn.innerHTML;
+            if(!document.getElementById('declarationCheck').checked){alert('Please confirm the declaration before generating the application.');return;}
+            if(!selectedClass){alert('Please select a Nice class before generating the application.');return;}
+            if(document.getElementById('attachGoodsListCheck')?.checked && !document.getElementById('pdfClassUploader')?.files?.length){alert('Please attach the goods/services specification before generating the application.');return;}
+            const uploadInputs = [...document.querySelectorAll('input[type="file"]')].filter(el => el.id !== 'logoFileInput' && el.id !== 'm01TemplateUpload');
             for (const input of uploadInputs) {
                 for (const file of input.files) {
-                    if (!/\.pdf$/i.test(file.name) || (file.type && file.type !== 'application/pdf')) {
-                        alert('Only PDF supporting documents are accepted: ' + file.name);
-                        return;
-                    }
+                    if (!/\.pdf$/i.test(file.name) || (file.type && file.type !== 'application/pdf')) { alert('Only PDF supporting documents are accepted: ' + file.name); return; }
                 }
             }
-
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Filling & Preparing PDF...';
-
+            btn.disabled=true;btn.textContent='Generating application and attachments...';
             try {
-                if (!window.PDFLib) {
-                    throw new Error('PDF library could not load. Please check your connection.');
+                if(!window.PDFLib)throw new Error('PDF library could not load. Please check your connection.');
+                // TEMPLATE: the uploaded / built-in Form M 01 PDF itself.
+                // The uploaded PDF has NO fillable AcroForm fields (it is a flat print form),
+                // so filling it via getTextField() silently did nothing. Instead we load the
+                // exact uploaded PDF and draw the inputs ON TOP of it, in the same serif
+                // style as the printed form (Times Roman, ~9.5pt, black), at the blank
+                // dotted-line positions of the original form. Original pages/headings kept.
+                let templateBytes=null;
+                const tplInput=document.getElementById('m01TemplateUpload');
+                if(tplInput?.files?.length){ templateBytes=await tplInput.files[0].arrayBuffer(); }
+                else {
+                    const response=await fetch('./Form_M01_Fillable_Multiline.pdf',{cache:'no-store'});
+                    if(!response.ok)throw new Error('Place Form_M01_Fillable_Multiline.pdf beside index.html, or choose it with the "Form M 01 template" picker above.');
+                    templateBytes=await response.arrayBuffer();
                 }
-
-                let response = await fetch('./Form_M01_Fillable_Clean_2.pdf', { cache: 'no-store' });
-                if (!response.ok) {
-                    response = await fetch('./Form_M01_Fillable_Clean.pdf', { cache: 'no-store' });
-                }
-                if (!response.ok) {
-                    throw new Error('Place Form_M01_Fillable_Clean_2.pdf beside index.html in the repository.');
-                }
-
-                const pdf = await PDFLib.PDFDocument.load(await response.arrayBuffer());
-                const form = pdf.getForm();
-
-                const formFont = await pdf.embedFont(PDFLib.StandardFonts.TimesRoman);
-                const formBoldFont = await pdf.embedFont(PDFLib.StandardFonts.TimesRomanBold);
-
-                const { PDFName, PDFString, rgb } = PDFLib;
-                const acroForm = pdf.catalog.lookup(PDFName.of('AcroForm'));
-                if (acroForm) {
-                    let dr = acroForm.lookup(PDFName.of('DR'));
-                    if (!dr) {
-                        dr = pdf.context.obj({});
-                        acroForm.set(PDFName.of('DR'), dr);
-                    }
-                    let fontDict = dr.lookup(PDFName.of('Font'));
-                    if (!fontDict) {
-                        fontDict = pdf.context.obj({});
-                        dr.set(PDFName.of('Font'), fontDict);
-                    }
-                    fontDict.set(PDFName.of('TiRo'), formFont.ref);
-                    acroForm.set(PDFName.of('DA'), PDFString.of('/TiRo 10 Tf 0 0 0 rg'));
-                }
-
-                const value = id => document.getElementById(id)?.value?.trim() || '';
-                const checked = id => !!document.getElementById(id)?.checked;
-
-                const category = document.querySelector('input[name="applicantCategory"]:checked')?.value || 'Individual';
-                let applicant = value('applicantFullName');
-                if (category === 'Partnership') {
-                    applicant = [
-                        value('partnershipFirmName'),
-                        [...document.querySelectorAll('.partner-input')].map(e => e.value.trim()).filter(Boolean).join(', ')
-                    ].filter(Boolean).join(' trading as ');
-                }
-                if (category === 'SoleProprietorship') {
-                    applicant = [
-                        [...document.querySelectorAll('.proprietor-input')].map(e => e.value.trim()).filter(Boolean).join(', '),
-                        value('solePropBusinessName')
-                    ].filter(Boolean).join(' trading as ');
-                }
-
-                const set = (name, text, size = 10) => {
-                    try {
-                        const field = form.getTextField(name);
-                        field.setText(String(text || ''));
-                        field.setFontSize(size);
-                        field.acroField.setDefaultAppearance(`/TiRo ${size} Tf 0 0 0 rg`);
-                        field.updateAppearances(formFont);
-                    } catch (err) {
-                        console.warn('PDF field unavailable:', name, err);
-                    }
+                const pdf=await PDFLib.PDFDocument.load(templateBytes);
+                if(pdf.getPageCount()<2)throw new Error('The Form M 01 template must have 2 pages.');
+                const font=await pdf.embedFont(PDFLib.StandardFonts.TimesRoman);
+                const fontBold=await pdf.embedFont(PDFLib.StandardFonts.TimesRomanBold);
+                const {rgb}=PDFLib;
+                const value=id=>document.getElementById(id)?.value?.trim()||'';
+                const checked=id=>!!document.getElementById(id)?.checked;
+                const category=document.querySelector('input[name="applicantCategory"]:checked')?.value||'Individual';
+                let applicant=value('applicantFullName');
+                if(category==='Partnership')applicant=[value('partnershipFirmName'),[...document.querySelectorAll('.partner-input')].map(e=>e.value.trim()).filter(Boolean).join(', ')].filter(Boolean).join(' - ');
+                if(category==='SoleProprietorship')applicant=[value('solePropBusinessName'),[...document.querySelectorAll('.proprietor-input')].map(e=>e.value.trim()).filter(Boolean).join(', ')].filter(Boolean).join(' - ');
+                const page1=pdf.getPage(0), page2=pdf.getPage(1);
+                const H1=page1.getHeight(), H2=page2.getHeight();
+                const yTop=(pageH,top)=>pageH-top;
+                const drawField=(page,pageH,text,{x,top,width,size=9.5,lineHeight=12,maxLines=3,bold=false})=>{
+                    text=String(text||'').trim(); if(!text) return;
+                    let s=size; const f=bold?fontBold:font;
+                    const wrap=(sz)=>{ const words=text.split(/\s+/), lines=[]; let line=''; for(const w of words){ const trial=line?line+' '+w:w; if(f.widthOfTextAtSize(trial,sz)>width && line){lines.push(line); line=w;} else line=trial; } if(line)lines.push(line); return lines; };
+                    let lines=wrap(s);
+                    while(lines.length>maxLines && s>7){ s-=0.5; lines=wrap(s); }
+                    lines=lines.slice(0,maxLines);
+                    lines.forEach((ln,i)=>page.drawText(ln,{x,y:yTop(pageH,top)-i*lineHeight,size:s,font:f,color:rgb(0,0,0)}));
                 };
-
-                const todayStr = new Date().toLocaleDateString('en-GB');
-                const goods = selectedClassGoods.join('; ');
-                const goodsAttached = checked('attachGoodsListCheck');
-                const isOverseasOrAgent = document.querySelector('input[name="addressLocation"]:checked')?.value === 'Overseas';
-
-                set('fees_paid_on', '', 10);
-                set('application_no', '', 10);
-                set('vienna_code', '', 10);
-
-                const idStr = value('applicantIdNo') ? ` (ID/Reg: ${value('applicantIdNo')})` : '';
-                const natStr = value('applicantNationality') ? ` [${value('applicantNationality')}]` : '';
-                set('applicant_name', `${applicant}${idStr}${natStr}`, 10);
-                set('applicant_address', value('applicantAddress'), 10);
-                set('applicant_contact', [value('applicantPhone'), value('applicantEmail')].filter(Boolean).join(' / '), 10);
-
-                set('mark_representation_note', logoDataUrl ? '' : value('markText'), 11);
-
-                set('mark_translation', value('markTranslationText'), 10);
-                set('colours_claimed', value('colorClaim'), 10);
-                set('three_d_shape_claimed', checked('has3DRepresentation') ? 'Three-dimensional mark; representations attached.' : '', 10);
-
-                set('goods_services_class', `Class ${selectedClass}`, 10);
-
-                set('priority_filed_on', checked('hasPriorityClaim') ? value('priorityDate') : '', 10);
-                set('exhibition_deemed_filed_on', '', 10);
-
-                set('address_for_service_sl', isOverseasOrAgent ? value('agentAddress') : '', 10);
-                set('agent_name', isOverseasOrAgent ? value('agentName') : '', 10);
-                set('agent_address', isOverseasOrAgent ? value('agentAddress') : '', 10);
-                set('agent_contact', isOverseasOrAgent ? [value('agentPhone'), value('agentEmail')].filter(Boolean).join(' / ') : '', 10);
-
-                set('collective_certification_note', '', 10);
-
-                const signatory =
-                    category === 'Company'
-                        ? [value('companyDirectorName'), value('companyDirectorDesignation')].filter(Boolean).join(' - ')
-                        : category === 'Partnership'
-                        ? value('signingPartnerName')
-                        : category === 'SoleProprietorship'
-                        ? value('signingProprietorName')
-                        : applicant;
-
-                const sigBlockText = capturedSigDataUrl
-                    ? `Date: ${todayStr}`
-                    : [signatory, `Date: ${todayStr}`].filter(Boolean).join('   |   ');
-                set('signature_and_date', sigBlockText, 10);
-
-                const pageTitle = (page, title, subtitle = '') => {
-                    page.drawText(title, { x: 42, y: 746, size: 12, font: formBoldFont, color: rgb(0.08, 0.16, 0.28) });
-                    if (subtitle) {
-                        page.drawText(subtitle.slice(0, 110), { x: 42, y: 726, size: 10, font: formFont });
-                    }
-                    page.drawLine({ start: { x: 42, y: 715 }, end: { x: 570, y: 715 }, thickness: 0.7 });
-                };
-
-                const embedImage = async (dataUrl) => {
-                    if (!dataUrl) return null;
-                    if (dataUrl.startsWith('data:image/png')) return pdf.embedPng(dataUrl);
-                    if (dataUrl.startsWith('data:image/jpeg')) return pdf.embedJpg(dataUrl);
-                    const image = new Image();
-                    image.src = dataUrl;
-                    await image.decode();
-                    const canvas = document.createElement('canvas');
-                    canvas.width = image.naturalWidth;
-                    canvas.height = image.naturalHeight;
-                    canvas.getContext('2d').drawImage(image, 0, 0);
-                    return pdf.embedPng(canvas.toDataURL('image/png'));
-                };
-
-                const drawCentered = async (dataUrl, page, box) => {
-                    const image = await embedImage(dataUrl);
-                    if (!image) return;
-                    const scale = Math.min(box.w / image.width, box.h / image.height);
-                    const w = image.width * scale;
-                    const h = image.height * scale;
-                    page.drawImage(image, {
-                        x: box.x + (box.w - w) / 2,
-                        y: box.y + (box.h - h) / 2,
-                        width: w,
-                        height: h
-                    });
-                };
-
-                if (logoDataUrl) {
-                    await drawCentered(logoDataUrl, pdf.getPage(0), { x: 288, y: 548, w: 260, h: 118 });
-                }
-
-                if (capturedSigDataUrl) {
-                    await drawCentered(capturedSigDataUrl, pdf.getPage(1), { x: 288, y: 118, w: 185, h: 27 });
-                }
-
-                if (goodsAttached) {
-                    set('goods_services_list', 'Attached as separate specification.', 10);
-                } else if (goods.length > 450) {
-                    set('goods_services_list', 'See attached Goods / Services Continuation Sheet.', 10);
-                    const lines = [];
-                    for (const paragraph of goods.split(/\n/)) {
-                        let line = '';
-                        for (const word of paragraph.split(/\s+/).filter(Boolean)) {
-                            if (formFont.widthOfTextAtSize(line ? line + ' ' + word : word, 10) > 500 && line) {
-                                lines.push(line);
-                                line = word;
-                            } else {
-                                line += (line ? ' ' : '') + word;
-                            }
-                        }
-                        lines.push(line);
-                    }
-                    const perPage = 45;
-                    for (let i = 0; i < lines.length; i += perPage) {
-                        const page = pdf.addPage([612, 792]);
-                        pageTitle(
-                            page,
-                            'FORM M-01 - GOODS / SERVICES CONTINUATION',
-                            `Nice Class: ${selectedClass} (${getClassName(selectedClass)}) | Page ${Math.floor(i / perPage) + 1}`
-                        );
-                        const field = form.createTextField('Goods_Services_Continuation_' + (Math.floor(i / perPage) + 1));
-                        field.enableMultiline();
-                        field.addToPage(page, { x: 42, y: 65, width: 528, height: 635, borderWidth: 0.5, font: formFont });
-                        field.setText(lines.slice(i, i + perPage).join('\n'));
-                        field.setFontSize(10);
-                        field.acroField.setDefaultAppearance('/TiRo 10 Tf 0 0 0 rg');
-                        field.updateAppearances(formFont);
-                    }
-                } else {
-                    set('goods_services_list', goods, 10);
-                }
-
-                if (checked('hasPriorityClaim')) {
-                    const page = pdf.addPage([612, 792]);
-                    pageTitle(page, 'FORM M-01 - PRIORITY CLAIM DETAILS');
-                    const field = form.createTextField('Priority_Claim_Full_Details');
-                    field.enableMultiline();
-                    field.setText(
-                        `Country: ${value('priorityCountry')}\n` +
-                        `Earlier Application No.: ${value('priorityNumber')}\n` +
-                        `Filing Date: ${value('priorityDate')}`
-                    );
-                    field.addToPage(page, { x: 42, y: 570, width: 528, height: 125, borderWidth: 0.5, font: formFont });
-                    field.setFontSize(10);
-                    field.acroField.setDefaultAppearance('/TiRo 10 Tf 0 0 0 rg');
-                    field.updateAppearances(formFont);
-                }
-
-                if (logoDataUrl) {
-                    const page = pdf.addPage([612, 792]);
-                    pageTitle(page, 'ATTACHMENT - TRADEMARK REPRESENTATION');
-                    await drawCentered(logoDataUrl, page, { x: 65, y: 135, w: 482, h: 530 });
-                }
-
-                const attachments = [
-                    ...(goodsAttached ? [['pdfClassUploader', 'GOODS / SERVICES SPECIFICATION']] : []),
-                    ['threeDRepresentationUpload', 'THREE-DIMENSIONAL MARK REPRESENTATION'],
-                    ['poaDocUpload', 'POWER OF ATTORNEY'],
-                    ['swornTranslatorDocUpload', 'CERTIFIED TRANSLATION'],
-                    ['priorityDocUpload', 'PRIORITY DOCUMENT'],
-                    ['companySealUpload', 'DIRECTOR SIGNATURE AND SEAL'],
-                    ['partnerSealUpload', 'PARTNERSHIP SIGNATURE AND SEAL'],
-                    ['solePropSealUpload', 'PROPRIETOR SIGNATURE AND SEAL'],
-                    ['indSigFileInput', 'SIGNATURE DOCUMENT'],
-                    ['extraDocsUpload', 'ADDITIONAL DOCUMENT']
-                ];
-
-                for (const [id] of attachments) {
-                    const input = document.getElementById(id);
-                    for (const file of Array.from(input?.files || [])) {
-                        if (file.type === 'application/pdf' || /\.pdf$/i.test(file.name)) {
-                            const source = await PDFLib.PDFDocument.load(await file.arrayBuffer());
-                            const pages = await pdf.copyPages(source, source.getPageIndices());
-                            for (const page of pages) pdf.addPage(page);
-                        } else {
-                            throw new Error('Supporting documents must be PDF files: ' + file.name);
-                        }
-                    }
-                }
-
-                form.updateFieldAppearances(formFont);
-                const bytes = await pdf.save({ updateFieldAppearances: false });
-
-                const safeMarkName = (value('markText') || 'Trademark').replace(/[^a-z0-9_-]+/gi, '_');
-                const blob = new Blob([bytes], { type: 'application/pdf' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `Form_M01_${safeMarkName}_Filled.pdf`;
-                document.body.appendChild(link);
-                link.click();
-                link.remove();
-                setTimeout(() => URL.revokeObjectURL(url), 30000);
-            } catch (err) {
-                console.error(err);
-                alert('Unable to generate application: ' + err.message);
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = original;
-            }
+                const drawInline=(page,pageH,text,{x,top,size=9.5})=>{ text=String(text||'').trim(); if(!text) return; page.drawText(text,{x,y:yTop(pageH,top),size,font,color:rgb(0,0,0)}); };
+                const pageTitle=(page,title,subtitle='')=>{ page.drawText(title,{x:42,y:page.getHeight()-46,size:12,font:fontBold,color:rgb(.08,.16,.28)}); if(subtitle)page.drawText(subtitle.slice(0,110),{x:42,y:page.getHeight()-69,size:9,font}); page.drawLine({start:{x:42,y:page.getHeight()-80},end:{x:570,y:page.getHeight()-80},thickness:0.7}); };
+                const goods=selectedClassGoods.join('; ');
+                const goodsAttached=checked('attachGoodsListCheck');
+                drawField(page1,H1,value('feesPaidOn')||'',{x:360,top:92,width:192,size:9.5,maxLines:1});
+                drawField(page1,H1,applicant,{x:284,top:236,width:268,maxLines:2});
+                drawField(page1,H1,value('applicantAddress'),{x:284,top:265,width:268,maxLines:2});
+                drawField(page1,H1,[value('applicantPhone'),value('applicantEmail')].filter(Boolean).join(' / '),{x:284,top:299,width:268,maxLines:1});
+                if(!logoDataUrl) drawField(page1,H1,value('markText'),{x:300,top:460,width:240,size:14,lineHeight:17,maxLines:3,bold:true});
+                drawField(page1,H1,value('markTranslationText'),{x:284,top:640,width:268,maxLines:4});
+                drawField(page1,H1,value('colorClaim'),{x:284,top:762,width:268,maxLines:3});
+                drawField(page1,H1,checked('has3DRepresentation')?'Three-dimensional mark; representations attached.':'',{x:284,top:862,width:268,maxLines:3});
+                drawField(page2,H2,String(selectedClass),{x:284,top:138,width:268,maxLines:1,bold:true});
+                if(goodsAttached){ drawField(page2,H2,'Attached - see specification',{x:284,top:176,width:268,maxLines:1}); }
+                else if(goods.length>290){
+                    drawField(page2,H2,'See continuation pages',{x:284,top:176,width:268,maxLines:1});
+                    const lines=[]; let line='';
+                    for(const word of goods.split(/\s+/).filter(Boolean)){ const trial=line?line+' '+word:word; if(font.widthOfTextAtSize(trial,10)>500 && line){lines.push(line); line=word;} else line=trial; }
+                    if(line)lines.push(line);
+                    const perPage=47;
+                    for(let i=0;i<lines.length;i+=perPage){ const page=pdf.addPage([612,1009]); pageTitle(page,'FORM M-01 - GOODS / SERVICES CONTINUATION','Nice Class: '+selectedClass+' | Page '+(Math.floor(i/perPage)+1)); page.drawText(lines.slice(i,i+perPage).join('\n'),{x:42,y:page.getHeight()-110,size:10,font,color:rgb(0,0,0),lineHeight:13}); }
+                } else { drawField(page2,H2,goods,{x:284,top:176,width:268,maxLines:14,lineHeight:12}); }
+                if(checked('hasPriorityClaim')) drawInline(page2,H2,value('priorityDate'),{x:302,top:432,size:9.5});
+                if(value('exhibitionDate')) drawInline(page2,H2,value('exhibitionDate'),{x:302,top:499,size:9.5});
+                drawField(page2,H2,value('agentAddress'),{x:284,top:549,width:268,maxLines:2});
+                drawField(page2,H2,value('agentName'),{x:284,top:617,width:268,maxLines:1});
+                drawField(page2,H2,value('agentAddress'),{x:284,top:646,width:268,maxLines:2});
+                drawField(page2,H2,[value('agentPhone'),value('agentEmail')].filter(Boolean).join(' / '),{x:284,top:680,width:268,maxLines:1});
+                const signatory=category==='Company'?value('companyDirectorName'):category==='Partnership'?value('signingPartnerName'):category==='SoleProprietorship'?value('signingProprietorName'):applicant;
+                drawField(page2,H2,signatory,{x:284,top:830,width:268,maxLines:2});
+                drawField(page2,H2,new Date().toLocaleDateString('en-GB'),{x:284,top:880,width:268,maxLines:1});
+                const embedImage=async(dataUrl)=>{ if(!dataUrl)return null; if(dataUrl.startsWith('data:image/png'))return pdf.embedPng(dataUrl); if(dataUrl.startsWith('data:image/jpeg'))return pdf.embedJpg(dataUrl); const image=new Image();image.src=dataUrl;await image.decode(); const canvas=document.createElement('canvas');canvas.width=image.naturalWidth;canvas.height=image.naturalHeight; canvas.getContext('2d').drawImage(image,0,0); return pdf.embedPng(canvas.toDataURL('image/png')); };
+                const drawCentered=async(dataUrl,page,box)=>{ const image=await embedImage(dataUrl);if(!image)return; const scale=Math.min(box.w/image.width,box.h/image.height); const w=image.width*scale,h=image.height*scale; page.drawImage(image,{x:box.x+(box.w-w)/2,y:box.y+(box.h-h)/2,width:w,height:h}); };
+                if(logoDataUrl)await drawCentered(logoDataUrl,page1,{x:314,y:H1-590,w:220,h:180});
+                if(capturedSigDataUrl)await drawCentered(capturedSigDataUrl,page2,{x:335,y:H2-910,w:198,h:28});
+                if(checked('hasPriorityClaim')){ const page=pdf.addPage([612,1009]);pageTitle(page,'FORM M-01 - PRIORITY CLAIM DETAILS'); page.drawText('Country: '+value('priorityCountry')+'\nEarlier application: '+value('priorityNumber')+'\nFiling date: '+value('priorityDate'),{x:42,y:page.getHeight()-220,size:10,font,color:rgb(0,0,0),lineHeight:16}); }
+                if(logoDataUrl){ const page=pdf.addPage([612,1009]);pageTitle(page,'ATTACHMENT - TRADEMARK REPRESENTATION'); await drawCentered(logoDataUrl,page,{x:65,y:135,w:482,h:530}); }
+                const attachments=[ ...(goodsAttached ? [['pdfClassUploader','GOODS / SERVICES SPECIFICATION']] : []), ['threeDRepresentationUpload','THREE-DIMENSIONAL MARK REPRESENTATION'], ['poaDocUpload','POWER OF ATTORNEY'], ['swornTranslatorDocUpload','CERTIFIED TRANSLATION'], ['priorityDocUpload','PRIORITY DOCUMENT'], ['companySealUpload','DIRECTOR SIGNATURE AND SEAL'], ['partnerSealUpload','PARTNERSHIP SIGNATURE AND SEAL'], ['solePropSealUpload','PROPRIETOR SIGNATURE AND SEAL'], ['indSigFileInput','SIGNATURE IMAGE'], ['extraDocsUpload','ADDITIONAL DOCUMENT'], ];
+                for(const [id,label] of attachments){ const input=document.getElementById(id); for(const file of Array.from(input?.files||[])){ if(file.type==='application/pdf'||/\.pdf$/i.test(file.name)){ const source=await PDFLib.PDFDocument.load(await file.arrayBuffer()); const pages=await pdf.copyPages(source,source.getPageIndices()); for(const page of pages)pdf.addPage(page); } else throw new Error('Supporting documents must be PDF files: '+file.name); } }
+                const bytes=await pdf.save();
+                const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
+                const link=document.createElement('a');link.href=url;link.download='Form_M01_Application_Filled.pdf';
+                document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+            }catch(err){console.error(err);alert('Unable to generate application: '+err.message);}
+            finally{btn.disabled=false;btn.innerHTML=original;}
         }
+
+        document.getElementById('m01TemplateUpload')?.addEventListener('change',e=>{
+            const f=e.target.files?.[0];
+            document.getElementById('m01TemplateName').textContent = f ? f.name : 'Using built-in Form_M01_Fillable_Multiline.pdf';
+        });
 
         function searchStatus() {
             alert('Application Status Lookup is coming soon. No live status service is connected.');
+            return;
+            const ref = document.getElementById('trackerInput').value.trim();
+            if (!ref) {
+                alert("Please enter a valid Application Reference Number.");
+                return;
+            }
+            document.getElementById('resRef').innerText = ref;
+            document.getElementById('trackerResult').classList.remove('hidden');
         }
 
         function toggleGeminiChat() {
@@ -2057,6 +1896,7 @@
 
             const box = document.getElementById('geminiMessages');
             
+            // User Message
             const userDiv = document.createElement('div');
             userDiv.className = "bg-slate-200 text-slate-800 p-2.5 rounded-xl rounded-tr-none max-w-[85%] ml-auto text-right";
             userDiv.innerText = text;
@@ -2064,6 +1904,7 @@
 
             input.value = '';
 
+            // AI Response Simulation
             setTimeout(() => {
                 const aiDiv = document.createElement('div');
                 aiDiv.className = "bg-purple-100 text-purple-900 p-2.5 rounded-xl rounded-tl-none max-w-[85%]";
@@ -2080,4 +1921,3 @@
     </script>
 </body>
 </html>
-```[cite: 7, 8, 9]
