@@ -828,10 +828,10 @@
                             <button type="button" id="btnNextStep" onclick="changeStep(1)" class="px-6 py-2.5 rounded-xl bg-nipo-deepBlue text-white font-bold text-xs hover:bg-slate-800 transition shadow-md flex items-center gap-2">
                                 <span>Continue</span> <i class="fa-solid fa-arrow-right"></i>
                             </button>
-                            <label class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-slate-300 text-[11px] font-semibold text-slate-700 cursor-pointer hover:border-amber-500" title="Optional: use your own copy of Form M 01 as the template.">
+                            <label class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-slate-300 text-[11px] font-semibold text-slate-700 cursor-pointer hover:border-amber-500" title="Optional: upload your own copy of Form M 01 as the template.">
                                 <i class="fa-solid fa-file-arrow-up text-amber-600"></i> Form M 01 template (optional)
                                 <input type="file" id="m01TemplateUpload" accept="application/pdf,.pdf" class="hidden">
-                                <span id="m01TemplateName" class="font-normal text-slate-500">Using built-in Form_M01_Fillable_Clean.pdf</span>
+                                <span id="m01TemplateName" class="font-normal text-slate-500">Using built-in Form-M01-New.pdf</span>
                             </label>
                             <button type="button" id="btnDownloadM01" onclick="downloadCompletedM01()" class="hidden px-5 py-2.5 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-700 transition shadow-md flex items-center gap-2"><i class="fa-solid fa-file-pdf"></i> Generate Application PDF</button>
                         </div>
@@ -1747,14 +1747,14 @@
                 const tplInput=document.getElementById('m01TemplateUpload');
                 if(tplInput?.files?.length){ templateBytes=await tplInput.files[0].arrayBuffer(); }
                 else {
-                    const response=await fetch('./Form_M01_Fillable_Clean.pdf',{cache:'no-store'});
-                    if(!response.ok)throw new Error('Place Form_M01_Fillable_Clean.pdf beside index.html, or choose it with the "Form M 01 template" picker above.');
+                    const response=await fetch('./Form-M01-New.pdf',{cache:'no-store'});
+                    if(!response.ok)throw new Error('Place Form-M01-New.pdf beside index.html, or choose it with the "Form M 01 template" picker above.');
                     templateBytes=await response.arrayBuffer();
                 }
                 const pdf=await PDFLib.PDFDocument.load(templateBytes);
                 if(pdf.getPageCount()<2)throw new Error('The Form M 01 template must have 2 pages.');
-                const font=await pdf.embedFont(PDFLib.StandardFonts.Helvetica);
-                const fontBold=await pdf.embedFont(PDFLib.StandardFonts.HelveticaBold);
+                const font=await pdf.embedFont(PDFLib.StandardFonts.TimesRoman);
+                const fontBold=await pdf.embedFont(PDFLib.StandardFonts.TimesRomanBold);
                 const {rgb}=PDFLib;
                 const value=id=>document.getElementById(id)?.value?.trim()||'';
                 const checked=id=>!!document.getElementById(id)?.checked;
@@ -1765,24 +1765,26 @@
                 const page1=pdf.getPage(0), page2=pdf.getPage(1);
                 const H1=page1.getHeight(), H2=page2.getHeight();
                 const yTop=(pageH,top)=>pageH-top;
-                const drawField=(page,pageH,text,{x,top,width,size=12,lineHeight=15,maxLines=3,bold=false})=>{
+                const drawField=(page,pageH,text,{x,top,width,size=10,lineHeight=13,maxLines=3,bold=false})=>{
                     text=String(text||'').trim(); if(!text) return;
                     let s=size; const f=bold?fontBold:font;
                     const wrap=(sz)=>{ const words=text.split(/\s+/), lines=[]; let line=''; for(const w of words){ const trial=line?line+' '+w:w; if(f.widthOfTextAtSize(trial,sz)>width && line){lines.push(line); line=w;} else line=trial; } if(line)lines.push(line); return lines; };
                     let lines=wrap(s);
-                    while(lines.length>maxLines && s>8){ s-=0.5; lines=wrap(s); }
+                    while(lines.length>maxLines && s>7.5){ s-=0.5; lines=wrap(s); }
                     lines=lines.slice(0,maxLines);
                     lines.forEach((ln,i)=>page.drawText(ln,{x,y:yTop(pageH,top)-i*lineHeight,size:s,font:f,color:rgb(0,0,0)}));
                 };
-                const drawInline=(page,pageH,text,{x,top,size=12})=>{ text=String(text||'').trim(); if(!text) return; page.drawText(text,{x,y:yTop(pageH,top),size,font,color:rgb(0,0,0)}); };
-                const pageTitle=(page,title,subtitle='')=>{ page.drawText(title,{x:42,y:page.getHeight()-46,size:18,font:fontBold,color:rgb(.10,.17,.30)}); if(subtitle)page.drawText(subtitle.slice(0,110),{x:42,y:page.getHeight()-72,size:12,font}); page.drawLine({start:{x:42,y:page.getHeight()-84},end:{x:570,y:page.getHeight()-84},thickness:0.7}); };
+                const drawInline=(page,pageH,text,{x,top,size=10})=>{ text=String(text||'').trim(); if(!text) return; page.drawText(text,{x,y:yTop(pageH,top),size,font,color:rgb(0,0,0)}); };
+                const pageTitle=(page,title,subtitle='')=>{ page.drawText(title,{x:42,y:page.getHeight()-46,size:13,font:fontBold,color:rgb(.08,.16,.28)}); if(subtitle)page.drawText(subtitle.slice(0,110),{x:42,y:page.getHeight()-68,size:10,font}); page.drawLine({start:{x:42,y:page.getHeight()-78},end:{x:570,y:page.getHeight()-78},thickness:0.7}); };
                 const goods=selectedClassGoods.join('; ');
                 const goodsAttached=checked('attachGoodsListCheck');
-                drawField(page1,H1,value('feesPaidOn')||'',{x:360,top:92,width:192,size:12,maxLines:1});
+                const brandName=value('markText');
+                drawField(page1,H1,value('feesPaidOn')||'',{x:360,top:92,width:192,size:10,maxLines:1});
                 drawField(page1,H1,applicant,{x:284,top:236,width:268,maxLines:2});
                 drawField(page1,H1,value('applicantAddress'),{x:284,top:265,width:268,maxLines:2});
                 drawField(page1,H1,[value('applicantPhone'),value('applicantEmail')].filter(Boolean).join(' / '),{x:284,top:299,width:268,maxLines:1});
-                if(!logoDataUrl) drawField(page1,H1,value('markText'),{x:300,top:460,width:240,size:14,lineHeight:17,maxLines:3,bold:true});
+                // Fill Text / Brand Name of Mark box in Section II of Form-M01-New.pdf
+                if(brandName) drawField(page1,H1,brandName,{x:284,top:418,width:266,size:11,lineHeight:13,maxLines:2,bold:true});
                 drawField(page1,H1,value('markTranslationText'),{x:284,top:640,width:268,maxLines:4});
                 drawField(page1,H1,value('colorClaim'),{x:284,top:762,width:268,maxLines:3});
                 drawField(page1,H1,checked('has3DRepresentation')?'Three-dimensional mark; representations attached.':'',{x:284,top:862,width:268,maxLines:3});
@@ -1791,13 +1793,13 @@
                 else if(goods.length>290){
                     drawField(page2,H2,'See continuation pages',{x:284,top:176,width:268,maxLines:1});
                     const lines=[]; let line='';
-                    for(const word of goods.split(/\s+/).filter(Boolean)){ const trial=line?line+' '+word:word; if(font.widthOfTextAtSize(trial,12)>500 && line){lines.push(line); line=word;} else line=trial; }
+                    for(const word of goods.split(/\s+/).filter(Boolean)){ const trial=line?line+' '+word:word; if(font.widthOfTextAtSize(trial,10)>500 && line){lines.push(line); line=word;} else line=trial; }
                     if(line)lines.push(line);
-                    const perPage=42;
-                    for(let i=0;i<lines.length;i+=perPage){ const page=pdf.addPage([612,1009]); pageTitle(page,'FORM M-01 - GOODS / SERVICES CONTINUATION','Nice Class: '+selectedClass+' | Page '+(Math.floor(i/perPage)+1)); page.drawText(lines.slice(i,i+perPage).join('\n'),{x:42,y:page.getHeight()-115,size:12,font,color:rgb(0,0,0),lineHeight:16}); }
-                } else { drawField(page2,H2,goods,{x:284,top:176,width:268,maxLines:14,lineHeight:15}); }
-                if(checked('hasPriorityClaim')) drawInline(page2,H2,value('priorityDate'),{x:302,top:432,size:12});
-                if(value('exhibitionDate')) drawInline(page2,H2,value('exhibitionDate'),{x:302,top:499,size:12});
+                    const perPage=47;
+                    for(let i=0;i<lines.length;i+=perPage){ const page=pdf.addPage([612,1009]); pageTitle(page,'FORM M-01 - GOODS / SERVICES CONTINUATION','Nice Class: '+selectedClass+' | Page '+(Math.floor(i/perPage)+1)); page.drawText(lines.slice(i,i+perPage).join('\n'),{x:42,y:page.getHeight()-110,size:10,font,color:rgb(0,0,0),lineHeight:13}); }
+                } else { drawField(page2,H2,goods,{x:284,top:176,width:268,maxLines:14,lineHeight:13}); }
+                if(checked('hasPriorityClaim')) drawInline(page2,H2,value('priorityDate'),{x:302,top:432,size:10});
+                if(value('exhibitionDate')) drawInline(page2,H2,value('exhibitionDate'),{x:302,top:499,size:10});
                 drawField(page2,H2,value('agentAddress'),{x:284,top:549,width:268,maxLines:2});
                 drawField(page2,H2,value('agentName'),{x:284,top:617,width:268,maxLines:1});
                 drawField(page2,H2,value('agentAddress'),{x:284,top:646,width:268,maxLines:2});
@@ -1807,87 +1809,14 @@
                 drawField(page2,H2,new Date().toLocaleDateString('en-GB'),{x:284,top:880,width:268,maxLines:1});
                 const embedImage=async(dataUrl)=>{ if(!dataUrl)return null; if(dataUrl.startsWith('data:image/png'))return pdf.embedPng(dataUrl); if(dataUrl.startsWith('data:image/jpeg'))return pdf.embedJpg(dataUrl); const image=new Image();image.src=dataUrl;await image.decode(); const canvas=document.createElement('canvas');canvas.width=image.naturalWidth;canvas.height=image.naturalHeight; canvas.getContext('2d').drawImage(image,0,0); return pdf.embedPng(canvas.toDataURL('image/png')); };
                 const drawCentered=async(dataUrl,page,box)=>{ const image=await embedImage(dataUrl);if(!image)return; const scale=Math.min(box.w/image.width,box.h/image.height); const w=image.width*scale,h=image.height*scale; page.drawImage(image,{x:box.x+(box.w-w)/2,y:box.y+(box.h-h)/2,width:w,height:h}); };
-                if(logoDataUrl)await drawCentered(logoDataUrl,page1,{x:314,y:H1-590,w:220,h:180});
+                if(logoDataUrl)await drawCentered(logoDataUrl,page1,{x:290,y:H1-585,w:245,h:125});
                 if(capturedSigDataUrl)await drawCentered(capturedSigDataUrl,page2,{x:335,y:H2-910,w:198,h:28});
-                if(checked('hasPriorityClaim')){ const page=pdf.addPage([612,1009]);pageTitle(page,'FORM M-01 - PRIORITY CLAIM DETAILS'); page.drawText('Country: '+value('priorityCountry')+'\nEarlier application: '+value('priorityNumber')+'\nFiling date: '+value('priorityDate'),{x:42,y:page.getHeight()-220,size:12,font,color:rgb(0,0,0),lineHeight:18}); }
+
+                // All attachments placed below the application pages
+                if(checked('hasPriorityClaim')){ const page=pdf.addPage([612,1009]);pageTitle(page,'FORM M-01 - PRIORITY CLAIM DETAILS'); page.drawText('Country: '+value('priorityCountry')+'\nEarlier application: '+value('priorityNumber')+'\nFiling date: '+value('priorityDate'),{x:42,y:page.getHeight()-220,size:10,font,color:rgb(0,0,0),lineHeight:16}); }
                 if(logoDataUrl){ const page=pdf.addPage([612,1009]);pageTitle(page,'ATTACHMENT - TRADEMARK REPRESENTATION'); await drawCentered(logoDataUrl,page,{x:65,y:135,w:482,h:530}); }
                 const attachments=[ ...(goodsAttached ? [['pdfClassUploader','GOODS / SERVICES SPECIFICATION']] : []), ['threeDRepresentationUpload','THREE-DIMENSIONAL MARK REPRESENTATION'], ['poaDocUpload','POWER OF ATTORNEY'], ['swornTranslatorDocUpload','CERTIFIED TRANSLATION'], ['priorityDocUpload','PRIORITY DOCUMENT'], ['companySealUpload','DIRECTOR SIGNATURE AND SEAL'], ['partnerSealUpload','PARTNERSHIP SIGNATURE AND SEAL'], ['solePropSealUpload','PROPRIETOR SIGNATURE AND SEAL'], ['indSigFileInput','SIGNATURE IMAGE'], ['extraDocsUpload','ADDITIONAL DOCUMENT'], ];
                 for(const [id,label] of attachments){ const input=document.getElementById(id); for(const file of Array.from(input?.files||[])){ if(file.type==='application/pdf'||/\.pdf$/i.test(file.name)){ const source=await PDFLib.PDFDocument.load(await file.arrayBuffer()); const pages=await pdf.copyPages(source,source.getPageIndices()); for(const page of pages)pdf.addPage(page); } else throw new Error('Supporting documents must be PDF files: '+file.name); } }
-
-                // Append generated Applicant Details & Summary page at the end of the downloaded PDF
-                const summaryEntries = [
-                    { label: 'Applicant Category', val: category },
-                    { label: 'Applicant Name / Entity', val: applicant },
-                    { label: 'Phone / Email', val: [value('applicantPhone'), value('applicantEmail')].filter(Boolean).join(' / ') },
-                    { label: 'ID / Passport / Reg No.', val: value('applicantIdNo') },
-                    { label: 'Nationality / Country', val: value('applicantNationality') },
-                    { label: 'Applicant Address', val: value('applicantAddress') },
-                    ...(value('agentName') || value('agentAddress') ? [
-                        { label: 'Agent Name', val: value('agentName') },
-                        { label: 'Agent Email / Phone', val: [value('agentEmail'), value('agentPhone')].filter(Boolean).join(' / ') },
-                        { label: 'Agent Address', val: value('agentAddress') }
-                    ] : []),
-                    { label: 'Mark Category', val: selectedMarkType + ' Mark' },
-                    { label: 'Mark Text', val: value('markText') },
-                    { label: 'Mark Language', val: value('markLanguage') },
-                    ...(value('markTranslationText') ? [{ label: 'Translation / Transliteration', val: value('markTranslationText') }] : []),
-                    { label: 'Color Claim', val: value('colorClaim') || 'None' },
-                    { label: '3D Representation', val: checked('has3DRepresentation') ? 'Yes' : 'No' },
-                    { label: 'Nice Class', val: selectedClass ? `Class ${selectedClass} (${getClassName(selectedClass)})` : 'None' },
-                    { label: 'Goods / Services', val: goodsAttached ? 'Attached Specification PDF' : (goods || 'None') },
-                    ...(checked('hasPriorityClaim') ? [
-                        { label: 'Priority Country', val: value('priorityCountry') },
-                        { label: 'Priority Application No.', val: value('priorityNumber') },
-                        { label: 'Priority Filing Date', val: value('priorityDate') }
-                    ] : []),
-                    ...(value('extraDocsDesc') ? [{ label: 'Additional Documents Note', val: value('extraDocsDesc') }] : []),
-                    { label: 'Signatory', val: signatory },
-                    { label: 'Estimated Fee', val: document.getElementById('totalFeeAmountText')?.textContent || 'LKR 2,380' },
-                    { label: 'Generated Date', val: new Date().toLocaleDateString('en-GB') }
-                ].filter(e => e.val && String(e.val).trim().length > 0);
-
-                let sumPage = pdf.addPage([612, 1009]);
-                let sumPageNum = 1;
-                pageTitle(sumPage, 'APPLICANT DETAILS & APPLICATION SUMMARY', `Generated PDF Page ${sumPageNum}`);
-                let cursorY = sumPage.getHeight() - 115;
-                const lineSize = 12;
-                const lineStep = 16;
-                const maxTextWidth = 528;
-
-                const wrapSummaryText = (txt) => {
-                    const words = String(txt).split(/\s+/);
-                    const out = [];
-                    let cur = '';
-                    for (const w of words) {
-                        const test = cur ? cur + ' ' + w : w;
-                        if (font.widthOfTextAtSize(test, lineSize) > maxTextWidth && cur) {
-                            out.push(cur);
-                            cur = w;
-                        } else {
-                            cur = test;
-                        }
-                    }
-                    if (cur) out.push(cur);
-                    return out;
-                };
-
-                for (const entry of summaryEntries) {
-                    const wrappedVal = wrapSummaryText(entry.val);
-                    const neededHeight = lineStep * (1 + wrappedVal.length) + 8;
-                    if (cursorY - neededHeight < 50) {
-                        sumPage = pdf.addPage([612, 1009]);
-                        sumPageNum += 1;
-                        pageTitle(sumPage, 'APPLICANT DETAILS & APPLICATION SUMMARY', `Continued - Page ${sumPageNum}`);
-                        cursorY = sumPage.getHeight() - 115;
-                    }
-                    sumPage.drawText(entry.label + ':', { x: 42, y: cursorY, size: lineSize, font: fontBold, color: rgb(0.10, 0.17, 0.30) });
-                    cursorY -= lineStep;
-                    for (const wl of wrappedVal) {
-                        sumPage.drawText(wl, { x: 54, y: cursorY, size: lineSize, font, color: rgb(0, 0, 0) });
-                        cursorY -= lineStep;
-                    }
-                    cursorY -= 6;
-                }
 
                 const bytes=await pdf.save();
                 const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
@@ -1899,7 +1828,7 @@
 
         document.getElementById('m01TemplateUpload')?.addEventListener('change',e=>{
             const f=e.target.files?.[0];
-            document.getElementById('m01TemplateName').textContent = f ? f.name : 'Using built-in Form_M01_Fillable_Clean.pdf';
+            document.getElementById('m01TemplateName').textContent = f ? f.name : 'Using built-in Form-M01-New.pdf';
         });
 
         function searchStatus() {
