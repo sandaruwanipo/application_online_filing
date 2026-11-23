@@ -807,9 +807,9 @@
                     <div class="mt-5 rounded-xl border-2 border-red-400 bg-red-50 p-5 text-red-800" role="note">
                         <h4 class="font-extrabold text-base mb-2">Important: Documents to submit to NIPO</h4>
                         <ol class="list-decimal pl-5 text-sm font-bold space-y-1">
-                            <li>Application</li>
-                            <li>Copy of the application</li>
-                            <li>Fees in cash should be submitted to the NIPO cash counter.</li>
+                            <li>Application to NIPO front desk</li>
+                            <li>Application Copy</li>
+                            <li>Your Application fees</li>
                         </ol>
                         <p class="text-xs mt-3 font-medium">Generating a PDF does not submit the application or pay any fee.</p>
                     </div>
@@ -932,7 +932,7 @@
             <div class="bg-nipo-deepBlue text-white px-6 py-4 flex items-center justify-between border-b border-nipo-gold">
                 <div class="flex items-center gap-2.5">
                     <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
-                    <h3 class="font-bold text-sm sm:text-base">PDF Downloaded — Next Steps</h3>
+                    <h3 class="font-bold text-sm sm:text-base">PDF Downloaded — Please Submit</h3>
                 </div>
                 <button type="button" onclick="closeDownloadNoticeModal()" class="text-slate-300 hover:text-white text-lg">
                     <i class="fa-solid fa-xmark"></i>
@@ -1801,7 +1801,8 @@
                 if(category==='SoleProprietorship')applicant=[value('solePropBusinessName'),[...document.querySelectorAll('.proprietor-input')].map(e=>e.value.trim()).filter(Boolean).join(', ')].filter(Boolean).join(' - ');
                 const page1=pdf.getPage(0), page2=pdf.getPage(1);
                 const H1=page1.getHeight(), H2=page2.getHeight();
-                const yTop=(pageH,top)=>pageH-top;
+                // Place text baseline right on top of each template line
+                const yTop=(pageH,top)=>pageH-top+2;
                 const overflowAttachments=[];
 
                 const wrapText=(text,width,sz,f)=>{
@@ -1817,7 +1818,7 @@
                     return lines;
                 };
 
-                const drawField=(page,pageH,text,{x,top,width,size=10,lineHeight=13,maxLines=3,bold=false,overflowLabel=''})=>{
+                const drawField=(page,pageH,text,{x,top,width,size=10,lineHeight=14,maxLines=3,bold=false,overflowLabel=''})=>{
                     text=String(text||'').trim(); if(!text) return;
                     const f=bold?fontBold:font;
                     const allLines=wrapText(text,width,size,f);
@@ -1835,29 +1836,29 @@
                 const goodsAttached=checked('attachGoodsListCheck');
                 const brandName=value('markText');
 
-                // Slot 1: Fees paid on
+                // Top header fields
                 drawField(page1,H1,value('feesPaidOn')||'',{x:360,top:92,width:192,size:10,maxLines:1,overflowLabel:'FEES PAID ON'});
-                // Slot 2-4: Applicant Name, Address, Tel/Fax/Email
+                // Section I: Applicant Name, Address, Tel/Fax/Email
                 drawField(page1,H1,applicant,{x:284,top:236,width:268,maxLines:2,overflowLabel:'I. APPLICANT - NAME'});
                 drawField(page1,H1,value('applicantAddress'),{x:284,top:265,width:268,maxLines:2,overflowLabel:'I. APPLICANT - ADDRESS'});
                 drawField(page1,H1,[value('applicantPhone'),value('applicantEmail')].filter(Boolean).join(' / '),{x:284,top:299,width:268,maxLines:1,overflowLabel:'I. APPLICANT - CONTACT'});
                 // Slot 7: Text / Brand Name of Mark
-                if(brandName) drawField(page1,H1,brandName,{x:284,top:418,width:266,size:10,lineHeight:13,maxLines:2,bold:true,overflowLabel:'II. TEXT / BRAND NAME OF MARK'});
-                // Slot 9: Translation of the Mark
+                if(brandName) drawField(page1,H1,brandName,{x:284,top:402,width:266,size:10,lineHeight:14,maxLines:2,bold:true,overflowLabel:'II. TEXT / BRAND NAME OF MARK'});
+                // Section III: Translation of the Mark
                 drawField(page1,H1,value('markTranslationText'),{x:284,top:640,width:268,maxLines:4,overflowLabel:'III. TRANSLATION OF THE MARK'});
-                // Slot 10: Claim to Colours of the Mark
+                // Section IV: Claim to Colours of the Mark
                 drawField(page1,H1,value('colorClaim'),{x:284,top:762,width:268,maxLines:3,overflowLabel:'IV. CLAIM TO COLOURS OF THE MARK'});
-                // Slot 11: Claim to Three-Dimensional Mark
+                // Section V: Claim to Three-Dimensional Mark
                 drawField(page1,H1,checked('has3DRepresentation')?'Three-dimensional mark; representations attached.':'',{x:284,top:862,width:268,maxLines:3,overflowLabel:'V. CLAIM TO THREE-DIMENSIONAL MARK'});
 
                 // Slot 12: Class
                 drawField(page2,H2,String(selectedClass),{x:284,top:138,width:268,maxLines:1,bold:true});
-                // Slot 13: List of goods or services
+                // Section VI: List of goods or services
                 if(goodsAttached){ drawField(page2,H2,'Attached - see specification',{x:284,top:176,width:268,maxLines:1}); }
                 else if(goods.length>290){
                     drawField(page2,H2,'See continuation pages',{x:284,top:176,width:268,maxLines:1});
                     overflowAttachments.push({label:'VI. LIST OF GOODS OR SERVICES',text:goods});
-                } else { drawField(page2,H2,goods,{x:284,top:176,width:268,maxLines:14,lineHeight:13}); }
+                } else { drawField(page2,H2,goods,{x:284,top:176,width:268,maxLines:14,lineHeight:14}); }
 
                 if(checked('hasPriorityClaim')) drawInline(page2,H2,value('priorityDate'),{x:302,top:432,size:10});
                 if(value('exhibitionDate')) drawInline(page2,H2,value('exhibitionDate'),{x:302,top:499,size:10});
@@ -1868,6 +1869,13 @@
                 const signatory=category==='Company'?value('companyDirectorName'):category==='Partnership'?value('signingPartnerName'):category==='SoleProprietorship'?value('signingProprietorName'):applicant;
                 drawField(page2,H2,signatory,{x:284,top:830,width:268,maxLines:2,overflowLabel:'XII. SIGNATURE / SIGNATORY'});
                 drawField(page2,H2,new Date().toLocaleDateString('en-GB'),{x:284,top:880,width:268,maxLines:1});
+
+                const embedImage=async(dataUrl)=>{ if(!dataUrl)return null; if(dataUrl.startsWith('data:image/png'))return pdf.embedPng(dataUrl); if(dataUrl.startsWith('data:image/jpeg'))return pdf.embedJpg(dataUrl); const image=new Image();image.src=dataUrl;await image.decode(); const canvas=document.createElement('canvas');canvas.width=image.naturalWidth;canvas.height=image.naturalHeight; canvas.getContext('2d').drawImage(image,0,0); return pdf.embedPng(canvas.toDataURL('image/png')); };
+                const drawCentered=async(dataUrl,page,box)=>{ const image=await embedImage(dataUrl);if(!image)return; const scale=Math.min(box.w/image.width,box.h/image.height); const w=image.width*scale,h=image.height*scale; page.drawImage(image,{x:box.x+(box.w-w)/2,y:box.y+(box.h-h)/2,width:w,height:h}); };
+
+                // Place one mark representation inside "(Affix/paste logo here)" box on Page 1
+                if(logoDataUrl)await drawCentered(logoDataUrl,page1,{x:292,y:H1-688,w:235,h:122});
+                if(capturedSigDataUrl)await drawCentered(capturedSigDataUrl,page2,{x:335,y:H2-910,w:198,h:28});
 
                 // Render overflow text (goods/services or any other oversized content) as attachment pages
                 for(const item of overflowAttachments){
@@ -1880,16 +1888,12 @@
                     }
                 }
 
-                const embedImage=async(dataUrl)=>{ if(!dataUrl)return null; if(dataUrl.startsWith('data:image/png'))return pdf.embedPng(dataUrl); if(dataUrl.startsWith('data:image/jpeg'))return pdf.embedJpg(dataUrl); const image=new Image();image.src=dataUrl;await image.decode(); const canvas=document.createElement('canvas');canvas.width=image.naturalWidth;canvas.height=image.naturalHeight; canvas.getContext('2d').drawImage(image,0,0); return pdf.embedPng(canvas.toDataURL('image/png')); };
-                const drawCentered=async(dataUrl,page,box)=>{ const image=await embedImage(dataUrl);if(!image)return; const scale=Math.min(box.w/image.width,box.h/image.height); const w=image.width*scale,h=image.height*scale; page.drawImage(image,{x:box.x+(box.w-w)/2,y:box.y+(box.h-h)/2,width:w,height:h}); };
-                if(capturedSigDataUrl)await drawCentered(capturedSigDataUrl,page2,{x:335,y:H2-910,w:198,h:28});
-
                 // All attachments placed below the application pages
                 if(checked('hasPriorityClaim')){ const page=pdf.addPage([612,1009]);pageTitle(page,'FORM M-01 - PRIORITY CLAIM DETAILS'); page.drawText('Country: '+value('priorityCountry')+'\nEarlier application: '+value('priorityNumber')+'\nFiling date: '+value('priorityDate'),{x:42,y:page.getHeight()-220,size:10,font,color:rgb(0,0,0),lineHeight:16}); }
-                // Logo attachment strictly 8 cm x 8 cm (1 cm = 28.3465 pt => 226.77 pt)
+                // Copy of mark representation as attachment (8 cm x 8 cm = 226.77 pt x 226.77 pt)
                 if(logoDataUrl){
                     const page=pdf.addPage([612,1009]);
-                    pageTitle(page,'ATTACHMENT - TRADEMARK REPRESENTATION (8 cm x 8 cm)');
+                    pageTitle(page,'ATTACHMENT - COPY OF TRADEMARK REPRESENTATION (8 cm x 8 cm)');
                     const logoSizePt = 8 * 28.3465;
                     const logoX = (612 - logoSizePt) / 2;
                     const logoY = (page.getHeight() - logoSizePt) / 2;
