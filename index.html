@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>National Intellectual Property Office - Sri Lanka | Trademark Portal (Form M-1)</title>
-    <!-- Public document generator: no login redirect. -->
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts: Inter & Noto Serif -->
@@ -39,17 +39,6 @@
     </script>
 
     <style>
-        .official-doc {
-            font-family: 'Noto Serif', serif;
-            color: #111;
-            background-color: #ffffff;
-        }
-        .official-border {
-            border: 2px solid #1a2b4c;
-        }
-        .official-header-border {
-            border-bottom: 2px solid #d4af37;
-        }
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -65,31 +54,11 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #modalFormDoc, #modalFormDoc * {
-                visibility: visible;
-            }
-            #modalFormDoc {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                margin: 0;
-                padding: 0;
-                box-shadow: none;
-            }
-            .no-print {
-                display: none !important;
-            }
-        }
     </style>
 </head>
 <body class="bg-nipo-bg font-sans min-h-screen text-slate-800 flex flex-col antialiased selection:bg-nipo-gold selection:text-nipo-navy">
 
-    <!-- TOP GOVT BAR WITH USER SESSION & SIGN OUT -->
+    <!-- TOP GOVT BAR -->
     <div class="bg-nipo-navy text-slate-300 text-xs py-1.5 px-4 border-b border-slate-700/50">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -100,17 +69,9 @@
                 <span class="hidden md:inline text-slate-400">Ministry of Commerce & Industry</span>
             </div>
             <div class="flex items-center space-x-4">
-                <div class="hidden sm:flex space-x-1 text-[11px] bg-slate-800/80 p-0.5 rounded border border-slate-700">
-                    <button class="px-2 py-0.5 rounded bg-nipo-gold text-nipo-navy font-bold">EN</button>
-                    <button class="px-2 py-0.5 rounded hover:text-white transition">SI</button>
-                    <button class="px-2 py-0.5 rounded hover:text-white transition">TA</button>
-                </div>
                 <span class="text-slate-300 font-semibold" id="userSessionDisplay">
                     <i class="fa-solid fa-file-pdf text-amber-400 mr-1"></i> Public Application Generator
                 </span>
-                <button style="display:none" onclick="handleLogout()" class="text-red-400 hover:text-red-300 font-bold transition flex items-center gap-1 bg-red-950/40 px-2.5 py-1 rounded border border-red-800/50">
-                    <i class="fa-solid fa-right-from-bracket"></i> Sign Out
-                </button>
             </div>
         </div>
     </div>
@@ -147,7 +108,7 @@
     </header>
 
     <!-- MAIN CONTENT CONTAINER -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24">
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-28">
 
         <!-- VIEW 1: TRADEMARK WIZARD APPLICATION -->
         <div id="viewWizard" class="space-y-6">
@@ -164,7 +125,7 @@
                         </span>
                         <h2 class="text-2xl font-bold">Application for Registration of a Mark (Form M-1)</h2>
                         <p class="text-slate-300 text-sm mt-1 max-w-2xl">
-                            Fill in all required fields to draft your official trademark application. Use the floating <strong class="text-nipo-gold">Live Form M-1 Preview</strong> button at any time to inspect your generated document.
+                            Fill in all required fields to draft your official trademark application. Use the floating <strong class="text-nipo-gold">Live Form M-1 Preview</strong> button at any time to inspect the Improved Form M-1 PDF.
                         </p>
                     </div>
                     <div class="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/15 min-w-[220px] text-right">
@@ -179,15 +140,15 @@
                     <div class="grid grid-cols-6 gap-2 text-center text-xs font-medium">
                         <div id="stepTab1" onclick="jumpToStep(1)" class="cursor-pointer space-y-1.5 transition text-amber-400">
                             <div class="w-8 h-8 rounded-full bg-nipo-gold text-nipo-navy flex items-center justify-center font-bold mx-auto shadow-md">1</div>
-                            <div class="truncate">Applicant Info</div>
+                            <div class="truncate">Applicant Info *</div>
                         </div>
                         <div id="stepTab2" onclick="jumpToStep(2)" class="cursor-pointer space-y-1.5 transition text-slate-400">
                             <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold mx-auto">2</div>
-                            <div class="truncate">Mark Details</div>
+                            <div class="truncate">Mark Details *</div>
                         </div>
                         <div id="stepTab3" onclick="jumpToStep(3)" class="cursor-pointer space-y-1.5 transition text-slate-400">
                             <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold mx-auto">3</div>
-                            <div class="truncate">Nice Class & Goods</div>
+                            <div class="truncate">Nice Class *</div>
                         </div>
                         <div id="stepTab4" onclick="jumpToStep(4)" class="cursor-pointer space-y-1.5 transition text-slate-400">
                             <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold mx-auto">4</div>
@@ -195,11 +156,11 @@
                         </div>
                         <div id="stepTab5" onclick="jumpToStep(5)" class="cursor-pointer space-y-1.5 transition text-slate-400">
                             <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold mx-auto">5</div>
-                            <div class="truncate">Additional Documents</div>
+                            <div class="truncate">Additional Docs</div>
                         </div>
                         <div id="stepTab6" onclick="jumpToStep(6)" class="cursor-pointer space-y-1.5 transition text-slate-400">
                             <div class="w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold mx-auto">6</div>
-                            <div class="truncate">Declaration & Fees</div>
+                            <div class="truncate">Signature & Fees *</div>
                         </div>
                     </div>
                 </div>
@@ -215,7 +176,7 @@
                         <div class="border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
                                 <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">1</span>
-                                Applicant Identity & Capacity
+                                Applicant Identity & Capacity <span class="text-xs text-red-600 font-bold">(Mandatory)</span>
                             </h3>
                             <p class="text-xs text-slate-500 mt-1">Select applicant type and provide legal details for registration.</p>
                         </div>
@@ -251,7 +212,7 @@
                             <div id="singleApplicantContainer" class="space-y-4">
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1" id="lblApplicantName">Full Name of Applicant *</label>
-                                    <input type="text" id="applicantFullName" placeholder="e.g. Kusal Janith Perera" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nipo-deepBlue text-sm transition">
+                                    <input type="text" id="applicantFullName" placeholder="e.g. Kusal Janith Perera" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nipo-deepBlue text-sm transition">
                                 </div>
                             </div>
 
@@ -274,19 +235,19 @@
                                     </div>
                                 </div>
                                 <div class="text-xs text-slate-600 bg-white p-2.5 rounded border border-amber-200">
-                                    <i class="fa-solid fa-circle-info text-amber-600 mr-1"></i> Resulting Legal Name Output: <strong id="formattedSolePropDisplay" class="text-nipo-deepBlue">--</strong>
+                                    <i class="fa-solid fa-circle-info text-amber-600 mr-1"></i> Resulting Legal Name Output: <strong id="formattedSolePropDisplay" class="text-nipo-deepBlue">N/A</strong>
                                 </div>
                             </div>
 
                             <!-- PARTNERSHIP DYNAMIC FIELDS -->
                             <div id="partnershipContainer" class="hidden space-y-4 p-4 bg-blue-50/50 rounded-xl border border-blue-200">
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-800 uppercase mb-1">Company / Partnership Firm Name (Optional / If any)</label>
+                                    <label class="block text-xs font-bold text-slate-800 uppercase mb-1">Company / Partnership Firm Name (If any)</label>
                                     <input type="text" id="partnershipFirmName" placeholder="e.g. Perera & Sons Law Associates" oninput="updatePartnershipString()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-nipo-deepBlue text-sm">
                                 </div>
                                 <div>
                                     <div class="flex justify-between items-center mb-1">
-                                        <label class="block text-xs font-bold text-slate-800 uppercase">Partner Full Names (Compulsory: At least 2 Partners) *</label>
+                                        <label class="block text-xs font-bold text-slate-800 uppercase">Partner Full Names (At least 2 Partners) *</label>
                                         <button type="button" onclick="addPartner()" class="text-xs text-nipo-deepBlue font-bold hover:underline"><i class="fa-solid fa-plus-circle"></i> Add Partner</button>
                                     </div>
                                     <div id="partnersList" class="space-y-2">
@@ -303,26 +264,18 @@
                             </div>
 
                             <!-- COMPULSORY CONTACT DETAILS -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Compulsory Contact Phone Number *</label>
-                                    <input type="tel" id="applicantPhone" placeholder="e.g. +94 71 234 5678" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white" required>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tel. No. *</label>
+                                    <input type="tel" id="applicantPhone" placeholder="e.g. +94 71 234 5678" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white" required>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Compulsory Email Address *</label>
-                                    <input type="email" id="applicantEmail" placeholder="e.g. kusal@example.lk" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white" required>
-                                </div>
-                            </div>
-
-                            <!-- Common ID & Nationality Details -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">NIC / Passport / Company Reg No. *</label>
-                                    <input type="text" id="applicantIdNo" placeholder="e.g. 19882390012V / PV12345" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm">
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Fax No. (If any)</label>
+                                    <input type="text" id="applicantFax" placeholder="e.g. +94 11 234 5678" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nationality / Country of Incorporation *</label>
-                                    <input type="text" id="applicantNationality" value="Sri Lankan" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm">
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">E-mail Address *</label>
+                                    <input type="email" id="applicantEmail" placeholder="e.g. kusal@example.lk" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white" required>
                                 </div>
                             </div>
 
@@ -336,13 +289,13 @@
                                     </label>
                                     <label class="inline-flex items-center text-xs font-semibold text-slate-700 cursor-pointer">
                                         <input type="radio" name="addressLocation" value="Overseas" onchange="toggleOverseasPoa()" class="w-4 h-4 text-nipo-deepBlue">
-                                        <span class="ml-2">Address is outside Sri Lanka (Requires Local Service Address) or Applying Through an Agent</span>
+                                        <span class="ml-2">Address is outside Sri Lanka or Applying Through an Agent</span>
                                     </label>
                                 </div>
 
                                 <div>
                                     <label class="block text-xs font-semibold text-slate-700 mb-1">Full Postal Address *</label>
-                                    <textarea id="applicantAddress" rows="2" placeholder="No. 45, Galle Road, Colombo 03, Sri Lanka" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white"></textarea>
+                                    <textarea id="applicantAddress" rows="2" placeholder="No. 45, Galle Road, Colombo 03, Sri Lanka" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white"></textarea>
                                 </div>
                             </div>
 
@@ -352,31 +305,28 @@
                                     <h4 class="text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
                                         <i class="fa-solid fa-file-contract text-amber-600"></i> Power of Attorney (Form M-2) & Service Address Details
                                     </h4>
-                                    <button type="button" onclick="downloadPoaTemplate()" class="px-2.5 py-1 text-xs font-bold bg-amber-700 text-white rounded hover:bg-amber-800 transition flex items-center gap-1">
-                                        <i class="fa-solid fa-file-pdf"></i> Download POA Template PDF
-                                    </button>
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-xs font-semibold text-slate-700 mb-1">Registered Agent / Attorney Name *</label>
-                                        <input type="text" id="agentName" placeholder="e.g. Julius & Creasy IP Attorneys" oninput="updateDocPreview()" class="w-full px-3 py-2 rounded border border-slate-300 text-sm bg-white">
+                                        <input type="text" id="agentName" placeholder="e.g. Julius & Creasy IP Attorneys" class="w-full px-3 py-2 rounded border border-slate-300 text-sm bg-white">
                                     </div>
                                     <div>
                                         <label class="block text-xs font-semibold text-slate-700 mb-1">Agent / Attorney Email *</label>
-                                        <input type="email" id="agentEmail" placeholder="e.g. ip-agent@lawfirm.lk" oninput="updateDocPreview()" class="w-full px-3 py-2 rounded border border-slate-300 text-sm bg-white">
+                                        <input type="email" id="agentEmail" placeholder="e.g. ip-agent@lawfirm.lk" class="w-full px-3 py-2 rounded border border-slate-300 text-sm bg-white">
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Agent Phone / Contact Number *</label>
-                                        <input type="text" id="agentPhone" placeholder="e.g. +94 11 2345678" oninput="updateDocPreview()" class="w-full px-3 py-2 rounded border border-slate-300 text-sm bg-white">
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Agent Phone / Fax *</label>
+                                        <input type="text" id="agentPhone" placeholder="e.g. +94 11 2345678" class="w-full px-3 py-2 rounded border border-slate-300 text-sm bg-white">
                                     </div>
                                     <div>
                                         <label class="block text-xs font-semibold text-slate-700 mb-1">Agent Postal Address in Sri Lanka *</label>
-                                        <input type="text" id="agentAddress" placeholder="e.g. No. 4, Janadhipathi Mawatha, Colombo 01" oninput="updateDocPreview()" class="w-full px-3 py-2 rounded border border-slate-300 text-sm bg-white">
+                                        <input type="text" id="agentAddress" placeholder="e.g. No. 4, Janadhipathi Mawatha, Colombo 01" class="w-full px-3 py-2 rounded border border-slate-300 text-sm bg-white">
                                     </div>
                                 </div>
                                 
                                 <div>
-                                    <label class="block text-xs font-bold text-amber-900 uppercase mb-1">Upload Signed Power of Attorney Document *</label>
+                                    <label class="block text-xs font-bold text-amber-900 uppercase mb-1">Upload Signed Power of Attorney Document (PDF)</label>
                                     <input type="file" id="poaDocUpload" accept=".pdf,application/pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-700 file:text-white hover:file:bg-amber-800 cursor-pointer">
                                 </div>
                             </div>
@@ -389,7 +339,7 @@
                         <div class="border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
                                 <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">2</span>
-                                Mark Representation & Details
+                                Mark Representation & Details <span class="text-xs text-red-600 font-bold">(Mandatory)</span>
                             </h3>
                             <p class="text-xs text-slate-500 mt-1">Specify whether your trademark is a Word, Logo, or Combination mark.</p>
                         </div>
@@ -416,14 +366,14 @@
                             <!-- Text Mark Field -->
                             <div id="wordMarkFieldContainer">
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Text / Brand Name of Mark *</label>
-                                <input type="text" id="markText" placeholder="e.g. CEYLON HERITAGE" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm font-semibold tracking-wide">
+                                <input type="text" id="markText" placeholder="e.g. CEYLON HERITAGE" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm font-semibold tracking-wide">
                             </div>
 
                             <!-- Logo Upload Container -->
                             <div id="logoUploadContainer" class="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center hover:border-nipo-deepBlue transition bg-slate-50">
                                 <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-400 mb-2"></i>
                                 <p class="text-xs font-bold text-slate-700">Upload Mark Logo / Image Representation (JPEG or PNG)</p>
-                                <p class="text-[11px] text-slate-400 mt-0.5">Attachment rendered at 8cm x 8cm (High Quality, max 5MB)</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Placed on Form M-01 and copied as an 8cm x 8cm attachment</p>
                                 <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)" class="mt-3 text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                                 
                                 <div id="logoPreviewBox" class="hidden mt-4 pt-4 border-t border-slate-200 flex flex-col items-center">
@@ -445,7 +395,7 @@
                                 </div>
                                 <div id="translationField" class="hidden">
                                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">English Translation / Transliteration *</label>
-                                    <input type="text" id="markTranslationText" placeholder="e.g. English translation/meaning of foreign words" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm">
+                                    <input type="text" id="markTranslationText" placeholder="e.g. English translation/meaning of foreign words" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm">
                                 </div>
                             </div>
 
@@ -470,8 +420,9 @@
                                 <p class="text-[11px] text-amber-700 font-semibold mb-1">
                                     <i class="fa-solid fa-circle-info"></i> Notice: Do not mention color codes (e.g. #HEX). Mention colors visible to the human eye (e.g. Royal Blue, Gold, Red).
                                 </p>
-                                <input type="text" id="colorClaim" placeholder="e.g. Royal Blue, Gold, and White" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm">
+                                <input type="text" id="colorClaim" placeholder="e.g. Royal Blue, Gold, and White" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm">
                             </div>
+
                             <!-- Optional three-dimensional mark representation -->
                             <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
                                 <label class="flex items-center gap-2 text-xs font-bold text-slate-700 uppercase">
@@ -492,7 +443,7 @@
                         <div class="border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
                                 <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">3</span>
-                                Nice Classification & Approved Goods / Services Selection
+                                Nice Classification & Approved Goods / Services Selection <span class="text-xs text-red-600 font-bold">(Mandatory Class)</span>
                             </h3>
                             <p class="text-xs text-slate-500 mt-1">Select 1 Nice Class (1–45) or search keywords to auto-discover matching goods from our official database (<code class="bg-slate-100 px-1 py-0.5 rounded font-mono text-nipo-deepBlue font-bold">mgs.json</code>).</p>
                             <div class="mt-3 flex flex-wrap items-center gap-3 rounded-xl border border-purple-200 bg-purple-50 p-3">
@@ -500,6 +451,9 @@
                                 <button type="button" onclick="toggleGeminiChat()" class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-purple-700 to-indigo-800 px-4 py-2 text-xs font-bold text-white shadow hover:opacity-90" aria-label="Open Ask IP Gemini Assistant">
                                     <i class="fa-solid fa-wand-magic-sparkles"></i> Ask IP Gemini Assistant
                                 </button>
+                                <a href="https://webaccess.wipo.int/mgs/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-lg bg-nipo-deepBlue px-4 py-2 text-xs font-bold text-white shadow hover:bg-slate-800 transition">
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-nipo-gold"></i> WIPO MGS Goods List
+                                </a>
                             </div>
                         </div>
 
@@ -522,7 +476,7 @@
 
                         <!-- 2. AUTOCOMPLETE GOODS SEARCH FROM mgs.json DATABASE & CHIPS -->
                         <div class="space-y-4 pt-4 border-t border-slate-200">
-                            <label class="block text-xs font-bold text-slate-700 uppercase">2. Search & Select Goods / Services from mgs.json Pool *</label>
+                            <label class="block text-xs font-bold text-slate-700 uppercase">2. Search & Select Goods / Services from mgs.json Pool</label>
                             
                             <div id="goodsSearchContainer" class="relative space-y-3">
                                 <div class="relative">
@@ -530,12 +484,8 @@
                                     <input type="text" id="goodsSearchInput" oninput="filterGoodsDropdown()" placeholder="Type goods/services keywords (e.g. Ceylon tea, spices, software, shoes)..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-nipo-deepBlue bg-white">
                                 </div>
 
-                                <!-- Autocomplete Dropdown List -->
-                                <div id="goodsDropdown" class="hidden absolute z-20 w-full bg-white border border-slate-300 rounded-xl shadow-xl max-h-60 overflow-y-auto custom-scrollbar mt-1">
-                                    <!-- Populated dynamically based on user typing -->
-                                </div>
+                                <div id="goodsDropdown" class="hidden absolute z-20 w-full bg-white border border-slate-300 rounded-xl shadow-xl max-h-60 overflow-y-auto custom-scrollbar mt-1"></div>
 
-                                <!-- Selected Goods Chips / Tags Container -->
                                 <div class="space-y-1.5 pt-2">
                                     <div class="flex justify-between items-center">
                                         <span class="text-[11px] font-bold text-slate-600 uppercase">Selected Approved Goods (<span id="selectedGoodsCount">0</span>):</span>
@@ -548,21 +498,16 @@
                             </div>
                         </div>
 
-                        <!-- Optional specification attachment (instead of manual goods entry) -->
+                        <!-- Optional specification attachment -->
                         <div class="space-y-3 p-4 bg-amber-50/70 rounded-xl border border-amber-300">
                             <label class="flex items-center gap-3 text-sm font-bold text-amber-950 cursor-pointer">
                                 <input type="checkbox" id="attachGoodsListCheck" onchange="toggleGoodsAttachment()" class="w-4 h-4 accent-amber-700">
                                 Attach the goods / services list as a separate document
                             </label>
-                            <p class="text-xs text-slate-600">Optional alternative to selecting goods from the list above. When selected, the Form M-01 goods/services box will display <strong>Attached</strong>, and the uploaded specification will be included as pages after the application.</p>
                             <div id="goodsAttachmentPanel" class="hidden space-y-3 p-3 bg-white rounded-lg border border-amber-200">
                                 <label for="pdfClassUploader" class="block text-xs font-bold text-amber-900 uppercase">Attach Class – Goods / Services Specification (PDF only)</label>
                                 <input type="file" id="pdfClassUploader" accept=".pdf,application/pdf" onchange="handleClassPdfUpload(event)" class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-amber-700 file:text-white file:font-semibold">
                                 <p id="goodsAttachmentName" class="text-xs text-slate-500" aria-live="polite">No attachment selected.</p>
-                                <div class="p-3 bg-amber-100/90 rounded border border-amber-300 text-xs text-amber-950 flex items-start gap-2.5">
-                                    <i class="fa-solid fa-triangle-exclamation text-amber-700 text-sm mt-0.5"></i>
-                                    <div><strong>Important Statutory Notice:</strong> Submitting custom goods or services terms outside the standard approved list takes extra processing time for the formality check during application examination at NIPO.</div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -588,45 +533,34 @@
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Priority Country *</label>
-                                    <input type="text" id="priorityCountry" placeholder="e.g. United Kingdom" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                                    <input type="text" id="priorityCountry" placeholder="e.g. United Kingdom" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Application No. *</label>
-                                    <input type="text" id="priorityNumber" placeholder="e.g. UK0000392812" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                                    <input type="text" id="priorityNumber" placeholder="e.g. UK0000392812" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Filing Date *</label>
-                                    <input type="date" id="priorityDate" onchange="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                                    <input type="date" id="priorityDate" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
                                 </div>
                             </div>
 
-                            <!-- Priority Document Upload / Deferred Submission Section -->
                             <div class="pt-3 border-t border-amber-200 space-y-3">
-                                <label class="block text-xs font-bold text-amber-900 uppercase">Certified Priority Document Upload / Submission *</label>
-                                
+                                <label class="block text-xs font-bold text-amber-900 uppercase">Certified Priority Document Upload / Submission</label>
                                 <div id="priorityUploadBox" class="bg-white p-3.5 rounded-lg border border-amber-300">
                                     <label class="block text-xs font-semibold text-slate-700 mb-1">Upload Certified Priority Copy (.pdf)</label>
                                     <input type="file" id="priorityDocUpload" accept=".pdf,application/pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                                 </div>
-
                                 <div class="flex items-center space-x-2 pt-1">
                                     <input type="checkbox" id="prioritySubmitLater" onchange="togglePrioritySubmitLater()" class="w-4 h-4 text-amber-600 rounded focus:ring-amber-500">
                                     <label for="prioritySubmitLater" class="text-xs font-bold text-amber-900 cursor-pointer">
                                         I will submit the certified Priority Document later (Within 3 months from filing date)
                                     </label>
                                 </div>
-
-                                <!-- Statutory Warning Banner when Submit Later is Checked -->
-                                <div id="priorityLaterWarning" class="hidden p-3 bg-amber-100/80 border-l-4 border-amber-600 rounded text-xs text-amber-900 space-y-1">
-                                    <div class="font-bold flex items-center gap-1.5 text-amber-950">
-                                        <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> Statutory Notice under Sri Lanka IP Act No. 36 of 2003
-                                    </div>
-                                    <p class="leading-relaxed">
-                                        You have opted to submit the certified Priority Document later. Pursuant to NIPO regulations, the official certified priority document together with certified English translation must be lodged with the Registrar General within **three (3) months** from this application filing date. Failure to lodge within 3 months will result in forfeiture of priority status.
-                                    </p>
+                                <div id="priorityLaterWarning" class="hidden p-3 bg-amber-100/80 border-l-4 border-amber-600 rounded text-xs text-amber-900">
+                                    Certified priority document with English translation must be lodged within three (3) months from the filing date.
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -634,24 +568,18 @@
                     <div id="step5" class="wizard-step hidden space-y-6">
                         <div class="border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-nipo-deepBlue">5. Additional Documents (Optional)</h3>
-                            <p class="text-xs text-slate-500 mt-1">Upload supporting PDF documents, if applicable. This section follows the optional priority claim.</p>
+                            <p class="text-xs text-slate-500 mt-1">Upload supporting PDF documents, if applicable.</p>
                         </div>
-                        <!-- 1. ADDITIONAL DOCUMENTS UPLOAD SECTION -->
                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
-                            <div class="border-b border-slate-200 pb-2">
-                                <span class="text-xs font-bold text-nipo-deepBlue uppercase tracking-wider block"><i class="fa-solid fa-folder-open mr-1.5 text-amber-600"></i> Additional Documents & Special Submissions</span>
-                                <p class="text-xs text-slate-500 mt-0.5">Use this section if you have other supplementary documents or custom submissions.</p>
-                            </div>
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Specification / Description of Extra Documents *</label>
-                                <input type="text" id="extraDocsDesc" placeholder="e.g. Certified translation of constitution, co-ownership agreement, letter of authorization..." class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Specification / Description of Extra Documents</label>
+                                <input type="text" id="extraDocsDesc" placeholder="e.g. Certified translation, co-ownership agreement..." class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Upload Additional Files (.pdf)</label>
                                 <input type="file" id="extraDocsUpload" multiple accept=".pdf,application/pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                             </div>
                         </div>
-
                     </div>
 
                     <!-- STEP 6: DECLARATION, SIGNATURE & FEES -->
@@ -659,16 +587,11 @@
                         <div class="border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
                                 <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">6</span>
-                                Declaration, Statutory Authentication & Fee Payment
+                                Declaration, Statutory Signature & Fee Payment <span class="text-xs text-red-600 font-bold">(Mandatory Signature)</span>
                             </h3>
-                            <p class="text-xs text-slate-500 mt-1">Review the declaration, signature/seal guidance and estimated fees.</p>
+                            <p class="text-xs text-slate-500 mt-1">Provide your signature/seal and review the estimated fees.</p>
                         </div>
 
-                        <div class="rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950">
-                            <strong>Recommended: Download, print, sign and affix the appropriate seal to the application.</strong>
-                            The generated PDF should be reviewed and signed/sealed as applicable before submission. Uploaded signed supporting documents must be PDFs.
-                        </div>
-                        <!-- DYNAMIC CATEGORY SIGNATURE & SEAL REQUIREMENTS (BOTH OPTION A & B AVAILABLE) -->
                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
                             <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
                                 <div>
@@ -678,13 +601,12 @@
                                 <span class="text-xs px-2.5 py-1 rounded bg-amber-100 text-amber-800 font-bold" id="sigBadgeCategory">Individual</span>
                             </div>
 
-                            <!-- 5A. INDIVIDUAL SIGNATURE OPTIONS: BOTH A & B DISPLAYED -->
+                            <!-- Individual Signature Options -->
                             <div id="sigContainerIndividual" class="space-y-4">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <!-- Option A: Draw E-Signature -->
                                     <div class="space-y-3 p-4 bg-white rounded-xl border border-slate-300">
                                         <div class="flex justify-between items-center">
-                                            <label class="block text-xs font-bold text-nipo-deepBlue uppercase">Option A: Draw E-Signature</label>
+                                            <label class="block text-xs font-bold text-nipo-deepBlue uppercase">Option A: Draw E-Signature *</label>
                                             <button type="button" onclick="clearCanvas()" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[11px] font-bold transition">
                                                 <i class="fa-solid fa-eraser"></i> Clear
                                             </button>
@@ -695,10 +617,9 @@
                                         <p class="text-[10px] text-slate-400">Draw signature using mouse or touchscreen.</p>
                                     </div>
 
-                                    <!-- Option B: Upload Scanned Signature -->
                                     <div class="space-y-3 p-4 bg-white rounded-xl border border-slate-300 flex flex-col justify-between">
                                         <div>
-                                            <label class="block text-xs font-bold text-nipo-deepBlue uppercase mb-1">Option B: Upload Scanned Signature</label>
+                                            <label class="block text-xs font-bold text-nipo-deepBlue uppercase mb-1">Option B: Upload Scanned Signature *</label>
                                             <p class="text-[11px] text-slate-500 mb-3">Upload a signed PDF document (.pdf) of your official signature.</p>
                                         </div>
                                         <input type="file" id="indSigFileInput" accept=".pdf,application/pdf" onchange="handleSigUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
@@ -706,87 +627,64 @@
                                 </div>
                             </div>
 
-                            <!-- 5B. COMPANY DIRECTORS SIGN & SEAL -->
+                            <!-- Company Sign & Seal -->
                             <div id="sigContainerCompany" class="hidden space-y-4">
-                                <div class="p-3 bg-amber-50 rounded-lg border border-amber-200 text-xs text-amber-900 flex items-center gap-2">
-                                    <i class="fa-solid fa-building-circle-check text-base text-amber-600"></i>
-                                    <span>Requirements: Scanned copy of document bearing Director's Signature and Official Corporate Seal/Stamp.</span>
-                                </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Director Full Name *</label>
-                                        <input type="text" id="companyDirectorName" placeholder="e.g. Dr. Sunil Jayasinghe" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                                        <input type="text" id="companyDirectorName" placeholder="e.g. Dr. Sunil Jayasinghe" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
                                     </div>
                                     <div>
                                         <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Designation *</label>
-                                        <input type="text" id="companyDirectorDesignation" value="Managing Director" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                                        <input type="text" id="companyDirectorDesignation" value="Managing Director" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
                                     </div>
                                 </div>
                                 <div class="p-4 bg-white rounded-xl border border-slate-300 space-y-2">
-                                    <label class="block text-xs font-bold text-slate-700 uppercase">Upload Scanned Director Signature & Company Seal *</label>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase">Upload Scanned Director Signature & Company Seal (PDF) *</label>
                                     <input type="file" id="companySealUpload" accept=".pdf,application/pdf" onchange="handleSealUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                                 </div>
                             </div>
 
-                            <!-- 5C. PARTNERSHIP SIGN & SEAL -->
+                            <!-- Partnership Sign & Seal -->
                             <div id="sigContainerPartnership" class="hidden space-y-4">
-                                <div class="p-3 bg-blue-50 rounded-lg border border-blue-200 text-xs text-blue-900 flex items-center gap-2">
-                                    <i class="fa-solid fa-users-gear text-base text-blue-600"></i>
-                                    <span>Requirements: Signature of at least one Managing Partner accompanied by Partnership Seal/Stamp.</span>
-                                </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Signing Partner Full Name *</label>
-                                    <input type="text" id="signingPartnerName" placeholder="e.g. Nimal Perera (Managing Partner)" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                                    <input type="text" id="signingPartnerName" placeholder="e.g. Nimal Perera (Managing Partner)" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
                                 </div>
                                 <div class="p-4 bg-white rounded-xl border border-slate-300 space-y-2">
-                                    <label class="block text-xs font-bold text-slate-700 uppercase">Upload Partner Signature & Partnership Seal *</label>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase">Upload Partner Signature & Partnership Seal (PDF) *</label>
                                     <input type="file" id="partnerSealUpload" accept=".pdf,application/pdf" onchange="handleSealUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                                 </div>
                             </div>
 
-                            <!-- 5D. SOLE PROPRIETORSHIP SIGN & SEAL -->
+                            <!-- Sole Proprietorship Sign & Seal -->
                             <div id="sigContainerSoleProp" class="hidden space-y-4">
-                                <div class="p-3 bg-amber-50 rounded-lg border border-amber-200 text-xs text-amber-900 flex items-center gap-2">
-                                    <i class="fa-solid fa-store text-base text-amber-600"></i>
-                                    <span>Requirements: Signature of Proprietor together with Business / Enterprise Seal or Stamp.</span>
-                                </div>
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Signing Proprietor Full Name *</label>
-                                    <input type="text" id="signingProprietorName" placeholder="e.g. Kusal Janith Perera (Proprietor)" oninput="updateDocPreview()" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
+                                    <input type="text" id="signingProprietorName" placeholder="e.g. Kusal Janith Perera (Proprietor)" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
                                 </div>
                                 <div class="p-4 bg-white rounded-xl border border-slate-300 space-y-2">
-                                    <label class="block text-xs font-bold text-slate-700 uppercase">Upload Proprietor Signature & Business Seal/Stamp *</label>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase">Upload Proprietor Signature & Business Seal/Stamp (PDF) *</label>
                                     <input type="file" id="solePropSealUpload" accept=".pdf,application/pdf" onchange="handleSealUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                                 </div>
                             </div>
 
-                            <!-- PREVIEW OF CAPTURED SIGNATURE / SEAL -->
                             <div id="sigPreviewBox" class="hidden pt-3 border-t border-slate-200 flex items-center gap-4">
-                                <span class="text-xs font-bold text-slate-500">Preview Captured Signature / Seal:</span>
+                                <span class="text-xs font-bold text-slate-500">Preview Captured Signature:</span>
                                 <img id="sigImgDisplay" src="" alt="Captured Signature" class="max-h-16 border rounded bg-white p-1">
                             </div>
                         </div>
 
-                        <p class="text-xs text-slate-500">Fee estimates shown below are configured for this prototype and must be confirmed against the current NIPO fee schedule before payment.</p>
                         <!-- Detailed Fee Breakdown Box -->
                         <div class="bg-slate-900 text-white rounded-2xl p-6 space-y-4 shadow-xl">
                             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
                                 <h4 class="text-sm font-bold text-amber-400 uppercase tracking-wider">Fee Calculation Schedule (LKR)</h4>
-                                <span class="text-xs bg-slate-800 px-2.5 py-1 rounded text-slate-300 border border-slate-700">User-configured estimates · verify before payment</span>
+                                <span class="text-xs bg-slate-800 px-2.5 py-1 rounded text-slate-300 border border-slate-700">Estimated fees · confirm with NIPO</span>
                             </div>
-
                             <div class="space-y-2 text-xs">
                                 <div class="flex justify-between text-slate-300">
                                     <span>Estimated category filing fee:</span>
                                     <span class="font-mono text-sm text-white" id="baseFeeText">LKR 2,380</span>
-                                </div>
-                                <div class="flex justify-between text-slate-300">
-                                    <span>Priority fee (not included):</span>
-                                    <span class="font-mono text-sm text-white" id="priorityFeeText">LKR 0</span>
-                                </div>
-                                <div class="flex justify-between text-slate-300">
-                                    <span>Agent fee (not included):</span>
-                                    <span class="font-mono text-sm text-white" id="agentFeeText">LKR 0</span>
                                 </div>
                                 <div class="border-t border-slate-800 pt-3 flex justify-between items-center text-sm font-bold">
                                     <span class="text-amber-400">ESTIMATED CATEGORY FEE:</span>
@@ -796,7 +694,7 @@
                         </div>
 
                         <!-- Declaration Check -->
-                        <div class="p-4 bg-amber-50 rounded-xl border border-amber-300 space-y-2">
+                        <div class="p-4 bg-amber-50 rounded-xl border border-amber-300">
                             <div class="flex items-start space-x-3">
                                 <input type="checkbox" id="declarationCheck" class="mt-1 w-4 h-4 text-nipo-deepBlue rounded focus:ring-nipo-deepBlue">
                                 <label for="declarationCheck" class="text-xs text-slate-800 font-medium leading-relaxed">
@@ -804,16 +702,16 @@
                                 </label>
                             </div>
                         </div>
-                    <div class="mt-5 rounded-xl border-2 border-red-400 bg-red-50 p-5 text-red-800" role="note">
-                        <h4 class="font-extrabold text-base mb-2">Important: Documents to submit to NIPO</h4>
-                        <ol class="list-decimal pl-5 text-sm font-bold space-y-1">
-                            <li>Application to NIPO front desk</li>
-                            <li>Application Copy</li>
-                            <li>Your Application fees</li>
-                        </ol>
-                        <p class="text-xs mt-3 font-medium">Generating a PDF does not submit the application or pay any fee.</p>
-                    </div>
 
+                        <div class="mt-5 rounded-xl border-2 border-red-400 bg-red-50 p-5 text-red-800" role="note">
+                            <h4 class="font-extrabold text-base mb-2">Important: Documents to submit to NIPO</h4>
+                            <ol class="list-decimal pl-5 text-sm font-bold space-y-1">
+                                <li>Application to NIPO front desk</li>
+                                <li>Application Copy</li>
+                                <li>Your Application fees</li>
+                            </ol>
+                            <p class="text-xs mt-3 font-medium">Generating a PDF does not submit the application or pay any fee.</p>
+                        </div>
                     </div>
 
                     <!-- NAV BUTTONS AT BOTTOM OF WIZARD -->
@@ -823,17 +721,14 @@
                         </button>
                         <div class="flex items-center gap-3 ml-auto flex-wrap">
                             <button type="button" onclick="openDocModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-nipo-deepBlue font-bold text-xs transition border border-slate-300 flex items-center gap-2">
-                                <i class="fa-solid fa-eye text-amber-600"></i> Preview Form M-1
+                                <i class="fa-solid fa-eye text-amber-600"></i> Preview Form M-1 Improved
                             </button>
                             <button type="button" id="btnNextStep" onclick="changeStep(1)" class="px-6 py-2.5 rounded-xl bg-nipo-deepBlue text-white font-bold text-xs hover:bg-slate-800 transition shadow-md flex items-center gap-2">
                                 <span>Continue</span> <i class="fa-solid fa-arrow-right"></i>
                             </button>
-                            <label class="flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-slate-300 text-[11px] font-semibold text-slate-700 cursor-pointer hover:border-amber-500" title="Optional: upload your own copy of Form M 01 as the template.">
-                                <i class="fa-solid fa-file-arrow-up text-amber-600"></i> Form M 01 template (optional)
-                                <input type="file" id="m01TemplateUpload" accept="application/pdf,.pdf" class="hidden">
-                                <span id="m01TemplateName" class="font-normal text-slate-500">Using built-in Form-M01-New.pdf</span>
-                            </label>
-                            <button type="button" id="btnDownloadM01" onclick="downloadCompletedM01()" class="hidden px-5 py-2.5 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-700 transition shadow-md flex items-center gap-2"><i class="fa-solid fa-file-pdf"></i> Generate Application PDF</button>
+                            <button type="button" id="btnDownloadM01" onclick="downloadCompletedM01()" class="hidden px-5 py-2.5 rounded-xl bg-amber-600 text-white font-bold text-xs hover:bg-amber-700 transition shadow-md flex items-center gap-2">
+                                <i class="fa-solid fa-file-pdf"></i> Generate Application PDF
+                            </button>
                         </div>
                     </div>
 
@@ -843,72 +738,42 @@
 
         <!-- VIEW 2: STATUS TRACKER -->
         <div id="viewTracker" class="hidden space-y-6">
-            <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm max-w-3xl mx-auto space-y-6">
-                <div class="text-center space-y-2">
-                    <div class="w-12 h-12 rounded-full bg-nipo-gold/20 text-nipo-deepBlue flex items-center justify-center text-xl mx-auto">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
-                    <h2 class="text-xl font-bold text-nipo-deepBlue">Application Status Lookup</h2>
-                    <span class="inline-flex items-center rounded-full bg-green-100 border border-green-300 px-4 py-1.5 text-sm font-extrabold text-green-700">Coming Soon</span>
-                    <p class="text-xs text-slate-500">Track real-time examination status of filed Sri Lanka Trademarks.</p>
+            <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm max-w-3xl mx-auto space-y-6 text-center">
+                <div class="w-12 h-12 rounded-full bg-nipo-gold/20 text-nipo-deepBlue flex items-center justify-center text-xl mx-auto">
+                    <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
-
-                <div class="flex gap-2 opacity-60" aria-disabled="true">
-                    <input disabled type="text" id="trackerInput" placeholder="Enter Application No. (e.g. LK/TM/2026/89401)" class="flex-grow px-4 py-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-nipo-deepBlue uppercase font-mono">
-                    <button disabled title="Coming soon" onclick="searchStatus()" class="px-6 py-3 bg-nipo-deepBlue text-white font-bold text-xs rounded-xl hover:bg-slate-800 transition">
-                        Search Status
-                    </button>
-                </div>
-
-                <div id="trackerResult" class="hidden p-6 bg-slate-50 rounded-xl border border-slate-200 space-y-4">
-                    <div class="flex justify-between items-center border-b border-slate-200 pb-3">
-                        <div>
-                            <span class="text-xs text-slate-400 uppercase font-mono block">Application Ref</span>
-                            <span class="font-bold font-mono text-sm text-nipo-deepBlue" id="resRef">LK/TM/2026/89401</span>
-                        </div>
-                        <span class="px-3 py-1 bg-amber-100 text-amber-800 font-bold text-xs rounded-full" id="resStatus">Under Formal Examination</span>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4 text-xs">
-                        <div>
-                            <span class="text-slate-400 block">Mark Name:</span>
-                            <strong class="text-slate-800 text-sm" id="resMark">CEYLON HERITAGE</strong>
-                        </div>
-                        <div>
-                            <span class="text-slate-400 block">Nice Class:</span>
-                            <strong class="text-slate-800" id="resClass">Class 30 (Tea & Spices)</strong>
-                        </div>
-                        <div>
-                            <span class="text-slate-400 block">Filing Date:</span>
-                            <strong class="text-slate-800" id="resDate">25-Oct-2026</strong>
-                        </div>
-                        <div>
-                            <span class="text-slate-400 block">Assigned Examiner:</span>
-                            <strong class="text-slate-800">IP Examiner Division 02</strong>
-                        </div>
-                    </div>
-                </div>
+                <h2 class="text-xl font-bold text-nipo-deepBlue">Application Status Lookup</h2>
+                <span class="inline-flex items-center rounded-full bg-green-100 border border-green-300 px-4 py-1.5 text-sm font-extrabold text-green-700">Coming Soon</span>
+                <p class="text-xs text-slate-500">Track real-time examination status of filed Sri Lanka Trademarks.</p>
             </div>
         </div>
 
     </main>
 
-    <!-- STACKED CIRCULAR FLOATING BUTTONS FOR MOBILE & EXPANDABLE FOR DESKTOP -->
+    <!-- FLOATING BUTTONS: TEMPLATE PICKER BESIDE GEMINI ASSISTANT + LIVE PREVIEW -->
     <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-2.5 pointer-events-none">
-        <!-- Live Form M-1 Preview Button -->
-        <button onclick="openDocModal()" class="pointer-events-auto w-12 h-12 sm:w-auto sm:h-auto sm:px-5 sm:py-3 bg-nipo-deepBlue hover:bg-slate-900 text-white rounded-full shadow-2xl hover:scale-105 transition-all flex items-center justify-center sm:justify-start gap-2.5 border-2 border-nipo-gold text-xs font-bold ring-4 ring-slate-900/10" title="Live Form M-1 Preview">
+        <button onclick="openDocModal()" class="pointer-events-auto w-12 h-12 sm:w-auto sm:h-auto sm:px-5 sm:py-3 bg-nipo-deepBlue hover:bg-slate-900 text-white rounded-full shadow-2xl hover:scale-105 transition-all flex items-center justify-center sm:justify-start gap-2.5 border-2 border-nipo-gold text-xs font-bold ring-4 ring-slate-900/10" title="Live Form M-1 Improved Preview">
             <i class="fa-solid fa-file-contract text-nipo-gold text-base"></i>
             <span class="hidden sm:inline">Live Form M-1 Preview</span>
         </button>
 
-        <!-- Gemini AI Assistant Button -->
-        <button onclick="toggleGeminiChat()" class="pointer-events-auto w-12 h-12 sm:w-auto sm:h-auto sm:px-4 sm:py-3 bg-gradient-to-r from-purple-700 to-indigo-800 text-white rounded-full shadow-2xl hover:scale-105 transition-all flex items-center justify-center sm:justify-start gap-2 border border-purple-400/40 text-xs font-bold" title="Ask Gemini IP Assistant">
-            <i class="fa-solid fa-wand-magic-sparkles text-amber-300 text-base"></i>
-            <span class="hidden sm:inline">Ask Gemini IP Assistant</span>
-        </button>
+        <div class="pointer-events-auto flex items-center gap-2 flex-wrap justify-end">
+            <label class="flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-white border border-slate-300 shadow-xl text-[11px] font-semibold text-slate-700 cursor-pointer hover:border-amber-500 transition" title="Optional: upload your own copy of Form M 01 as the template.">
+                <i class="fa-solid fa-file-arrow-up text-amber-600"></i>
+                <span>Form M 01 template (optional)</span>
+                <input type="file" id="m01TemplateUpload" accept="application/pdf,.pdf" class="hidden">
+                <span id="m01TemplateName" class="font-normal text-slate-500 hidden md:inline">(Form-M01-Improved-Legal.pdf)</span>
+            </label>
+
+            <button onclick="toggleGeminiChat()" class="px-4 py-3 bg-gradient-to-r from-purple-700 to-indigo-800 text-white rounded-full shadow-2xl hover:scale-105 transition-all flex items-center gap-2 border border-purple-400/40 text-xs font-bold" title="Ask Gemini IP Assistant">
+                <i class="fa-solid fa-wand-magic-sparkles text-amber-300 text-base"></i>
+                <span class="hidden sm:inline">Ask Gemini IP Assistant</span>
+            </button>
+        </div>
     </div>
 
     <!-- GEMINI ASSISTANT MODAL / POPUP -->
-    <div id="geminiChatModal" class="hidden fixed bottom-24 right-6 z-50 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-purple-200 overflow-hidden flex flex-col h-96">
+    <div id="geminiChatModal" class="hidden fixed bottom-28 right-6 z-50 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-purple-200 overflow-hidden flex flex-col h-96">
         <div class="bg-gradient-to-r from-purple-800 to-indigo-900 text-white p-3.5 flex justify-between items-center">
             <div class="flex items-center gap-2 text-xs font-bold">
                 <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i> Gemini IP Assistant
@@ -945,7 +810,7 @@
                     <li>Application Copy</li>
                     <li>Your Application fees</li>
                 </ol>
-                <p class="text-xs text-slate-500">Your completed application PDF (<code class="font-mono">Form_M01_Application_Filled.pdf</code>) has been downloaded.</p>
+                <p class="text-xs text-slate-500">Your completed application PDF (<code class="font-mono">Form_M01_Improved_Legal_Filled.pdf</code>) has been downloaded.</p>
                 <div class="pt-2 flex justify-end">
                     <button type="button" onclick="closeDownloadNoticeModal()" class="px-5 py-2.5 rounded-xl bg-nipo-deepBlue hover:bg-slate-800 text-white font-bold text-xs transition">
                         Got it
@@ -955,139 +820,41 @@
         </div>
     </div>
 
-    <!-- FULL MODAL / POP-OUT DIALOG FOR LIVE FORM M-1 DOCUMENT -->
+    <!-- PREVIEW MODAL FOR FORM M-01 IMPROVED LEGAL PDF -->
     <div id="docModalOverlay" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-6 overflow-y-auto">
         <div class="bg-white w-full max-w-4xl rounded-2xl shadow-2xl border border-slate-200 flex flex-col max-h-[92vh] overflow-hidden">
-            
-            <!-- Modal Header -->
             <div class="bg-nipo-deepBlue text-white px-6 py-4 flex justify-between items-center border-b border-nipo-gold">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-file-invoice text-nipo-gold text-lg"></i>
                     <div>
-                        <h3 class="font-bold text-sm sm:text-base">Official Form M-1 Printable Document View</h3>
-                        <p class="text-[11px] text-slate-300">Live preview synchronized with your inputs</p>
+                        <h3 class="font-bold text-sm sm:text-base">Form M-01 Improved Legal PDF Preview</h3>
+                        <p class="text-[11px] text-slate-300">Live rendered pages from Form-M01-Improved-Legal.pdf</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="printOfficialForm()" class="px-3.5 py-1.5 bg-nipo-gold hover:bg-nipo-goldHover text-nipo-navy font-bold text-xs rounded-lg transition flex items-center gap-1.5 shadow-sm">
-                        <i class="fa-solid fa-print"></i> <span>Print / Save PDF</span>
-                    </button>
-                    <button onclick="closeDocModal()" class="text-slate-300 hover:text-white text-xl p-1 rounded-lg">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
+                <button onclick="closeDocModal()" class="text-slate-300 hover:text-white text-xl p-1 rounded-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
 
-            <!-- Modal Printable Document Content Area -->
-            <div class="flex-grow p-4 sm:p-8 overflow-y-auto custom-scrollbar bg-slate-100 flex justify-center">
-                
-                <!-- THE OFFICIAL FORM M-1 CONTAINER -->
-                <div id="modalFormDoc" class="official-doc bg-white p-6 sm:p-10 rounded-lg shadow-md border official-border max-w-3xl w-full space-y-6 text-xs text-black leading-relaxed">
-                    
-                    <!-- Official Header -->
-                    <div class="text-center space-y-1.5 pb-4 official-header-border">
-                        <div class="font-bold text-sm tracking-wide">INTELLECTUAL PROPERTY ACT NO. 36 OF 2003</div>
-                        <div class="font-serif text-lg font-bold text-nipo-deepBlue uppercase tracking-wider">FORM M-1</div>
-                        <div class="font-bold text-xs text-slate-800">APPLICATION FOR REGISTRATION OF A MARK</div>
-                        <div class="text-[10px] text-slate-500 italic">National Intellectual Property Office of Sri Lanka, 37/1, Bernie Mawatha, Colombo 08</div>
-                    </div>
-
-                    <!-- Doc Section 1: Applicant -->
-                    <div class="space-y-1.5">
-                        <div class="font-bold text-xs uppercase bg-slate-100 p-1.5 border-l-4 border-nipo-deepBlue">1. Full Name & Address of Applicant</div>
-                        <div class="pl-2 space-y-1">
-                            <div><span class="font-bold">Applicant Category:</span> <span id="docCategory">Individual</span></div>
-                            <div><span class="font-bold">Full Name / Entity:</span> <span id="docApplicantName" class="font-semibold text-slate-900">[Not Provided]</span></div>
-                            <div><span class="font-bold">Contact Phone & Email:</span> <span id="docContactInfo">[Phone & Email]</span></div>
-                            <div><span class="font-bold">ID / Passport / Reg No:</span> <span id="docIdNo">--</span></div>
-                            <div><span class="font-bold">Nationality / Country:</span> <span id="docNationality">Sri Lankan</span></div>
-                            <div><span class="font-bold">Address:</span> <span id="docAddress">--</span></div>
-                        </div>
-                    </div>
-
-                    <!-- Doc Section 2: Agent -->
-                    <div id="docAgentSection" class="space-y-1.5 hidden">
-                        <div class="font-bold text-xs uppercase bg-slate-100 p-1.5 border-l-4 border-amber-600">2. Address for Service / Local Agent (Form M-2 Attached)</div>
-                        <div class="pl-2 space-y-1">
-                            <div><span class="font-bold">Agent Name:</span> <span id="docAgentName">--</span></div>
-                            <div><span class="font-bold">Agent Address:</span> <span id="docAgentAddress">--</span></div>
-                        </div>
-                    </div>
-
-                    <!-- Doc Section 3: Mark Representation -->
-                    <div class="space-y-2">
-                        <div class="font-bold text-xs uppercase bg-slate-100 p-1.5 border-l-4 border-nipo-deepBlue">3. Representation of the Mark</div>
-                        <div class="border border-slate-300 p-4 rounded text-center flex flex-col items-center justify-center min-h-[120px] bg-slate-50">
-                            <div id="docMarkTextDisplay" class="text-xl font-bold font-mono tracking-widest text-slate-900">[ TEXT MARK ]</div>
-                            <img id="docLogoPreview" src="" alt="Mark Logo" class="hidden max-h-28 object-contain border p-1 bg-white mt-2">
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 text-[11px]">
-                            <div><span class="font-bold">Mark Category:</span> <span id="docMarkType">Word Mark</span></div>
-                            <div><span class="font-bold">Language:</span> <span id="docMarkLang">English</span></div>
-                            <div id="docTranslationRow" class="hidden col-span-2"><span class="font-bold">Translation:</span> <span id="docMarkTranslation">--</span></div>
-                            <div class="col-span-2"><span class="font-bold">Color Claim:</span> <span id="docColorClaim">None</span></div>
-                        </div>
-                    </div>
-
-                    <!-- Doc Section 4: Nice Classes -->
-                    <div class="space-y-1.5">
-                        <div class="font-bold text-xs uppercase bg-slate-100 p-1.5 border-l-4 border-nipo-deepBlue">4. Nice Class & Goods/Services (Strictly 1 Class)</div>
-                        <div id="docClassesList" class="pl-2 space-y-2">
-                            <div class="text-slate-500 italic">No Nice Class Selected</div>
-                        </div>
-                    </div>
-
-                    <!-- Doc Section 5: Priority Claim -->
-                    <div id="docPrioritySection" class="space-y-1.5 hidden">
-                        <div class="font-bold text-xs uppercase bg-slate-100 p-1.5 border-l-4 border-nipo-deepBlue">5. Paris Convention Priority Claim</div>
-                        <div class="pl-2 space-y-1">
-                            <div><span class="font-bold">Country:</span> <span id="docPriorityCountry">--</span></div>
-                            <div><span class="font-bold">Application No:</span> <span id="docPriorityNumber">--</span></div>
-                            <div><span class="font-bold">Filing Date:</span> <span id="docPriorityDate">--</span></div>
-                            <div><span class="font-bold">Certified Priority Doc Status:</span> <span id="docPriorityDocStatus" class="text-amber-800 font-bold">To be lodged within 3 months</span></div>
-                        </div>
-                    </div>
-
-                    <!-- Doc Section 6: Fees & Signature -->
-                    <div class="space-y-3 pt-2">
-                        <div class="font-bold text-xs uppercase bg-slate-100 p-1.5 border-l-4 border-nipo-deepBlue">6. Calculated Fee & Statutory Signature / Authentication</div>
-                        <div class="flex justify-between font-bold text-sm p-2 bg-slate-50 rounded border border-slate-200">
-                            <span>Calculated Official Fee:</span>
-                            <span id="docTotalFee" class="text-nipo-deepBlue">LKR 2,380</span>
-                        </div>
-                        <div class="pt-6 border-t border-dashed border-slate-400 flex justify-between items-end">
-                            <div>
-                                <div class="text-[10px] text-slate-500">Date of Application</div>
-                                <div id="docDateToday" class="font-bold">25-Oct-2026</div>
-                            </div>
-                            <div class="text-center space-y-1">
-                                <div class="h-16 flex items-center justify-center">
-                                    <img id="docSigImgOutput" src="" alt="Signature" class="hidden max-h-16 border-b border-black">
-                                    <div id="docSigPlaceholder" class="w-48 border-b border-black"></div>
-                                </div>
-                                <div class="text-[10px] font-bold" id="docSignatoryTitleDisplay">Signature of Applicant / Registered Agent</div>
-                                <div class="text-[9px] text-slate-500 font-semibold" id="docSignatorySubtext">Official Seal / Stamp where applicable</div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
+            <div id="pdfPreviewPagesContainer" class="flex-grow p-4 sm:p-8 overflow-y-auto custom-scrollbar bg-slate-200 flex flex-col items-center gap-6">
+                <p class="text-xs text-slate-600">Rendering preview...</p>
             </div>
 
-            <!-- Modal Footer -->
             <div class="bg-slate-100 px-6 py-3 flex justify-between items-center border-t border-slate-200">
-                <span class="text-xs text-slate-500"><i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Synchronized with Form Data</span>
+                <span class="text-xs text-slate-500"><i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Previewing Form-M01-Improved-Legal.pdf</span>
                 <button onclick="closeDocModal()" class="px-5 py-2 bg-slate-700 hover:bg-slate-800 text-white font-bold text-xs rounded-lg transition">
                     Close Preview
                 </button>
             </div>
-
         </div>
     </div>
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        if (window.pdfjsLib) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+
         let currentStep = 1;
         let selectedMarkType = 'Word';
         let selectedClass = null;
@@ -1098,6 +865,11 @@
 
         let isDrawing = false;
         let canvas, ctx;
+
+        const na = (v) => {
+            const s = String(v ?? '').trim();
+            return s ? s : 'N/A';
+        };
 
         function getClassObj(classNum) {
             if (!classNum) return null;
@@ -1119,22 +891,16 @@
         window.onload = async function() {
             try {
                 const response = await fetch('mgs.json');
-                if (response.ok) {
-                    classDatabase = await response.json();
-                } else {
-                    console.warn("Could not load mgs.json. Ensure mgs.json is present in the repository root.");
-                }
+                if (response.ok) classDatabase = await response.json();
             } catch (e) {
-                console.error("Error fetching mgs.json:", e);
+                console.warn('Could not load mgs.json:', e);
             }
 
             renderNiceClassGrid();
             handleCategoryChange();
             setupCanvas();
-            updateDocPreview();
             calculateFees();
-            document.getElementById('docDateToday').innerText = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-            
+
             document.addEventListener('click', function(e) {
                 const dropdown = document.getElementById('goodsDropdown');
                 const searchInput = document.getElementById('goodsSearchInput');
@@ -1144,17 +910,12 @@
             });
         };
 
-        function handleLogout() {
-            localStorage.removeItem('nipo_active_user');
-            window.location.href = 'https://sandaruwanipo.github.io/all_in_one/';
-        }
-
         function setupCanvas() {
             canvas = document.getElementById('sigCanvas');
-            if(!canvas) return;
+            if (!canvas) return;
             ctx = canvas.getContext('2d');
             ctx.strokeStyle = '#0d1b2a';
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 2.2;
 
             canvas.addEventListener('mousedown', startDrawing);
             canvas.addEventListener('mousemove', draw);
@@ -1174,27 +935,25 @@
         }
 
         function draw(e) {
-            if(!isDrawing) return;
+            if (!isDrawing) return;
             const rect = canvas.getBoundingClientRect();
             ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
             ctx.stroke();
         }
 
         function stopDrawing() {
-            if(!isDrawing) return;
+            if (!isDrawing) return;
             isDrawing = false;
             capturedSigDataUrl = canvas.toDataURL('image/png');
             document.getElementById('sigImgDisplay').src = capturedSigDataUrl;
             document.getElementById('sigPreviewBox').classList.remove('hidden');
-            updateDocPreview();
         }
 
         function clearCanvas() {
-            if(!ctx) return;
+            if (!ctx) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             capturedSigDataUrl = null;
             document.getElementById('sigPreviewBox').classList.add('hidden');
-            updateDocPreview();
         }
 
         function switchMainTab(tab) {
@@ -1224,14 +983,13 @@
 
         function jumpToStep(step) {
             document.getElementById(`step${currentStep}`).classList.add('hidden');
-            
-            for(let i=1; i<=6; i++) {
+            for (let i = 1; i <= 6; i++) {
                 const tab = document.getElementById(`stepTab${i}`);
                 const circle = tab.children[0];
-                if(i === step) {
+                if (i === step) {
                     tab.className = "cursor-pointer space-y-1.5 transition text-amber-400";
                     circle.className = "w-8 h-8 rounded-full bg-nipo-gold text-nipo-navy flex items-center justify-center font-bold mx-auto shadow-md";
-                } else if(i < step) {
+                } else if (i < step) {
                     tab.className = "cursor-pointer space-y-1.5 transition text-emerald-400";
                     circle.className = "w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold mx-auto";
                 } else {
@@ -1239,26 +997,22 @@
                     circle.className = "w-8 h-8 rounded-full bg-slate-700 text-slate-300 flex items-center justify-center font-bold mx-auto";
                 }
             }
-
             currentStep = step;
             document.getElementById(`step${currentStep}`).classList.remove('hidden');
-
             document.getElementById('btnPrevStep').classList.toggle('hidden', currentStep === 1);
             document.getElementById('btnNextStep').classList.toggle('hidden', currentStep === 6);
         }
 
         function handleCategoryChange() {
             const categoryEl = document.querySelector('input[name="applicantCategory"]:checked');
-            if(!categoryEl) return;
+            if (!categoryEl) return;
             const category = categoryEl.value;
 
             ['Individual', 'Company', 'Partnership', 'SoleProprietorship'].forEach(cat => {
                 const label = document.getElementById(`catLabel${cat === 'SoleProprietorship' ? 'SoleProp' : cat}`);
-                if(cat === category) {
-                    label.className = "relative flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition border-nipo-deepBlue bg-blue-50/30";
-                } else {
-                    label.className = "relative flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer hover:bg-slate-50 transition border-slate-200";
-                }
+                label.className = (cat === category)
+                    ? "relative flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition border-nipo-deepBlue bg-blue-50/30"
+                    : "relative flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer hover:bg-slate-50 transition border-slate-200";
             });
 
             const singleContainer = document.getElementById('singleApplicantContainer');
@@ -1283,64 +1037,120 @@
 
             updateSignatureSectionCategory(category);
             calculateFees();
-            updateDocPreview();
         }
 
         function updateSignatureSectionCategory(category) {
-            const indBox = document.getElementById('sigContainerIndividual');
-            const compBox = document.getElementById('sigContainerCompany');
-            const partBox = document.getElementById('sigContainerPartnership');
-            const soleBox = document.getElementById('sigContainerSoleProp');
+            ['sigContainerIndividual', 'sigContainerCompany', 'sigContainerPartnership', 'sigContainerSoleProp']
+                .forEach(id => document.getElementById(id).classList.add('hidden'));
+
             const title = document.getElementById('sigCategoryTitle');
             const badge = document.getElementById('sigBadgeCategory');
 
-            [indBox, compBox, partBox, soleBox].forEach(b => b.classList.add('hidden'));
-
             if (category === 'Individual') {
-                indBox.classList.remove('hidden');
+                document.getElementById('sigContainerIndividual').classList.remove('hidden');
                 title.innerText = "Individual Applicant Signature";
                 badge.innerText = "Individual";
             } else if (category === 'Company') {
-                compBox.classList.remove('hidden');
+                document.getElementById('sigContainerCompany').classList.remove('hidden');
                 title.innerText = "Director Signature & Company Official Seal";
                 badge.innerText = "Company Seal Required";
             } else if (category === 'Partnership') {
-                partBox.classList.remove('hidden');
+                document.getElementById('sigContainerPartnership').classList.remove('hidden');
                 title.innerText = "Partner Signature & Partnership Seal";
                 badge.innerText = "Partnership Seal Required";
-            } else if (category === 'SoleProprietorship') {
-                soleBox.classList.remove('hidden');
+            } else {
+                document.getElementById('sigContainerSoleProp').classList.remove('hidden');
                 title.innerText = "Proprietor Signature & Enterprise Seal";
                 badge.innerText = "Proprietorship Seal Required";
             }
+        }
+
+        function hasSignatureProvided() {
+            const category = document.querySelector('input[name="applicantCategory"]:checked')?.value || 'Individual';
+            if (category === 'Individual') {
+                return Boolean(capturedSigDataUrl) || Boolean(document.getElementById('indSigFileInput')?.files?.length);
+            }
+            if (category === 'Company') {
+                return Boolean(document.getElementById('companyDirectorName')?.value.trim()) &&
+                    Boolean(document.getElementById('companySealUpload')?.files?.length);
+            }
+            if (category === 'Partnership') {
+                return Boolean(document.getElementById('signingPartnerName')?.value.trim()) &&
+                    Boolean(document.getElementById('partnerSealUpload')?.files?.length);
+            }
+            return Boolean(document.getElementById('signingProprietorName')?.value.trim()) &&
+                Boolean(document.getElementById('solePropSealUpload')?.files?.length);
+        }
+
+        function validateMandatoryFields() {
+            const category = document.querySelector('input[name="applicantCategory"]:checked')?.value || 'Individual';
+            let applicantName = '';
+            if (category === 'Partnership') {
+                const partners = [...document.querySelectorAll('.partner-input')].map(e => e.value.trim()).filter(Boolean);
+                if (partners.length < 2) {
+                    alert('Please enter at least 2 Partner names under Application Info.');
+                    jumpToStep(1); return false;
+                }
+                applicantName = partners.join(', ');
+            } else if (category === 'SoleProprietorship') {
+                const biz = document.getElementById('solePropBusinessName')?.value.trim() || '';
+                const props = [...document.querySelectorAll('.proprietor-input')].map(e => e.value.trim()).filter(Boolean);
+                if (!biz || props.length < 1) {
+                    alert('Please enter the Business Name and at least one Proprietor Name under Application Info.');
+                    jumpToStep(1); return false;
+                }
+                applicantName = props.join(', ');
+            } else {
+                applicantName = document.getElementById('applicantFullName')?.value.trim() || '';
+            }
+
+            const phone = document.getElementById('applicantPhone')?.value.trim() || '';
+            const email = document.getElementById('applicantEmail')?.value.trim() || '';
+            const address = document.getElementById('applicantAddress')?.value.trim() || '';
+
+            if (!applicantName || !phone || !email || !address) {
+                alert('Please complete all mandatory Application Info fields (Name, Phone, Email, Address).');
+                jumpToStep(1); return false;
+            }
+
+            const markText = document.getElementById('markText')?.value.trim() || '';
+            if (!markText && !logoDataUrl) {
+                alert('Please provide Mark Details (Text / Brand Name of Mark or Logo representation).');
+                jumpToStep(2); return false;
+            }
+
+            if (!selectedClass) {
+                alert('Please select a Nice Class (1–45) before continuing or generating.');
+                jumpToStep(3); return false;
+            }
+
+            if (document.getElementById('attachGoodsListCheck')?.checked && !document.getElementById('pdfClassUploader')?.files?.length) {
+                alert('Please attach the goods/services specification PDF.');
+                jumpToStep(3); return false;
+            }
+
+            return true;
         }
 
         function handleSigUpload(event) {
             const file = event.target.files[0];
             if (file && !/\.pdf$/i.test(file.name)) {
                 alert('Please upload the signed document as a PDF.');
-                event.target.value = ''; return;
+                event.target.value = '';
             }
-            capturedSigDataUrl = null;
-            document.getElementById('sigPreviewBox')?.classList.add('hidden');
-            updateDocPreview();
         }
 
         function handleSealUpload(event) {
             const file = event.target.files[0];
             if (file && !/\.pdf$/i.test(file.name)) {
                 alert('Please upload the signed and sealed document as a PDF.');
-                event.target.value = ''; return;
+                event.target.value = '';
             }
-            capturedSigDataUrl = null;
-            const preview = document.getElementById('sigPreviewBox');
-            if (preview) preview.classList.add('hidden');
-            updateDocPreview();
         }
 
         function removeDynamicRow(btn, callback) {
             btn.parentElement.remove();
-            if(callback) callback();
+            if (callback) callback();
             calculateFees();
         }
 
@@ -1358,14 +1168,10 @@
         }
 
         function updateSolePropString() {
-            const biz = document.getElementById('solePropBusinessName').value.trim() || '[Company / Business Name]';
-            const inputs = document.querySelectorAll('.proprietor-input');
-            const names = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
-            
-            let formatted = names.length > 0 ? names.join(', ') + " trading as " + biz : "Name 1 trading as " + biz;
+            const biz = na(document.getElementById('solePropBusinessName')?.value);
+            const names = [...document.querySelectorAll('.proprietor-input')].map(i => i.value.trim()).filter(Boolean);
+            const formatted = (names.length ? names.join(', ') : 'N/A') + ' trading as ' + biz;
             document.getElementById('formattedSolePropDisplay').innerText = formatted;
-            document.getElementById('docApplicantName').innerText = formatted;
-            document.getElementById('docCategory').innerText = "Proprietorship";
             calculateFees();
         }
 
@@ -1381,45 +1187,21 @@
             container.appendChild(div);
         }
 
-        function updatePartnershipString() {
-            const firm = document.getElementById('partnershipFirmName').value.trim();
-            const inputs = document.querySelectorAll('.partner-input');
-            const names = Array.from(inputs).map(i => i.value.trim()).filter(Boolean);
-            
-            let formatted = names.length > 0 ? names.join(', ') : 'Partners (Min 2 required)';
-            if(firm) formatted += " trading as " + firm;
-
-            document.getElementById('docApplicantName').innerText = formatted;
-            document.getElementById('docCategory').innerText = "Partnership";
-        }
+        function updatePartnershipString() {}
 
         function toggleOverseasPoa() {
-            const addressLoc = document.querySelector('input[name="addressLocation"]:checked').value;
-            const isOverseas = addressLoc === 'Overseas';
-
+            const isOverseas = document.querySelector('input[name="addressLocation"]:checked').value === 'Overseas';
             document.getElementById('poaSection').classList.toggle('hidden', !isOverseas);
-            document.getElementById('docAgentSection').classList.toggle('hidden', !isOverseas);
             calculateFees();
-        }
-
-        function downloadPoaTemplate() {
-            alert("Power of Attorney (Form M-2) Sri Lanka NIPO Template downloaded successfully.");
         }
 
         function setMarkType(type) {
             selectedMarkType = type;
-            const bWord = document.getElementById('btnTypeWord');
-            const bDev = document.getElementById('btnTypeDevice');
-            const bComb = document.getElementById('btnTypeCombined');
-
-            [bWord, bDev, bComb].forEach(b => b.className = "py-3 px-4 rounded-xl border-2 font-bold text-xs flex flex-col items-center gap-1.5 border-slate-200 hover:border-slate-300 text-slate-700");
-
-            if (type === 'Word') bWord.className = "py-3 px-4 rounded-xl border-2 font-bold text-xs flex flex-col items-center gap-1.5 border-nipo-deepBlue bg-nipo-deepBlue text-white";
-            else if (type === 'Device') bDev.className = "py-3 px-4 rounded-xl border-2 font-bold text-xs flex flex-col items-center gap-1.5 border-nipo-deepBlue bg-nipo-deepBlue text-white";
-            else bComb.className = "py-3 px-4 rounded-xl border-2 font-bold text-xs flex flex-col items-center gap-1.5 border-nipo-deepBlue bg-nipo-deepBlue text-white";
-
-            document.getElementById('docMarkType').innerText = type + " Mark";
-            updateDocPreview();
+            ['btnTypeWord', 'btnTypeDevice', 'btnTypeCombined'].forEach(id => {
+                document.getElementById(id).className = "py-3 px-4 rounded-xl border-2 font-bold text-xs flex flex-col items-center gap-1.5 border-slate-200 hover:border-slate-300 text-slate-700";
+            });
+            const activeMap = { Word: 'btnTypeWord', Device: 'btnTypeDevice', Combined: 'btnTypeCombined' };
+            document.getElementById(activeMap[type]).className = "py-3 px-4 rounded-xl border-2 font-bold text-xs flex flex-col items-center gap-1.5 border-nipo-deepBlue bg-nipo-deepBlue text-white";
         }
 
         function handleLogoUpload(event) {
@@ -1430,39 +1212,23 @@
                     logoDataUrl = e.target.result;
                     document.getElementById('logoImgPreview').src = logoDataUrl;
                     document.getElementById('logoPreviewBox').classList.remove('hidden');
-                    
-                    const docLogo = document.getElementById('docLogoPreview');
-                    docLogo.src = logoDataUrl;
-                    docLogo.classList.remove('hidden');
-                    updateDocPreview();
-                }
+                };
                 reader.readAsDataURL(file);
             }
         }
 
         function handleLanguageChange() {
             const lang = document.getElementById('markLanguage').value;
-            const translationField = document.getElementById('translationField');
-            const swornNotice = document.getElementById('swornTranslatorNotice');
-
-            if (lang === 'Other') {
-                translationField.classList.remove('hidden');
-                swornNotice.classList.remove('hidden');
-                document.getElementById('docTranslationRow').classList.remove('hidden');
-            } else {
-                translationField.classList.add('hidden');
-                swornNotice.classList.add('hidden');
-                document.getElementById('docTranslationRow').classList.add('hidden');
-            }
-            updateDocPreview();
+            const isOther = lang === 'Other';
+            document.getElementById('translationField').classList.toggle('hidden', !isOther);
+            document.getElementById('swornTranslatorNotice').classList.toggle('hidden', !isOther);
         }
 
         function renderNiceClassGrid() {
             const grid = document.getElementById('niceClassGrid');
             grid.innerHTML = '';
-
             for (let i = 1; i <= 45; i++) {
-                const isSelected = (selectedClass === i);
+                const isSelected = selectedClass === i;
                 const item = document.createElement('div');
                 item.className = `class-box p-2 rounded-lg border cursor-pointer text-center transition text-xs font-bold ${isSelected ? 'bg-nipo-deepBlue text-white border-nipo-deepBlue shadow' : 'bg-white border-slate-200 hover:border-slate-300 text-slate-800'}`;
                 item.dataset.classNum = i;
@@ -1474,8 +1240,7 @@
 
         function filterClassGrid() {
             const q = document.getElementById('classSearchInput').value.toLowerCase().trim();
-            const boxes = document.querySelectorAll('.class-box');
-            boxes.forEach(box => {
+            document.querySelectorAll('.class-box').forEach(box => {
                 const num = box.dataset.classNum;
                 const cName = getClassName(num).toLowerCase();
                 box.style.display = (num.includes(q) || cName.includes(q)) ? 'block' : 'none';
@@ -1483,131 +1248,76 @@
         }
 
         function selectSingleNiceClass(classNum) {
-            if (selectedClass !== classNum) {
-                selectedClass = classNum;
-            } else {
-                selectedClass = null;
-            }
-            
+            selectedClass = selectedClass === classNum ? null : classNum;
             renderNiceClassGrid();
-            
             const activeLabel = document.getElementById('selectedClassDisplayLabel');
-            const activePdfLabel = document.getElementById('lblActivePdfNum');
-
-            if (selectedClass) {
-                const className = getClassName(selectedClass);
-                activeLabel.innerText = `Active: Class ${selectedClass} (${className})`;
-                if(activePdfLabel) activePdfLabel.innerText = selectedClass + '.pdf';
-            } else {
-                activeLabel.innerText = `Active Class: None`;
-                if(activePdfLabel) activePdfLabel.innerText = '--';
-            }
-
+            activeLabel.innerText = selectedClass ? `Active: Class ${selectedClass} (${getClassName(selectedClass)})` : 'Active Class: None';
             calculateFees();
-            updateDocPreview();
         }
 
         function filterGoodsDropdown() {
             const query = document.getElementById('goodsSearchInput').value.toLowerCase().trim();
             const dropdown = document.getElementById('goodsDropdown');
-
-            if (query.length < 2) {
-                dropdown.classList.add('hidden');
-                return;
-            }
+            if (query.length < 2) { dropdown.classList.add('hidden'); return; }
 
             let foundMatches = [];
-
-            if (selectedClass) {
-                const items = getClassItems(selectedClass);
-                items.forEach(item => {
+            const classesToSearch = selectedClass ? [selectedClass] : Array.from({ length: 45 }, (_, idx) => idx + 1);
+            for (const c of classesToSearch) {
+                for (const item of getClassItems(c)) {
                     if (item.toLowerCase().includes(query) && !selectedClassGoods.includes(item)) {
-                        foundMatches.push({ classNum: selectedClass, item: item });
+                        foundMatches.push({ classNum: c, item });
                     }
-                });
-            } else {
-                for (let c = 1; c <= 45; c++) {
-                    const items = getClassItems(c);
-                    items.forEach(item => {
-                        if (item.toLowerCase().includes(query) && !selectedClassGoods.includes(item)) {
-                            foundMatches.push({ classNum: c, item: item });
-                        }
-                    });
                 }
             }
 
             if (foundMatches.length === 0) {
-                dropdown.innerHTML = `<div class="p-3 text-xs text-slate-500 italic">No matching goods/services found in mgs.json pool. Please enter custom terms below.</div>`;
+                dropdown.innerHTML = `<div class="p-3 text-xs text-slate-500 italic">No matching goods/services found in mgs.json pool.</div>`;
                 dropdown.classList.remove('hidden');
                 return;
             }
 
-            let html = `<div class="p-2 text-[11px] font-bold text-slate-400 uppercase border-b border-slate-100 flex justify-between">
-                <span>Matching Items in Database</span>
-                <span>${foundMatches.length} result(s)</span>
-            </div>`;
-
+            let html = `<div class="p-2 text-[11px] font-bold text-slate-400 uppercase border-b border-slate-100 flex justify-between"><span>Matching Items</span><span>${foundMatches.length}</span></div>`;
             foundMatches.slice(0, 50).forEach(match => {
-                html += `
-                    <div onclick="addGoodFromSearch('${match.item.replace(/'/g, "\\'")}', ${match.classNum})" class="px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-100 cursor-pointer border-b border-slate-50 transition flex items-center justify-between">
-                        <span class="font-medium"><i class="fa-solid fa-plus text-nipo-deepBlue mr-2 text-[10px]"></i> ${match.item}</span>
-                        <span class="text-[10px] font-bold bg-slate-100 text-nipo-deepBlue px-2 py-0.5 rounded border border-slate-200">Class ${match.classNum}</span>
-                    </div>
-                `;
+                html += `<div onclick="addGoodFromSearch('${match.item.replace(/'/g, "\\'")}', ${match.classNum})" class="px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-100 cursor-pointer border-b border-slate-50 flex items-center justify-between">
+                    <span><i class="fa-solid fa-plus text-nipo-deepBlue mr-2 text-[10px]"></i>${match.item}</span>
+                    <span class="text-[10px] font-bold bg-slate-100 text-nipo-deepBlue px-2 py-0.5 rounded border border-slate-200">Class ${match.classNum}</span>
+                </div>`;
             });
-
             dropdown.innerHTML = html;
             dropdown.classList.remove('hidden');
         }
 
         function addGoodFromSearch(goodName, targetClass) {
-            if (!selectedClass && targetClass) {
-                selectSingleNiceClass(targetClass);
-            }
-
-            if (!selectedClassGoods.includes(goodName)) {
-                selectedClassGoods.push(goodName);
-            }
-            
+            if (!selectedClass && targetClass) selectSingleNiceClass(targetClass);
+            if (!selectedClassGoods.includes(goodName)) selectedClassGoods.push(goodName);
             document.getElementById('goodsSearchInput').value = '';
             document.getElementById('goodsDropdown').classList.add('hidden');
             renderSelectedGoodsChips();
-            updateDocPreview();
         }
 
         function removeGoodItem(goodName) {
             selectedClassGoods = selectedClassGoods.filter(g => g !== goodName);
             renderSelectedGoodsChips();
-            updateDocPreview();
         }
 
         function clearSelectedGoods() {
             selectedClassGoods = [];
             renderSelectedGoodsChips();
-            updateDocPreview();
         }
 
         function renderSelectedGoodsChips() {
             const container = document.getElementById('selectedGoodsChips');
             document.getElementById('selectedGoodsCount').innerText = selectedClassGoods.length;
-
             if (selectedClassGoods.length === 0) {
                 container.innerHTML = `<span class="text-xs text-slate-400 italic" id="noGoodsPlaceholder">No goods selected yet. Choose from the database search above.</span>`;
                 return;
             }
-
-            let html = '';
-            selectedClassGoods.forEach(good => {
-                html += `
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-nipo-deepBlue text-white rounded-lg text-xs font-semibold shadow-sm">
-                        <span>${good}</span>
-                        <button type="button" onclick="removeGoodItem('${good.replace(/'/g, "\\'")}')" class="text-amber-300 hover:text-white ml-1">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </span>
-                `;
-            });
-            container.innerHTML = html;
+            container.innerHTML = selectedClassGoods.map(good => `
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-nipo-deepBlue text-white rounded-lg text-xs font-semibold shadow-sm">
+                    <span>${good}</span>
+                    <button type="button" onclick="removeGoodItem('${good.replace(/'/g, "\\'")}')" class="text-amber-300 hover:text-white ml-1"><i class="fa-solid fa-xmark"></i></button>
+                </span>
+            `).join('');
         }
 
         function toggleGoodsAttachment() {
@@ -1616,131 +1326,41 @@
             document.getElementById('goodsSearchContainer').classList.toggle('opacity-50', attached);
             document.getElementById('goodsSearchInput').disabled = attached;
             document.getElementById('goodsAttachmentName').textContent = document.getElementById('pdfClassUploader').files[0]?.name || 'No attachment selected.';
-            updateDocPreview();
         }
 
         function handleClassPdfUpload(event) {
             const file = event.target.files[0];
             const label = document.getElementById('goodsAttachmentName');
-            if (!file) { label.textContent = 'No attachment selected.'; updateDocPreview(); return; }
+            if (!file) { label.textContent = 'No attachment selected.'; return; }
             if (!/\.pdf$/i.test(file.name)) {
                 alert('Please upload the goods/services specification as PDF only.');
                 event.target.value = ''; label.textContent = 'No attachment selected.'; return;
             }
             label.textContent = 'Selected: ' + file.name;
-            updateDocPreview();
         }
 
         function calculateFees() {
             const category = document.querySelector('input[name="applicantCategory"]:checked')?.value || 'Individual';
             const proprietors = [...document.querySelectorAll('.proprietor-input')].filter(e => e.value.trim()).length;
-            const base = category === 'Company' || category === 'Partnership' ||
-                (category === 'SoleProprietorship' && proprietors > 1) ? 7080 : 2380;
+            const base = (category === 'Company' || category === 'Partnership' || (category === 'SoleProprietorship' && proprietors > 1)) ? 7080 : 2380;
             const formatted = `LKR ${base.toLocaleString('en-US')}`;
-            ['headerFeeDisplay','totalFeeAmountText','docTotalFee','baseFeeText'].forEach(id => {
+            ['headerFeeDisplay', 'totalFeeAmountText', 'baseFeeText'].forEach(id => {
                 const el = document.getElementById(id); if (el) el.textContent = formatted;
             });
-            ['priorityFeeText','agentFeeText'].forEach(id => {
-                const el = document.getElementById(id); if (el) el.textContent = 'Not included';
-            });
-        }
-
-        function updateDocPreview() {
-            const nameInput = document.getElementById('applicantFullName')?.value.trim();
-            const category = document.querySelector('input[name="applicantCategory"]:checked')?.value;
-            
-            if (category === 'Individual' || category === 'Company') {
-                document.getElementById('docApplicantName').innerText = nameInput || '[Applicant Name]';
-                document.getElementById('docCategory').innerText = category;
-            }
-
-            const phone = document.getElementById('applicantPhone')?.value.trim() || '';
-            const email = document.getElementById('applicantEmail')?.value.trim() || '';
-            document.getElementById('docContactInfo').innerText = (phone || email) ? `${phone} | ${email}` : '[Phone & Email]';
-
-            document.getElementById('docIdNo').innerText = document.getElementById('applicantIdNo')?.value.trim() || '--';
-            document.getElementById('docNationality').innerText = document.getElementById('applicantNationality')?.value.trim() || 'Sri Lankan';
-            document.getElementById('docAddress').innerText = document.getElementById('applicantAddress')?.value.trim() || '--';
-
-            const agentName = document.getElementById('agentName')?.value.trim();
-            const agentAddress = document.getElementById('agentAddress')?.value.trim();
-            document.getElementById('docAgentName').innerText = agentName || '--';
-            document.getElementById('docAgentAddress').innerText = agentAddress || '--';
-
-            const markText = document.getElementById('markText')?.value.trim() || '[ TEXT MARK ]';
-            document.getElementById('docMarkTextDisplay').innerText = markText;
-            document.getElementById('docMarkLang').innerText = document.getElementById('markLanguage')?.value || 'English';
-            document.getElementById('docMarkTranslation').innerText = document.getElementById('markTranslationText')?.value.trim() || '--';
-            document.getElementById('docColorClaim').innerText = document.getElementById('colorClaim')?.value.trim() || 'None';
-
-            const docClassesList = document.getElementById('docClassesList');
-            const attachedGoods = document.getElementById('attachGoodsListCheck')?.checked;
-            if (!selectedClass) {
-                docClassesList.innerHTML = `<div class="text-slate-500 italic">No Nice Class Selected</div>`;
-            } else {
-                const finalGoodsStr = selectedClassGoods.length ? selectedClassGoods.join('; ') : 'No specific goods selected.';
-                const className = getClassName(selectedClass);
-                const goodsPreview = attachedGoods ? 'Attached' : (finalGoodsStr.length > 290
-                    ? '<span class="italic text-amber-800">Goods/services list attached as continuation page(s); original Form M-01 box will be blank.</span>'
-                    : finalGoodsStr);
-                docClassesList.innerHTML = `
-                    <div class="border-l-2 border-nipo-deepBlue pl-2 text-xs">
-                        <strong class="text-nipo-deepBlue">Class ${selectedClass} (${className}):</strong>
-                        <div class="text-[11px] text-slate-700 mt-1"><strong>Goods/Services:</strong> ${goodsPreview}</div>
-                    </div>
-                `;
-            }
-
-            const hasPriority = document.getElementById('hasPriorityClaim')?.checked;
-            const docPrioritySection = document.getElementById('docPrioritySection');
-            if (hasPriority) {
-                docPrioritySection.classList.remove('hidden');
-                document.getElementById('docPriorityCountry').innerText = document.getElementById('priorityCountry')?.value.trim() || '--';
-                document.getElementById('docPriorityNumber').innerText = document.getElementById('priorityNumber')?.value.trim() || '--';
-                document.getElementById('docPriorityDate').innerText = document.getElementById('priorityDate')?.value || '--';
-            } else {
-                docPrioritySection.classList.add('hidden');
-            }
-
-            const sigImg = document.getElementById('docSigImgOutput');
-            const sigPlaceholder = document.getElementById('docSigPlaceholder');
-
-            if (capturedSigDataUrl) {
-                sigImg.src = capturedSigDataUrl;
-                sigImg.classList.remove('hidden');
-                sigPlaceholder.classList.add('hidden');
-            } else {
-                sigImg.classList.add('hidden');
-                sigPlaceholder.classList.remove('hidden');
-            }
         }
 
         function toggle3DRepresentation() {
-            const enabled=document.getElementById('has3DRepresentation').checked;
-            document.getElementById('threeDRepresentationSection').classList.toggle('hidden',!enabled);
-            if(!enabled)document.getElementById('threeDRepresentationUpload').value='';
-            updateDocPreview();
+            const enabled = document.getElementById('has3DRepresentation').checked;
+            document.getElementById('threeDRepresentationSection').classList.toggle('hidden', !enabled);
+            if (!enabled) document.getElementById('threeDRepresentationUpload').value = '';
         }
 
         function togglePriorityFields() {
-            const checked = document.getElementById('hasPriorityClaim').checked;
-            document.getElementById('priorityFieldsContainer').classList.toggle('hidden', !checked);
-            calculateFees();
-            updateDocPreview();
+            document.getElementById('priorityFieldsContainer').classList.toggle('hidden', !document.getElementById('hasPriorityClaim').checked);
         }
 
         function togglePrioritySubmitLater() {
-            const later = document.getElementById('prioritySubmitLater').checked;
-            document.getElementById('priorityLaterWarning').classList.toggle('hidden', !later);
-        }
-
-        function openDocModal() {
-            updateDocPreview();
-            document.getElementById('docModalOverlay').classList.remove('hidden');
-        }
-
-        function closeDocModal() {
-            document.getElementById('docModalOverlay').classList.add('hidden');
+            document.getElementById('priorityLaterWarning').classList.toggle('hidden', !document.getElementById('prioritySubmitLater').checked);
         }
 
         function openDownloadNoticeModal() {
@@ -1751,174 +1371,302 @@
             document.getElementById('downloadNoticeModal')?.classList.add('hidden');
         }
 
-        function printOfficialForm() {
-            window.print();
+        function closeDocModal() {
+            document.getElementById('docModalOverlay').classList.add('hidden');
         }
+
+        async function buildFilledPdfBytes() {
+            if (!window.PDFLib) throw new Error('PDF library could not load.');
+            let templateBytes = null;
+            const tplInput = document.getElementById('m01TemplateUpload');
+            if (tplInput?.files?.length) {
+                templateBytes = await tplInput.files[0].arrayBuffer();
+            } else {
+                const response = await fetch('./Form-M01-Improved-Legal.pdf', { cache: 'no-store' });
+                if (!response.ok) throw new Error('Place Form-M01-Improved-Legal.pdf beside index.html, or choose it with the template picker.');
+                templateBytes = await response.arrayBuffer();
+            }
+
+            const pdf = await PDFLib.PDFDocument.load(templateBytes);
+            if (pdf.getPageCount() < 2) throw new Error('The Form M 01 template must have 2 pages.');
+
+            // Use bold font so user-entered letters look slightly bolder than template text
+            const fontBold = await pdf.embedFont(PDFLib.StandardFonts.TimesRomanBold);
+            const font = fontBold;
+            const { rgb } = PDFLib;
+
+            const rawVal = id => document.getElementById(id)?.value?.trim() || '';
+            const checked = id => !!document.getElementById(id)?.checked;
+            const category = document.querySelector('input[name="applicantCategory"]:checked')?.value || 'Individual';
+
+            let applicant = rawVal('applicantFullName');
+            if (category === 'Partnership') {
+                applicant = [rawVal('partnershipFirmName'), [...document.querySelectorAll('.partner-input')].map(e => e.value.trim()).filter(Boolean).join(', ')].filter(Boolean).join(' - ');
+            } else if (category === 'SoleProprietorship') {
+                applicant = [rawVal('solePropBusinessName'), [...document.querySelectorAll('.proprietor-input')].map(e => e.value.trim()).filter(Boolean).join(', ')].filter(Boolean).join(' - ');
+            }
+
+            const page1 = pdf.getPage(0);
+            const page2 = pdf.getPage(1);
+            const H1 = page1.getHeight();
+            const H2 = page2.getHeight();
+            const yTop = (pageH, top) => pageH - top + 2;
+            const overflowAttachments = [];
+
+            const wrapText = (text, width, sz) => {
+                const words = String(text || '').trim().split(/\s+/).filter(Boolean);
+                const lines = [];
+                let line = '';
+                for (const w of words) {
+                    const trial = line ? line + ' ' + w : w;
+                    if (fontBold.widthOfTextAtSize(trial, sz) > width && line) { lines.push(line); line = w; }
+                    else line = trial;
+                }
+                if (line) lines.push(line);
+                return lines;
+            };
+
+            const drawField = (page, pageH, text, { x, top, width, size = 10, lineHeight = 14, maxLines = 3, overflowLabel = '' }) => {
+                const displayText = na(text);
+                const allLines = wrapText(displayText, width, size);
+                if (allLines.length > maxLines && overflowLabel) {
+                    page.drawText('See attachment', { x, y: yTop(pageH, top), size, font: fontBold, color: rgb(0, 0, 0) });
+                    overflowAttachments.push({ label: overflowLabel, text: displayText });
+                    return;
+                }
+                allLines.slice(0, maxLines).forEach((ln, i) => {
+                    page.drawText(ln, { x, y: yTop(pageH, top) - i * lineHeight, size, font: fontBold, color: rgb(0, 0, 0) });
+                });
+            };
+
+            const drawInline = (page, pageH, text, { x, top, size = 10 }) => {
+                page.drawText(na(text), { x, y: yTop(pageH, top), size, font: fontBold, color: rgb(0, 0, 0) });
+            };
+
+            const pageTitle = (page, title, subtitle = '') => {
+                page.drawText(title, { x: 42, y: page.getHeight() - 46, size: 13, font: fontBold, color: rgb(0.08, 0.16, 0.28) });
+                if (subtitle) page.drawText(subtitle.slice(0, 110), { x: 42, y: page.getHeight() - 68, size: 10, font });
+                page.drawLine({ start: { x: 42, y: page.getHeight() - 78 }, end: { x: 570, y: page.getHeight() - 78 }, thickness: 0.7 });
+            };
+
+            // Page 1 slots: Section I Applicant & Section II Representation of the Mark
+            drawField(page1, H1, applicant, { x: 284, top: 236, width: 268, maxLines: 2, overflowLabel: 'I. APPLICANT - NAME' });
+            drawField(page1, H1, rawVal('applicantAddress'), { x: 284, top: 265, width: 268, maxLines: 2, overflowLabel: 'I. APPLICANT - ADDRESS' });
+            drawField(page1, H1, rawVal('applicantPhone'), { x: 284, top: 299, width: 268, maxLines: 1, overflowLabel: 'I. APPLICANT - TEL. NO.' });
+            drawField(page1, H1, rawVal('applicantFax'), { x: 284, top: 325, width: 268, maxLines: 1, overflowLabel: 'I. APPLICANT - FAX NO.' });
+            drawField(page1, H1, rawVal('applicantEmail'), { x: 284, top: 351, width: 268, maxLines: 1, overflowLabel: 'I. APPLICANT - E-MAIL' });
+
+            // Slot 7: Text / Brand Name of Mark
+            drawField(page1, H1, rawVal('markText'), { x: 284, top: 402, width: 266, size: 10, lineHeight: 14, maxLines: 2, overflowLabel: 'II. TEXT / BRAND NAME OF MARK' });
+
+            // Section III, IV, V
+            drawField(page1, H1, rawVal('markTranslationText'), { x: 284, top: 640, width: 268, maxLines: 4, overflowLabel: 'III. TRANSLATION OF THE MARK' });
+            drawField(page1, H1, rawVal('colorClaim'), { x: 284, top: 762, width: 268, maxLines: 3, overflowLabel: 'IV. CLAIM TO COLOURS OF THE MARK' });
+            drawField(page1, H1, checked('has3DRepresentation') ? 'Three-dimensional mark; representations attached.' : 'N/A', { x: 284, top: 862, width: 268, maxLines: 3, overflowLabel: 'V. CLAIM TO THREE-DIMENSIONAL MARK' });
+
+            // Page 2 slots: Slot 12 Class & List of goods or services
+            drawField(page2, H2, selectedClass ? String(selectedClass) : 'N/A', { x: 284, top: 138, width: 268, maxLines: 1 });
+
+            const goods = selectedClassGoods.length ? selectedClassGoods.join('; ') : 'N/A';
+            const goodsAttached = checked('attachGoodsListCheck');
+            if (goodsAttached) {
+                drawField(page2, H2, 'Attached - see specification', { x: 284, top: 176, width: 268, maxLines: 1 });
+            } else if (goods.length > 290) {
+                drawField(page2, H2, 'See attachment', { x: 284, top: 176, width: 268, maxLines: 1 });
+                overflowAttachments.push({ label: 'VI. LIST OF GOODS OR SERVICES', text: goods });
+            } else {
+                drawField(page2, H2, goods, { x: 284, top: 176, width: 268, maxLines: 14, lineHeight: 14 });
+            }
+
+            if (checked('hasPriorityClaim')) drawInline(page2, H2, rawVal('priorityDate'), { x: 302, top: 432, size: 10 });
+            drawField(page2, H2, rawVal('agentAddress'), { x: 284, top: 549, width: 268, maxLines: 2, overflowLabel: 'IX. ADDRESS FOR SERVICES IN SRI LANKA' });
+            drawField(page2, H2, rawVal('agentName'), { x: 284, top: 617, width: 268, maxLines: 1, overflowLabel: 'X. AGENT - NAME' });
+            drawField(page2, H2, rawVal('agentAddress'), { x: 284, top: 646, width: 268, maxLines: 2, overflowLabel: 'X. AGENT - ADDRESS' });
+            drawField(page2, H2, [rawVal('agentPhone'), rawVal('agentEmail')].filter(Boolean).join(' / '), { x: 284, top: 680, width: 268, maxLines: 1, overflowLabel: 'X. AGENT - TEL / FAX / E-MAIL' });
+
+            const signatory = category === 'Company'
+                ? rawVal('companyDirectorName')
+                : category === 'Partnership'
+                    ? rawVal('signingPartnerName')
+                    : category === 'SoleProprietorship'
+                        ? rawVal('signingProprietorName')
+                        : applicant;
+            drawField(page2, H2, signatory, { x: 284, top: 830, width: 268, maxLines: 2, overflowLabel: 'XII. SIGNATURE / SIGNATORY' });
+            drawField(page2, H2, new Date().toLocaleDateString('en-GB'), { x: 284, top: 880, width: 268, maxLines: 1 });
+
+            const embedImage = async (dataUrl) => {
+                if (!dataUrl) return null;
+                if (dataUrl.startsWith('data:image/png')) return pdf.embedPng(dataUrl);
+                if (dataUrl.startsWith('data:image/jpeg')) return pdf.embedJpg(dataUrl);
+                const image = new Image();
+                image.src = dataUrl;
+                await image.decode();
+                const c = document.createElement('canvas');
+                c.width = image.naturalWidth;
+                c.height = image.naturalHeight;
+                c.getContext('2d').drawImage(image, 0, 0);
+                return pdf.embedPng(c.toDataURL('image/png'));
+            };
+
+            const drawCentered = async (dataUrl, page, box) => {
+                const image = await embedImage(dataUrl);
+                if (!image) return;
+                const scale = Math.min(box.w / image.width, box.h / image.height);
+                const w = image.width * scale, h = image.height * scale;
+                page.drawImage(image, { x: box.x + (box.w - w) / 2, y: box.y + (box.h - h) / 2, width: w, height: h });
+            };
+
+            // One representation inside "(Affix/paste logo here)" box on Page 1
+            if (logoDataUrl) await drawCentered(logoDataUrl, page1, { x: 292, y: H1 - 688, w: 235, h: 122 });
+            if (capturedSigDataUrl) await drawCentered(capturedSigDataUrl, page2, { x: 335, y: H2 - 910, w: 198, h: 28 });
+
+            // Overflow content as attachments below application
+            for (const item of overflowAttachments) {
+                const lines = wrapText(item.text, 520, 10);
+                const perPage = 48;
+                for (let i = 0; i < lines.length; i += perPage) {
+                    const page = pdf.addPage([612, 1009]);
+                    pageTitle(page, 'ATTACHMENT - ' + item.label, 'Nice Class: ' + na(selectedClass) + ' | Page ' + (Math.floor(i / perPage) + 1));
+                    page.drawText(lines.slice(i, i + perPage).join('\n'), { x: 42, y: page.getHeight() - 110, size: 10, font, color: rgb(0, 0, 0), lineHeight: 14 });
+                }
+            }
+
+            if (checked('hasPriorityClaim')) {
+                const page = pdf.addPage([612, 1009]);
+                pageTitle(page, 'FORM M-01 - PRIORITY CLAIM DETAILS');
+                page.drawText('Country: ' + na(rawVal('priorityCountry')) + '\nEarlier application: ' + na(rawVal('priorityNumber')) + '\nFiling date: ' + na(rawVal('priorityDate')), { x: 42, y: page.getHeight() - 220, size: 10, font, color: rgb(0, 0, 0), lineHeight: 16 });
+            }
+
+            // Copy of mark representation as attachment (8 cm x 8 cm = 226.77 pt x 226.77 pt)
+            if (logoDataUrl) {
+                const page = pdf.addPage([612, 1009]);
+                pageTitle(page, 'ATTACHMENT - COPY OF TRADEMARK REPRESENTATION (8 cm x 8 cm)');
+                const logoSizePt = 8 * 28.3465;
+                await drawCentered(logoDataUrl, page, { x: (612 - logoSizePt) / 2, y: (page.getHeight() - logoSizePt) / 2, w: logoSizePt, h: logoSizePt });
+            }
+
+            const attachments = [
+                ...(goodsAttached ? [['pdfClassUploader', 'GOODS / SERVICES SPECIFICATION']] : []),
+                ['threeDRepresentationUpload', 'THREE-DIMENSIONAL MARK REPRESENTATION'],
+                ['poaDocUpload', 'POWER OF ATTORNEY'],
+                ['swornTranslatorDocUpload', 'CERTIFIED TRANSLATION'],
+                ['priorityDocUpload', 'PRIORITY DOCUMENT'],
+                ['companySealUpload', 'DIRECTOR SIGNATURE AND SEAL'],
+                ['partnerSealUpload', 'PARTNERSHIP SIGNATURE AND SEAL'],
+                ['solePropSealUpload', 'PROPRIETOR SIGNATURE AND SEAL'],
+                ['indSigFileInput', 'SIGNATURE IMAGE'],
+                ['extraDocsUpload', 'ADDITIONAL DOCUMENT'],
+            ];
+
+            for (const [id] of attachments) {
+                const input = document.getElementById(id);
+                for (const file of Array.from(input?.files || [])) {
+                    if (file.type === 'application/pdf' || /\.pdf$/i.test(file.name)) {
+                        const source = await PDFLib.PDFDocument.load(await file.arrayBuffer());
+                        const pages = await pdf.copyPages(source, source.getPageIndices());
+                        for (const page of pages) pdf.addPage(page);
+                    } else {
+                        throw new Error('Supporting documents must be PDF files: ' + file.name);
+                    }
+                }
+            }
+
+            return await pdf.save();
+        }
+
+        async function openDocModal() {
+            const modal = document.getElementById('docModalOverlay');
+            const container = document.getElementById('pdfPreviewPagesContainer');
+            modal.classList.remove('hidden');
+            container.innerHTML = `<p class="text-xs text-slate-600">Rendering Form-M01-Improved-Legal.pdf preview...</p>`;
+
+            try {
+                const bytes = await buildFilledPdfBytes();
+                if (!window.pdfjsLib) {
+                    container.innerHTML = `<p class="text-xs text-red-600">PDF viewer library unavailable.</p>`;
+                    return;
+                }
+                const loadingTask = pdfjsLib.getDocument({ data: bytes });
+                const pdfDoc = await loadingTask.promise;
+                container.innerHTML = '';
+
+                for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+                    const page = await pdfDoc.getPage(pageNum);
+                    const viewport = page.getViewport({ scale: 1.15 });
+                    const pageCanvas = document.createElement('canvas');
+                    pageCanvas.width = viewport.width;
+                    pageCanvas.height = viewport.height;
+                    pageCanvas.className = 'bg-white shadow-md border border-slate-300 max-w-full h-auto';
+                    await page.render({ canvasContext: pageCanvas.getContext('2d'), viewport }).promise;
+                    container.appendChild(pageCanvas);
+                }
+            } catch (err) {
+                container.innerHTML = `<p class="text-xs text-red-600 font-semibold">Unable to render preview: ${err.message}</p>`;
+            }
+        }
+
+        async function downloadCompletedM01() {
+            const btn = document.getElementById('btnDownloadM01');
+            const original = btn.innerHTML;
+
+            if (!validateMandatoryFields()) return;
+            if (!hasSignatureProvided()) {
+                alert('Please provide your Signature (drawn or uploaded PDF) before generating the application.');
+                jumpToStep(6);
+                return;
+            }
+            if (!document.getElementById('declarationCheck').checked) {
+                alert('Please confirm the declaration before generating the application.');
+                jumpToStep(6);
+                return;
+            }
+
+            const uploadInputs = [...document.querySelectorAll('input[type="file"]')].filter(el => el.id !== 'logoFileInput' && el.id !== 'm01TemplateUpload');
+            for (const input of uploadInputs) {
+                for (const file of input.files) {
+                    if (!/\.pdf$/i.test(file.name) || (file.type && file.type !== 'application/pdf')) {
+                        alert('Only PDF supporting documents are accepted: ' + file.name);
+                        return;
+                    }
+                }
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Generating application and attachments...';
+            try {
+                const bytes = await buildFilledPdfBytes();
+                const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'Form_M01_Improved_Legal_Filled.pdf';
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 30000);
+                openDownloadNoticeModal();
+            } catch (err) {
+                console.error(err);
+                alert('Unable to generate application: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = original;
+            }
+        }
+
+        document.getElementById('m01TemplateUpload')?.addEventListener('change', e => {
+            const f = e.target.files?.[0];
+            document.getElementById('m01TemplateName').textContent = f ? `(${f.name})` : '(Form-M01-Improved-Legal.pdf)';
+        });
 
         document.addEventListener('DOMContentLoaded', () => {
             const step6 = document.getElementById('step6');
             const button = document.getElementById('btnDownloadM01');
             if (step6 && button) {
                 const refresh = () => button.classList.toggle('hidden', step6.classList.contains('hidden'));
-                new MutationObserver(refresh).observe(step6,{attributes:true,attributeFilter:['class']});
+                new MutationObserver(refresh).observe(step6, { attributes: true, attributeFilter: ['class'] });
                 refresh();
             }
         });
-
-        async function downloadCompletedM01() {
-            const btn=document.getElementById('btnDownloadM01');
-            const original=btn.innerHTML;
-            if(!document.getElementById('declarationCheck').checked){alert('Please confirm the declaration before generating the application.');return;}
-            if(!selectedClass){alert('Please select a Nice class before generating the application.');return;}
-            if(document.getElementById('attachGoodsListCheck')?.checked && !document.getElementById('pdfClassUploader')?.files?.length){alert('Please attach the goods/services specification before generating the application.');return;}
-            const uploadInputs = [...document.querySelectorAll('input[type="file"]')].filter(el => el.id !== 'logoFileInput' && el.id !== 'm01TemplateUpload');
-            for (const input of uploadInputs) {
-                for (const file of input.files) {
-                    if (!/\.pdf$/i.test(file.name) || (file.type && file.type !== 'application/pdf')) { alert('Only PDF supporting documents are accepted: ' + file.name); return; }
-                }
-            }
-            btn.disabled=true;btn.textContent='Generating application and attachments...';
-            try {
-                if(!window.PDFLib)throw new Error('PDF library could not load. Please check your connection.');
-                let templateBytes=null;
-                const tplInput=document.getElementById('m01TemplateUpload');
-                if(tplInput?.files?.length){ templateBytes=await tplInput.files[0].arrayBuffer(); }
-                else {
-                    const response=await fetch('./Form-M01-New.pdf',{cache:'no-store'});
-                    if(!response.ok)throw new Error('Place Form-M01-New.pdf beside index.html, or choose it with the "Form M 01 template" picker above.');
-                    templateBytes=await response.arrayBuffer();
-                }
-                const pdf=await PDFLib.PDFDocument.load(templateBytes);
-                if(pdf.getPageCount()<2)throw new Error('The Form M 01 template must have 2 pages.');
-                const font=await pdf.embedFont(PDFLib.StandardFonts.TimesRoman);
-                const fontBold=await pdf.embedFont(PDFLib.StandardFonts.TimesRomanBold);
-                const {rgb}=PDFLib;
-                const value=id=>document.getElementById(id)?.value?.trim()||'';
-                const checked=id=>!!document.getElementById(id)?.checked;
-                const category=document.querySelector('input[name="applicantCategory"]:checked')?.value||'Individual';
-                let applicant=value('applicantFullName');
-                if(category==='Partnership')applicant=[value('partnershipFirmName'),[...document.querySelectorAll('.partner-input')].map(e=>e.value.trim()).filter(Boolean).join(', ')].filter(Boolean).join(' - ');
-                if(category==='SoleProprietorship')applicant=[value('solePropBusinessName'),[...document.querySelectorAll('.proprietor-input')].map(e=>e.value.trim()).filter(Boolean).join(', ')].filter(Boolean).join(' - ');
-                const page1=pdf.getPage(0), page2=pdf.getPage(1);
-                const H1=page1.getHeight(), H2=page2.getHeight();
-                // Place text baseline right on top of each template line
-                const yTop=(pageH,top)=>pageH-top+2;
-                const overflowAttachments=[];
-
-                const wrapText=(text,width,sz,f)=>{
-                    const words=String(text||'').trim().split(/\s+/).filter(Boolean);
-                    const lines=[];
-                    let line='';
-                    for(const w of words){
-                        const trial=line?line+' '+w:w;
-                        if(f.widthOfTextAtSize(trial,sz)>width && line){ lines.push(line); line=w; }
-                        else line=trial;
-                    }
-                    if(line) lines.push(line);
-                    return lines;
-                };
-
-                const drawField=(page,pageH,text,{x,top,width,size=10,lineHeight=14,maxLines=3,bold=false,overflowLabel=''})=>{
-                    text=String(text||'').trim(); if(!text) return;
-                    const f=bold?fontBold:font;
-                    const allLines=wrapText(text,width,size,f);
-                    if(allLines.length>maxLines && overflowLabel){
-                        drawInline(page,pageH,'See attachment',{x,top,size});
-                        overflowAttachments.push({label:overflowLabel,text});
-                        return;
-                    }
-                    const lines=allLines.slice(0,maxLines);
-                    lines.forEach((ln,i)=>page.drawText(ln,{x,y:yTop(pageH,top)-i*lineHeight,size,font:f,color:rgb(0,0,0)}));
-                };
-                const drawInline=(page,pageH,text,{x,top,size=10})=>{ text=String(text||'').trim(); if(!text) return; page.drawText(text,{x,y:yTop(pageH,top),size,font,color:rgb(0,0,0)}); };
-                const pageTitle=(page,title,subtitle='')=>{ page.drawText(title,{x:42,y:page.getHeight()-46,size:13,font:fontBold,color:rgb(.08,.16,.28)}); if(subtitle)page.drawText(subtitle.slice(0,110),{x:42,y:page.getHeight()-68,size:10,font}); page.drawLine({start:{x:42,y:page.getHeight()-78},end:{x:570,y:page.getHeight()-78},thickness:0.7}); };
-                const goods=selectedClassGoods.join('; ');
-                const goodsAttached=checked('attachGoodsListCheck');
-                const brandName=value('markText');
-
-                // Top header fields
-                drawField(page1,H1,value('feesPaidOn')||'',{x:360,top:92,width:192,size:10,maxLines:1,overflowLabel:'FEES PAID ON'});
-                // Section I: Applicant Name, Address, Tel/Fax/Email
-                drawField(page1,H1,applicant,{x:284,top:236,width:268,maxLines:2,overflowLabel:'I. APPLICANT - NAME'});
-                drawField(page1,H1,value('applicantAddress'),{x:284,top:265,width:268,maxLines:2,overflowLabel:'I. APPLICANT - ADDRESS'});
-                drawField(page1,H1,[value('applicantPhone'),value('applicantEmail')].filter(Boolean).join(' / '),{x:284,top:299,width:268,maxLines:1,overflowLabel:'I. APPLICANT - CONTACT'});
-                // Slot 7: Text / Brand Name of Mark
-                if(brandName) drawField(page1,H1,brandName,{x:284,top:402,width:266,size:10,lineHeight:14,maxLines:2,bold:true,overflowLabel:'II. TEXT / BRAND NAME OF MARK'});
-                // Section III: Translation of the Mark
-                drawField(page1,H1,value('markTranslationText'),{x:284,top:640,width:268,maxLines:4,overflowLabel:'III. TRANSLATION OF THE MARK'});
-                // Section IV: Claim to Colours of the Mark
-                drawField(page1,H1,value('colorClaim'),{x:284,top:762,width:268,maxLines:3,overflowLabel:'IV. CLAIM TO COLOURS OF THE MARK'});
-                // Section V: Claim to Three-Dimensional Mark
-                drawField(page1,H1,checked('has3DRepresentation')?'Three-dimensional mark; representations attached.':'',{x:284,top:862,width:268,maxLines:3,overflowLabel:'V. CLAIM TO THREE-DIMENSIONAL MARK'});
-
-                // Slot 12: Class
-                drawField(page2,H2,String(selectedClass),{x:284,top:138,width:268,maxLines:1,bold:true});
-                // Section VI: List of goods or services
-                if(goodsAttached){ drawField(page2,H2,'Attached - see specification',{x:284,top:176,width:268,maxLines:1}); }
-                else if(goods.length>290){
-                    drawField(page2,H2,'See continuation pages',{x:284,top:176,width:268,maxLines:1});
-                    overflowAttachments.push({label:'VI. LIST OF GOODS OR SERVICES',text:goods});
-                } else { drawField(page2,H2,goods,{x:284,top:176,width:268,maxLines:14,lineHeight:14}); }
-
-                if(checked('hasPriorityClaim')) drawInline(page2,H2,value('priorityDate'),{x:302,top:432,size:10});
-                if(value('exhibitionDate')) drawInline(page2,H2,value('exhibitionDate'),{x:302,top:499,size:10});
-                drawField(page2,H2,value('agentAddress'),{x:284,top:549,width:268,maxLines:2,overflowLabel:'IX. ADDRESS FOR SERVICES IN SRI LANKA'});
-                drawField(page2,H2,value('agentName'),{x:284,top:617,width:268,maxLines:1,overflowLabel:'X. AGENT - NAME'});
-                drawField(page2,H2,value('agentAddress'),{x:284,top:646,width:268,maxLines:2,overflowLabel:'X. AGENT - ADDRESS'});
-                drawField(page2,H2,[value('agentPhone'),value('agentEmail')].filter(Boolean).join(' / '),{x:284,top:680,width:268,maxLines:1,overflowLabel:'X. AGENT - TEL / FAX / E-MAIL'});
-                const signatory=category==='Company'?value('companyDirectorName'):category==='Partnership'?value('signingPartnerName'):category==='SoleProprietorship'?value('signingProprietorName'):applicant;
-                drawField(page2,H2,signatory,{x:284,top:830,width:268,maxLines:2,overflowLabel:'XII. SIGNATURE / SIGNATORY'});
-                drawField(page2,H2,new Date().toLocaleDateString('en-GB'),{x:284,top:880,width:268,maxLines:1});
-
-                const embedImage=async(dataUrl)=>{ if(!dataUrl)return null; if(dataUrl.startsWith('data:image/png'))return pdf.embedPng(dataUrl); if(dataUrl.startsWith('data:image/jpeg'))return pdf.embedJpg(dataUrl); const image=new Image();image.src=dataUrl;await image.decode(); const canvas=document.createElement('canvas');canvas.width=image.naturalWidth;canvas.height=image.naturalHeight; canvas.getContext('2d').drawImage(image,0,0); return pdf.embedPng(canvas.toDataURL('image/png')); };
-                const drawCentered=async(dataUrl,page,box)=>{ const image=await embedImage(dataUrl);if(!image)return; const scale=Math.min(box.w/image.width,box.h/image.height); const w=image.width*scale,h=image.height*scale; page.drawImage(image,{x:box.x+(box.w-w)/2,y:box.y+(box.h-h)/2,width:w,height:h}); };
-
-                // Place one mark representation inside "(Affix/paste logo here)" box on Page 1
-                if(logoDataUrl)await drawCentered(logoDataUrl,page1,{x:292,y:H1-688,w:235,h:122});
-                if(capturedSigDataUrl)await drawCentered(capturedSigDataUrl,page2,{x:335,y:H2-910,w:198,h:28});
-
-                // Render overflow text (goods/services or any other oversized content) as attachment pages
-                for(const item of overflowAttachments){
-                    const lines=wrapText(item.text,520,10,font);
-                    const perPage=48;
-                    for(let i=0;i<lines.length;i+=perPage){
-                        const page=pdf.addPage([612,1009]);
-                        pageTitle(page,'ATTACHMENT - '+item.label,'Nice Class: '+selectedClass+' | Page '+(Math.floor(i/perPage)+1));
-                        page.drawText(lines.slice(i,i+perPage).join('\n'),{x:42,y:page.getHeight()-110,size:10,font,color:rgb(0,0,0),lineHeight:14});
-                    }
-                }
-
-                // All attachments placed below the application pages
-                if(checked('hasPriorityClaim')){ const page=pdf.addPage([612,1009]);pageTitle(page,'FORM M-01 - PRIORITY CLAIM DETAILS'); page.drawText('Country: '+value('priorityCountry')+'\nEarlier application: '+value('priorityNumber')+'\nFiling date: '+value('priorityDate'),{x:42,y:page.getHeight()-220,size:10,font,color:rgb(0,0,0),lineHeight:16}); }
-                // Copy of mark representation as attachment (8 cm x 8 cm = 226.77 pt x 226.77 pt)
-                if(logoDataUrl){
-                    const page=pdf.addPage([612,1009]);
-                    pageTitle(page,'ATTACHMENT - COPY OF TRADEMARK REPRESENTATION (8 cm x 8 cm)');
-                    const logoSizePt = 8 * 28.3465;
-                    const logoX = (612 - logoSizePt) / 2;
-                    const logoY = (page.getHeight() - logoSizePt) / 2;
-                    await drawCentered(logoDataUrl,page,{x:logoX,y:logoY,w:logoSizePt,h:logoSizePt});
-                }
-                const attachments=[ ...(goodsAttached ? [['pdfClassUploader','GOODS / SERVICES SPECIFICATION']] : []), ['threeDRepresentationUpload','THREE-DIMENSIONAL MARK REPRESENTATION'], ['poaDocUpload','POWER OF ATTORNEY'], ['swornTranslatorDocUpload','CERTIFIED TRANSLATION'], ['priorityDocUpload','PRIORITY DOCUMENT'], ['companySealUpload','DIRECTOR SIGNATURE AND SEAL'], ['partnerSealUpload','PARTNERSHIP SIGNATURE AND SEAL'], ['solePropSealUpload','PROPRIETOR SIGNATURE AND SEAL'], ['indSigFileInput','SIGNATURE IMAGE'], ['extraDocsUpload','ADDITIONAL DOCUMENT'], ];
-                for(const [id,label] of attachments){ const input=document.getElementById(id); for(const file of Array.from(input?.files||[])){ if(file.type==='application/pdf'||/\.pdf$/i.test(file.name)){ const source=await PDFLib.PDFDocument.load(await file.arrayBuffer()); const pages=await pdf.copyPages(source,source.getPageIndices()); for(const page of pages)pdf.addPage(page); } else throw new Error('Supporting documents must be PDF files: '+file.name); } }
-
-                const bytes=await pdf.save();
-                const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
-                const link=document.createElement('a');link.href=url;link.download='Form_M01_Application_Filled.pdf';
-                document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
-                openDownloadNoticeModal();
-            }catch(err){console.error(err);alert('Unable to generate application: '+err.message);}
-            finally{btn.disabled=false;btn.innerHTML=original;}
-        }
-
-        document.getElementById('m01TemplateUpload')?.addEventListener('change',e=>{
-            const f=e.target.files?.[0];
-            document.getElementById('m01TemplateName').textContent = f ? f.name : 'Using built-in Form-M01-New.pdf';
-        });
-
-        function searchStatus() {
-            alert('Application Status Lookup is coming soon. No live status service is connected.');
-        }
 
         function toggleGeminiChat() {
             document.getElementById('geminiChatModal').classList.toggle('hidden');
@@ -1930,26 +1678,21 @@
             if (!text) return;
 
             const box = document.getElementById('geminiMessages');
-            
             const userDiv = document.createElement('div');
             userDiv.className = "bg-slate-200 text-slate-800 p-2.5 rounded-xl rounded-tr-none max-w-[85%] ml-auto text-right";
             userDiv.innerText = text;
             box.appendChild(userDiv);
-
             input.value = '';
 
             setTimeout(() => {
                 const aiDiv = document.createElement('div');
                 aiDiv.className = "bg-purple-100 text-purple-900 p-2.5 rounded-xl rounded-tl-none max-w-[85%]";
-                
-                let responseText = "For Nice classification: Tea & spices belong to Class 30, Software & Mobile Apps belong to Class 9, Cosmetics fall in Class 3, and Restaurants/Hotels fall in Class 43.";
-                if(text.toLowerCase().includes('tea')) responseText = "Ceylon Tea & Spices belong to Class 30 of the Nice Classification system.";
-                if(text.toLowerCase().includes('pdf') || text.toLowerCase().includes('file')) responseText = "You can attach any class PDF document directly under Step 3 of the Goods list section.";
-                
+                let responseText = "For Nice classification: Tea & spices belong to Class 30, Software & Mobile Apps belong to Class 9, Cosmetics fall in Class 3, and Restaurants/Hotels fall in Class 43. You can also check https://webaccess.wipo.int/mgs/.";
+                if (text.toLowerCase().includes('tea')) responseText = "Ceylon Tea & Spices belong to Class 30 of the Nice Classification system.";
                 aiDiv.innerText = responseText;
                 box.appendChild(aiDiv);
                 box.scrollTop = box.scrollHeight;
-            }, 500);
+            }, 400);
         }
     </script>
 </body>
