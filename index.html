@@ -587,91 +587,37 @@
                         <div class="border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-nipo-deepBlue flex items-center gap-2">
                                 <span class="w-7 h-7 rounded-lg bg-amber-100 text-nipo-deepBlue text-sm flex items-center justify-center font-bold">6</span>
-                                Declaration, Statutory Signature & Fee Payment <span class="text-xs text-red-600 font-bold">(Mandatory Signature)</span>
+                                Declaration, Signing Instructions & Fee Payment
                             </h3>
-                            <p class="text-xs text-slate-500 mt-1">Provide your signature/seal and review the estimated fees.</p>
+                            <p class="text-xs text-slate-500 mt-1">Review the estimated fees, then print and sign your application as instructed below.</p>
                         </div>
 
                         <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
                             <div class="border-b border-slate-200 pb-3 flex justify-between items-center">
                                 <div>
-                                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider block">Mandatory Authentication Step</span>
-                                    <h4 class="text-sm font-bold text-nipo-deepBlue" id="sigCategoryTitle">Applicant Statutory Signature & Official Seal</h4>
+                                    <span class="text-xs font-bold text-amber-700 uppercase tracking-wider block">Signing Instructions</span>
+                                    <h4 class="text-sm font-bold text-nipo-deepBlue" id="sigCategoryTitle">Individual Applicant</h4>
                                 </div>
                                 <span class="text-xs px-2.5 py-1 rounded bg-amber-100 text-amber-800 font-bold" id="sigBadgeCategory">Individual</span>
                             </div>
 
-                            <!-- Individual Signature Options -->
-                            <div id="sigContainerIndividual" class="space-y-4">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="space-y-3 p-4 bg-white rounded-xl border border-slate-300">
-                                        <div class="flex justify-between items-center">
-                                            <label class="block text-xs font-bold text-nipo-deepBlue uppercase">Option A: Draw E-Signature *</label>
-                                            <button type="button" onclick="clearCanvas()" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[11px] font-bold transition">
-                                                <i class="fa-solid fa-eraser"></i> Clear
-                                            </button>
-                                        </div>
-                                        <div class="border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 p-2">
-                                            <canvas id="sigCanvas" width="400" height="110" class="w-full h-24 border border-slate-200 rounded cursor-crosshair bg-white"></canvas>
-                                        </div>
-                                        <p class="text-[10px] text-slate-400">Draw signature using mouse or touchscreen.</p>
-                                    </div>
+                            <p class="text-xs text-slate-700 font-semibold"><i class="fa-solid fa-print text-amber-600 mr-1.5"></i> Print the application, then sign it as follows:</p>
 
-                                    <div class="space-y-3 p-4 bg-white rounded-xl border border-slate-300 flex flex-col justify-between">
-                                        <div>
-                                            <label class="block text-xs font-bold text-nipo-deepBlue uppercase mb-1">Option B: Upload Scanned Signature *</label>
-                                            <p class="text-[11px] text-slate-500 mb-3">Upload a signed PDF document (.pdf) of your official signature.</p>
-                                        </div>
-                                        <input type="file" id="indSigFileInput" accept=".pdf,application/pdf" onchange="handleSigUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
-                                    </div>
-                                </div>
+                            <div id="sigContainerIndividual" class="p-4 bg-white rounded-xl border border-slate-300 text-xs text-slate-700">
+                                <i class="fa-solid fa-signature text-nipo-deepBlue mr-1.5"></i> <strong>Individual applicant:</strong> Sign the application and write the date.
+                            </div>
+                            <div id="sigContainerCompany" class="hidden p-4 bg-white rounded-xl border border-slate-300 text-xs text-slate-700">
+                                <i class="fa-solid fa-stamp text-nipo-deepBlue mr-1.5"></i> <strong>Company:</strong> Affix the official company seal, and have a director of the company sign the application.
+                            </div>
+                            <div id="sigContainerPartnership" class="hidden p-4 bg-white rounded-xl border border-slate-300 text-xs text-slate-700">
+                                <i class="fa-solid fa-stamp text-nipo-deepBlue mr-1.5"></i> <strong>Partnership:</strong> Affix the partnership seal, and have the partners sign the application.
+                            </div>
+                            <div id="sigContainerSoleProp" class="hidden p-4 bg-white rounded-xl border border-slate-300 text-xs text-slate-700">
+                                <i class="fa-solid fa-stamp text-nipo-deepBlue mr-1.5"></i> <strong>Proprietorship:</strong> Affix the proprietorship seal, and have the proprietor(s) sign the application.
                             </div>
 
-                            <!-- Company Sign & Seal -->
-                            <div id="sigContainerCompany" class="hidden space-y-4">
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Director Full Name *</label>
-                                        <input type="text" id="companyDirectorName" placeholder="e.g. Dr. Sunil Jayasinghe" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
-                                    </div>
-                                    <div>
-                                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Designation *</label>
-                                        <input type="text" id="companyDirectorDesignation" value="Managing Director" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
-                                    </div>
-                                </div>
-                                <div class="p-4 bg-white rounded-xl border border-slate-300 space-y-2">
-                                    <label class="block text-xs font-bold text-slate-700 uppercase">Upload Scanned Director Signature & Company Seal (PDF) *</label>
-                                    <input type="file" id="companySealUpload" accept=".pdf,application/pdf" onchange="handleSealUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
-                                </div>
-                            </div>
-
-                            <!-- Partnership Sign & Seal -->
-                            <div id="sigContainerPartnership" class="hidden space-y-4">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Signing Partner Full Name *</label>
-                                    <input type="text" id="signingPartnerName" placeholder="e.g. Nimal Perera (Managing Partner)" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
-                                </div>
-                                <div class="p-4 bg-white rounded-xl border border-slate-300 space-y-2">
-                                    <label class="block text-xs font-bold text-slate-700 uppercase">Upload Partner Signature & Partnership Seal (PDF) *</label>
-                                    <input type="file" id="partnerSealUpload" accept=".pdf,application/pdf" onchange="handleSealUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
-                                </div>
-                            </div>
-
-                            <!-- Sole Proprietorship Sign & Seal -->
-                            <div id="sigContainerSoleProp" class="hidden space-y-4">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Signing Proprietor Full Name *</label>
-                                    <input type="text" id="signingProprietorName" placeholder="e.g. Kusal Janith Perera (Proprietor)" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-sm bg-white">
-                                </div>
-                                <div class="p-4 bg-white rounded-xl border border-slate-300 space-y-2">
-                                    <label class="block text-xs font-bold text-slate-700 uppercase">Upload Proprietor Signature & Business Seal/Stamp (PDF) *</label>
-                                    <input type="file" id="solePropSealUpload" accept=".pdf,application/pdf" onchange="handleSealUpload(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
-                                </div>
-                            </div>
-
-                            <div id="sigPreviewBox" class="hidden pt-3 border-t border-slate-200 flex items-center gap-4">
-                                <span class="text-xs font-bold text-slate-500">Preview Captured Signature:</span>
-                                <img id="sigImgDisplay" src="" alt="Captured Signature" class="max-h-16 border rounded bg-white p-1">
+                            <div class="p-4 bg-amber-50 rounded-xl border border-amber-300 text-xs text-slate-800">
+                                <i class="fa-solid fa-user-tie text-amber-700 mr-1.5"></i> <strong>Applying through a third party / Power of Attorney:</strong> The application must be signed by the person holding the power of attorney (the authorised representative).
                             </div>
                         </div>
 
@@ -704,11 +650,11 @@
                         </div>
 
                         <div class="mt-5 rounded-xl border-2 border-red-400 bg-red-50 p-5 text-red-800" role="note">
-                            <h4 class="font-extrabold text-base mb-2">Important: Documents to submit to NIPO</h4>
+                            <h4 class="font-extrabold text-base mb-2">Important: Submit your application to the NIPO Front Desk with</h4>
                             <ol class="list-decimal pl-5 text-sm font-bold space-y-1">
-                                <li>Application to NIPO front desk</li>
-                                <li>Application Copy</li>
-                                <li>Your Application fees</li>
+                                <li>The duly filled application (if you claim colours, the logo must be in colour print)</li>
+                                <li>A copy of the application</li>
+                                <li>Fees in cash or by payment cheque</li>
                             </ol>
                             <p class="text-xs mt-3 font-medium">Generating a PDF does not submit the application or pay any fee.</p>
                         </div>
@@ -758,14 +704,7 @@
         </button>
 
         <div class="pointer-events-auto flex items-center gap-2 flex-wrap justify-end">
-            <label class="flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-white border border-slate-300 shadow-xl text-[11px] font-semibold text-slate-700 cursor-pointer hover:border-amber-500 transition" title="Optional: upload your own copy of Form M 01 as the template.">
-                <i class="fa-solid fa-file-arrow-up text-amber-600"></i>
-                <span>Form M 01 template (optional)</span>
-                <input type="file" id="m01TemplateUpload" accept="application/pdf,.pdf" class="hidden">
-                <span id="m01TemplateName" class="font-normal text-slate-500 hidden md:inline">(Form-M01-Improved-Legal.pdf)</span>
-            </label>
-
-            <button onclick="toggleGeminiChat()" class="px-4 py-3 bg-gradient-to-r from-purple-700 to-indigo-800 text-white rounded-full shadow-2xl hover:scale-105 transition-all flex items-center gap-2 border border-purple-400/40 text-xs font-bold" title="Ask Gemini IP Assistant">
+                        <button onclick="toggleGeminiChat()" class="px-4 py-3 bg-gradient-to-r from-purple-700 to-indigo-800 text-white rounded-full shadow-2xl hover:scale-105 transition-all flex items-center gap-2 border border-purple-400/40 text-xs font-bold" title="Ask Gemini IP Assistant">
                 <i class="fa-solid fa-wand-magic-sparkles text-amber-300 text-base"></i>
                 <span class="hidden sm:inline">Ask Gemini IP Assistant</span>
             </button>
@@ -793,24 +732,34 @@
 
     <!-- PDF DOWNLOAD SUBMISSION CHECKLIST MODAL WITH BLURRED BACKDROP -->
     <div id="downloadNoticeModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl border-2 border-nipo-gold overflow-hidden">
+        <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl border-2 border-nipo-gold overflow-hidden">
             <div class="bg-nipo-deepBlue text-white px-6 py-4 flex items-center justify-between border-b border-nipo-gold">
                 <div class="flex items-center gap-2.5">
                     <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
-                    <h3 class="font-bold text-sm sm:text-base">PDF Downloaded — Please Submit</h3>
+                    <h3 class="font-bold text-sm sm:text-base">PDF Downloaded — Print, Sign & Submit</h3>
                 </div>
                 <button type="button" onclick="closeDownloadNoticeModal()" class="text-slate-300 hover:text-white text-lg">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             <div class="p-6 space-y-4 text-sm text-slate-800">
-                <p class="font-semibold text-nipo-deepBlue">Please submit the following:</p>
+                <p class="font-semibold text-nipo-deepBlue">Print, sign and submit your application to the NIPO Front Desk with the following documents:</p>
                 <ol class="list-decimal pl-5 space-y-2 font-bold text-slate-900 bg-amber-50 border border-amber-300 rounded-xl p-4">
-                    <li>Application to NIPO front desk</li>
-                    <li>Application Copy</li>
-                    <li>Your Application fees</li>
+                    <li>Duly filled application <span class="font-medium text-xs block text-slate-600">(If you claim colours, the logo must be in colour print)</span></li>
+                    <li>A copy of the application</li>
+                    <li>Fees in cash or by payment cheque</li>
                 </ol>
-                <p class="text-xs text-slate-500">Your completed application PDF (<code class="font-mono">Form_M01_Improved_Legal_Filled.pdf</code>) has been downloaded.</p>
+                <div class="rounded-xl border border-slate-300 bg-slate-50 p-4 flex items-start gap-3">
+                    <i class="fa-solid fa-location-dot text-red-600 text-xl mt-0.5"></i>
+                    <div class="text-xs text-slate-700">
+                        <p class="font-bold text-nipo-deepBlue text-sm">National Intellectual Property Office (NIPO) - Front Desk</p>
+                        <p>No. 400, Sir Chittampalam A. Gardiner Mawatha, Colombo 02, Sri Lanka</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=National+Intellectual+Property+Office+Sri+Lanka+400+Sir+Chittampalam+A+Gardiner+Mawatha+Colombo+02" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-2 px-3 py-1.5 rounded-lg bg-nipo-deepBlue text-white font-bold hover:bg-slate-800 transition">
+                            <i class="fa-solid fa-map-pin text-nipo-gold"></i> Open in Google Maps
+                        </a>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-500">Your application PDF (<code class="font-mono">Form_M01_Improved_Legal_Filled.pdf</code>) has been downloaded. Generating a PDF does not submit the application or pay any fee.</p>
                 <div class="pt-2 flex justify-end">
                     <button type="button" onclick="closeDownloadNoticeModal()" class="px-5 py-2.5 rounded-xl bg-nipo-deepBlue hover:bg-slate-800 text-white font-bold text-xs transition">
                         Got it
@@ -1041,45 +990,20 @@
 
         function updateSignatureSectionCategory(category) {
             ['sigContainerIndividual', 'sigContainerCompany', 'sigContainerPartnership', 'sigContainerSoleProp']
-                .forEach(id => document.getElementById(id).classList.add('hidden'));
+                .forEach(id => document.getElementById(id)?.classList.add('hidden'));
 
             const title = document.getElementById('sigCategoryTitle');
             const badge = document.getElementById('sigBadgeCategory');
-
-            if (category === 'Individual') {
-                document.getElementById('sigContainerIndividual').classList.remove('hidden');
-                title.innerText = "Individual Applicant Signature";
-                badge.innerText = "Individual";
-            } else if (category === 'Company') {
-                document.getElementById('sigContainerCompany').classList.remove('hidden');
-                title.innerText = "Director Signature & Company Official Seal";
-                badge.innerText = "Company Seal Required";
-            } else if (category === 'Partnership') {
-                document.getElementById('sigContainerPartnership').classList.remove('hidden');
-                title.innerText = "Partner Signature & Partnership Seal";
-                badge.innerText = "Partnership Seal Required";
-            } else {
-                document.getElementById('sigContainerSoleProp').classList.remove('hidden');
-                title.innerText = "Proprietor Signature & Enterprise Seal";
-                badge.innerText = "Proprietorship Seal Required";
-            }
-        }
-
-        function hasSignatureProvided() {
-            const category = document.querySelector('input[name="applicantCategory"]:checked')?.value || 'Individual';
-            if (category === 'Individual') {
-                return Boolean(capturedSigDataUrl) || Boolean(document.getElementById('indSigFileInput')?.files?.length);
-            }
-            if (category === 'Company') {
-                return Boolean(document.getElementById('companyDirectorName')?.value.trim()) &&
-                    Boolean(document.getElementById('companySealUpload')?.files?.length);
-            }
-            if (category === 'Partnership') {
-                return Boolean(document.getElementById('signingPartnerName')?.value.trim()) &&
-                    Boolean(document.getElementById('partnerSealUpload')?.files?.length);
-            }
-            return Boolean(document.getElementById('signingProprietorName')?.value.trim()) &&
-                Boolean(document.getElementById('solePropSealUpload')?.files?.length);
+            const map = {
+                Individual:        ['sigContainerIndividual', 'Individual Applicant', 'Individual'],
+                Company:           ['sigContainerCompany', 'Company Applicant', 'Company'],
+                Partnership:       ['sigContainerPartnership', 'Partnership Applicant', 'Partnership'],
+                SoleProprietorship:['sigContainerSoleProp', 'Proprietorship Applicant', 'Proprietorship']
+            };
+            const [id, t, b] = map[category] || map.Individual;
+            document.getElementById(id)?.classList.remove('hidden');
+            if (title) title.innerText = t;
+            if (badge) badge.innerText = b;
         }
 
         function validateMandatoryFields() {
@@ -1130,22 +1054,6 @@
             }
 
             return true;
-        }
-
-        function handleSigUpload(event) {
-            const file = event.target.files[0];
-            if (file && !/\.pdf$/i.test(file.name)) {
-                alert('Please upload the signed document as a PDF.');
-                event.target.value = '';
-            }
-        }
-
-        function handleSealUpload(event) {
-            const file = event.target.files[0];
-            if (file && !/\.pdf$/i.test(file.name)) {
-                alert('Please upload the signed and sealed document as a PDF.');
-                event.target.value = '';
-            }
         }
 
         function removeDynamicRow(btn, callback) {
@@ -1641,26 +1549,13 @@
             await fillSlot('agentTel', hasAgent ? rawVal('agentPhone') : '', { single: true, label: 'X. AGENT - TEL / FAX' });
             await fillSlot('agentEmail', hasAgent ? rawVal('agentEmail') : '', { single: true, label: 'X. AGENT - E-MAIL' });
 
-            // XII. Signature / company seal and date.
-            // The signature box field is left empty; the signature image and the
-            // signatory line are drawn on top after flattening.
+            // XII. Signature / seal area is left blank: the applicant signs and seals the printed copy.
             const signatory = category === 'Company' ? rawVal('companyDirectorName')
                 : category === 'Partnership' ? rawVal('signingPartnerName')
                 : category === 'SoleProprietorship' ? rawVal('signingProprietorName')
                 : applicant;
             const designation = category === 'Company' ? rawVal('companyDirectorDesignation') : '';
             const signLine = [signatory, designation].filter(Boolean).join(', ');
-            const uploadedSig = id => !!document.getElementById(id)?.files?.length;
-            if (category === 'Individual') {
-                if (capturedSigDataUrl) {
-                    const upper = SLOT.sigUpper;
-                    post.push(() => drawInSlot(capturedSigDataUrl, upper, [231, 836, 563, 884], 3));
-                } else if (uploadedSig('indSigFileInput')) {
-                    await fillSlot('sigUpper', 'Signed - see attached signature page', { single: true, blank: true, maxSize: 9 });
-                }
-            } else {
-                await fillSlot('sigUpper', 'Signature and seal attached - see following page', { single: true, blank: true, maxSize: 9 });
-            }
             await fillSlot('sigLower', signLine, { single: true, blank: true, maxSize: 8.5, minSize: 5.5 });
             await fillSlot('date', todayDMY(), { single: true });
 
@@ -1707,10 +1602,6 @@
                 ['poaDocUpload', 'POWER OF ATTORNEY'],
                 ['swornTranslatorDocUpload', 'CERTIFIED TRANSLATION'],
                 ['priorityDocUpload', 'PRIORITY DOCUMENT'],
-                ['companySealUpload', 'DIRECTOR SIGNATURE AND SEAL'],
-                ['partnerSealUpload', 'PARTNERSHIP SIGNATURE AND SEAL'],
-                ['solePropSealUpload', 'PROPRIETOR SIGNATURE AND SEAL'],
-                ['indSigFileInput', 'SIGNATURE IMAGE'],
                 ['extraDocsUpload', 'ADDITIONAL DOCUMENT'],
             ];
 
@@ -1766,11 +1657,6 @@
             const original = btn.innerHTML;
 
             if (!validateMandatoryFields()) return;
-            if (!hasSignatureProvided()) {
-                alert('Please provide your Signature (drawn or uploaded PDF) before generating the application.');
-                jumpToStep(6);
-                return;
-            }
             if (!document.getElementById('declarationCheck').checked) {
                 alert('Please confirm the declaration before generating the application.');
                 jumpToStep(6);
@@ -1809,10 +1695,7 @@
             }
         }
 
-        document.getElementById('m01TemplateUpload')?.addEventListener('change', e => {
-            const f = e.target.files?.[0];
-            document.getElementById('m01TemplateName').textContent = f ? `(${f.name})` : '(Form-M01-Improved-Legal.pdf)';
-        });
+        
 
         document.addEventListener('DOMContentLoaded', () => {
             const step6 = document.getElementById('step6');
