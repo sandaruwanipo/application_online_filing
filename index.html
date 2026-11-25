@@ -328,6 +328,7 @@
                                 <div>
                                     <label class="block text-xs font-bold text-amber-900 uppercase mb-1">Upload Signed Power of Attorney Document (PDF)</label>
                                     <input type="file" id="poaDocUpload" accept=".pdf,application/pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-700 file:text-white hover:file:bg-amber-800 cursor-pointer">
+<p class="pdf-only-note mt-1 text-[11px] font-bold text-red-600"><i class="fa-solid fa-file-pdf mr-1"></i>PDF files only (.pdf) – other formats are not accepted.</p>
                                 </div>
                             </div>
 
@@ -411,6 +412,7 @@
                                 <div>
                                     <label class="block text-xs font-bold text-blue-900 uppercase mb-1">Upload Sworn Translator Certificate *</label>
                                     <input type="file" id="swornTranslatorDocUpload" accept=".pdf,application/pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-700 file:text-white hover:file:bg-blue-800 cursor-pointer">
+<p class="pdf-only-note mt-1 text-[11px] font-bold text-red-600"><i class="fa-solid fa-file-pdf mr-1"></i>PDF files only (.pdf) – other formats are not accepted.</p>
                                 </div>
                             </div>
 
@@ -432,6 +434,7 @@
                                 <div id="threeDRepresentationSection" class="hidden space-y-2">
                                     <p class="text-xs text-slate-600">If the mark is three-dimensional, attach views or representations of the 3D mark (PDF only). These will appear as separate pages after the application.</p>
                                     <input type="file" id="threeDRepresentationUpload" accept=".pdf,application/pdf" multiple class="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-nipo-deepBlue file:text-white">
+<p class="pdf-only-note mt-1 text-[11px] font-bold text-red-600"><i class="fa-solid fa-file-pdf mr-1"></i>PDF files only (.pdf) – other formats are not accepted.</p>
                                 </div>
                             </div>
 
@@ -507,6 +510,7 @@
                             <div id="goodsAttachmentPanel" class="hidden space-y-3 p-3 bg-white rounded-lg border border-amber-200">
                                 <label for="pdfClassUploader" class="block text-xs font-bold text-amber-900 uppercase">Attach Class – Goods / Services Specification (PDF only)</label>
                                 <input type="file" id="pdfClassUploader" accept=".pdf,application/pdf" onchange="handleClassPdfUpload(event)" class="w-full text-xs text-slate-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-amber-700 file:text-white file:font-semibold">
+<p class="pdf-only-note mt-1 text-[11px] font-bold text-red-600"><i class="fa-solid fa-file-pdf mr-1"></i>PDF files only (.pdf) – other formats are not accepted.</p>
                                 <p id="goodsAttachmentName" class="text-xs text-slate-500" aria-live="polite">No attachment selected.</p>
                             </div>
                         </div>
@@ -550,6 +554,7 @@
                                 <div id="priorityUploadBox" class="bg-white p-3.5 rounded-lg border border-amber-300">
                                     <label class="block text-xs font-semibold text-slate-700 mb-1">Upload Certified Priority Copy (.pdf)</label>
                                     <input type="file" id="priorityDocUpload" accept=".pdf,application/pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
+<p class="pdf-only-note mt-1 text-[11px] font-bold text-red-600"><i class="fa-solid fa-file-pdf mr-1"></i>PDF files only (.pdf) – other formats are not accepted.</p>
                                 </div>
                                 <div class="flex items-center space-x-2 pt-1">
                                     <input type="checkbox" id="prioritySubmitLater" onchange="togglePrioritySubmitLater()" class="w-4 h-4 text-amber-600 rounded focus:ring-amber-500">
@@ -578,6 +583,7 @@
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Upload Additional Files (.pdf)</label>
                                 <input type="file" id="extraDocsUpload" multiple accept=".pdf,application/pdf" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
+<p class="pdf-only-note mt-1 text-[11px] font-bold text-red-600"><i class="fa-solid fa-file-pdf mr-1"></i>PDF files only (.pdf) – other formats are not accepted.</p>
                             </div>
                         </div>
                     </div>
@@ -1512,8 +1518,8 @@
             const has3D = checked('has3DRepresentation');
 
             // ---- Page 1: applicant & mark ----
-            await fillSlot('name', applicant, { label: 'I. APPLICANT - NAME', maxSize: 11 });
-            await fillSlot('address', rawVal('applicantAddress'), { label: 'I. APPLICANT - ADDRESS' });
+            await fillSlot('name', applicant.toUpperCase(), { label: 'I. APPLICANT - NAME', maxSize: 11 });
+            await fillSlot('address', rawVal('applicantAddress').toUpperCase(), { label: 'I. APPLICANT - ADDRESS' });
             const contactText = [
                 [rawVal('applicantPhone') && 'Tel: ' + rawVal('applicantPhone'), rawVal('applicantFax') && 'Fax: ' + rawVal('applicantFax')].filter(Boolean).join('  /  '),
                 rawVal('applicantEmail') && 'E-mail: ' + rawVal('applicantEmail')
@@ -1543,9 +1549,9 @@
                 await fillSlot('priorityNumber', rawVal('priorityNumber'), { single: true, minSize: 5.5 });
             }
 
-            await fillSlot('service', hasAgent ? rawVal('agentAddress') : '', { label: 'IX. ADDRESS FOR SERVICES IN SRI LANKA' });
-            await fillSlot('agentName', hasAgent ? rawVal('agentName') : '', { single: true, label: 'X. AGENT - NAME' });
-            await fillSlot('agentAddress', hasAgent ? rawVal('agentAddress') : '', { label: 'X. AGENT - ADDRESS' });
+            await fillSlot('service', hasAgent ? rawVal('agentAddress').toUpperCase() : '', { label: 'IX. ADDRESS FOR SERVICES IN SRI LANKA' });
+            await fillSlot('agentName', hasAgent ? rawVal('agentName').toUpperCase() : '', { single: true, label: 'X. AGENT - NAME' });
+            await fillSlot('agentAddress', hasAgent ? rawVal('agentAddress').toUpperCase() : '', { label: 'X. AGENT - ADDRESS' });
             const agentContactText = hasAgent ? [
                 rawVal('agentPhone') && 'Tel / Fax: ' + rawVal('agentPhone'),
                 rawVal('agentEmail') && 'E-mail: ' + rawVal('agentEmail')
@@ -1724,5 +1730,37 @@
             }, 400);
         }
     </script>
+
+<script>
+(function(){
+  const upIds=['applicantFullName','applicantAddress','agentName','agentAddress','partnershipFirmName','solePropBusinessName'];
+  function up(el){
+    el.style.textTransform='uppercase';
+    el.addEventListener('input',function(){
+      const s=el.selectionStart,e=el.selectionEnd,u=el.value.toUpperCase();
+      if(u!==el.value){el.value=u;try{el.setSelectionRange(s,e);}catch(_){}}
+    });
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    upIds.forEach(id=>{const el=document.getElementById(id);if(el)up(el);});
+    // partner / proprietor name inputs (may be created dynamically)
+    document.addEventListener('input',function(ev){
+      const t=ev.target;
+      if(t&&t.matches&&t.matches('.partner-input,.proprietor-input,input[id*="partner" i],input[id*="proprietor" i]')){
+        const s=t.selectionStart,u=t.value.toUpperCase();
+        if(u!==t.value){t.value=u;try{t.setSelectionRange(s,s);}catch(_){}}
+      }
+    });
+    // reject non-PDF attachments immediately
+    document.querySelectorAll('input[type="file"]').forEach(inp=>{
+      if(inp.id==='logoFileInput'||inp.id==='m01TemplateUpload')return;
+      inp.addEventListener('change',function(){
+        const bad=[...inp.files].filter(f=>!/\.pdf$/i.test(f.name)||(f.type&&f.type!=='application/pdf'));
+        if(bad.length){alert('Only PDF files are accepted. Not allowed: '+bad.map(f=>f.name).join(', '));inp.value='';}
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>
