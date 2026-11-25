@@ -374,7 +374,7 @@
                             <div id="logoUploadContainer" class="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center hover:border-nipo-deepBlue transition bg-slate-50">
                                 <i class="fa-solid fa-cloud-arrow-up text-3xl text-slate-400 mb-2"></i>
                                 <p class="text-xs font-bold text-slate-700">Upload Mark Logo / Image Representation (JPEG or PNG)</p>
-                                <p class="text-[11px] text-slate-400 mt-0.5">Placed on Form M-01 and copied as an 8cm x 8cm attachment</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Placed on Form M-01 and copied as a 10cm x 10cm attachment</p>
                                 <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)" class="mt-3 text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-nipo-deepBlue file:text-white hover:file:bg-slate-800 cursor-pointer">
                                 
                                 <div id="logoPreviewBox" class="hidden mt-4 pt-4 border-t border-slate-200 flex flex-col items-center">
@@ -1422,7 +1422,7 @@
                     width: w, height: h
                 });
             };
-            // Helper for the 8cm x 8cm attachment page.
+            // Helper for the 10cm x 10cm attachment page.
             const drawCentered = async (dataUrl, page, box) => {
                 const image = await embedImage(dataUrl);
                 if (!image) return;
@@ -1584,11 +1584,12 @@
                 }
             }
 
-            // Copy of mark representation as attachment (8 cm x 8 cm = 226.77 pt x 226.77 pt)
+            // Copy of mark representation as attachment (10 cm x 10 cm = 283.46 pt x 283.46 pt)
             if (logoDataUrl) {
                 const page = pdf.addPage([612, 1009]);
-                pageTitle(page, 'ATTACHMENT - COPY OF TRADEMARK REPRESENTATION (8 cm x 8 cm)');
-                const logoSizePt = 8 * 28.3465;
+                pageTitle(page, 'ATTACHMENT - COPY OF TRADEMARK REPRESENTATION (10 cm x 10 cm)');
+                const logoSizePt = 10 * 28.3465;
+                page.drawRectangle({ x: (612 - logoSizePt) / 2, y: (page.getHeight() - logoSizePt) / 2, width: logoSizePt, height: logoSizePt, borderColor: rgb(0.6, 0.6, 0.6), borderWidth: 0.5 });
                 await drawCentered(logoDataUrl, page, { x: (612 - logoSizePt) / 2, y: (page.getHeight() - logoSizePt) / 2, w: logoSizePt, h: logoSizePt });
             }
 
